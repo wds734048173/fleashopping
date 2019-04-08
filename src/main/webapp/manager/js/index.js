@@ -5,19 +5,17 @@ function pageClick(k) {
 	$("#flTitle").text($(k).text());
     var url = "";
     if (text == "分类管理") {
-        url = "/bookType.do?method=getBookTypelist";
+        url = "/goodsClass.do?method=getGoodsClassListByCondition";
+    } else if (text == "商品管理") {
+        url = "/goods.do?method=getGoodsListByCondition";
     } else if (text == "订单管理") {
-        url = "/order.do?method=getOrderlist";
-    } else if (text == "图书信息管理") {
-        url = "/book.do?method=getBooklist";
-    } else if (text == "管理员信息管理") {
-        url = "/manager.do?method=getManagerList";
-    } else if (text == "客户信息管理") {
-        url = "/customer.do?method=getCustomerlist";
-    } else if (text == "评价信息") {
-        url = "/comment.do?method=getCommentlist";
-    } else if (text == "信息反馈"){
-        url = "/reply.do?method=getReplylist";
+        url = "/order.do?method=getOrderListByCondition";
+    } else if (text == "用户信息管理") {
+        url = "/manager.do?method=getUserListByCondition";
+    } else if (text == "评价管理") {
+        url = "/comment.do?method=getCommentListByCondition";
+    } else if (text == "信息反馈管理"){
+        url = "/reply.do?method=getReplylistByCondition";
     }
     $(".content").load(url);
 }

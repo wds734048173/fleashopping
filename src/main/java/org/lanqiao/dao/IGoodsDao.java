@@ -27,4 +27,8 @@ public interface IGoodsDao {
     public Long selectGoodsOtherCount(Condition condition);
     //修改商品状态
     public void updateGoodsState(int id);
+    //通过模糊查询获取商品列表（后台）
+    public List<Goods> selectGoodsListByCondition(Condition condition);
+    //通过模糊查询获取商品数量（后台）
+    public int selectGoodsCountByCondition(Condition condition);
 }

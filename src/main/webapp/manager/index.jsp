@@ -27,14 +27,14 @@
     </head>
     <body>
         <div class="left">
-            <div class="bigTitle">网上书店后台管理系统</div>
+            <div class="bigTitle">吕梁学院二手市场后台管理系统</div>
             <div class="lines">
                 <div onclick="pageClick(this)" class="active"><img src="/manager/img/icon-1.png" />分类管理</div>
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-4.png" />商品管理</div>
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-3.png" />订单管理</div>
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-4.png" />用户信息管理</div>
-                <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />评价信息</div>
-                <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />信息反馈</div>
+                <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />评价管理</div>
+                <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />信息反馈管理</div>
             </div>
         </div>
         <div class="top">
@@ -47,7 +47,7 @@
     </body>
     <script type="text/javascript">
         $(function(){
-            $(".content").load("/bookType.do?method=getBookTypelist");
+            $(".content").load("/goodsClass.do?method=getGoodsClassListByCondition");
         })
         function exit() {
             var url = "/register.do?method=exit";

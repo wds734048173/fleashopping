@@ -3,9 +3,8 @@ package org.lanqiao.dao.impl;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.lanqiao.dao.IGoodsDao;
+import org.lanqiao.dao.IGoodsClassDao;
 import org.lanqiao.domain.Condition;
-import org.lanqiao.domain.Goods;
 import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.utils.jdbcUtils;
 
@@ -15,56 +14,15 @@ import java.util.List;
 
 /**
  * @Auther: WDS
- * @Date: 2019/4/4 19:14
+ * @Date: 2019/4/5 20:05
  * @Description:
  */
-public class GoodsDaoImpl implements IGoodsDao {
+public class GoodsClassDaoImpl implements IGoodsClassDao {
     private QueryRunner qr = new QueryRunner(jdbcUtils.getDataSource());
-
     @Override
-    public void insertGoods(Goods goods) {
-
-    }
-
-    @Override
-    public void updateGoods(Goods goods) {
-
-    }
-
-    @Override
-    public void deleteGoodsById(int id) {
-
-    }
-
-    @Override
-    public List<Goods> selectGoodsList(Condition condition) {
-        return null;
-    }
-
-    @Override
-    public Long selectGoodsCount(Condition condition) {
-        return null;
-    }
-
-    @Override
-    public List<Goods> selectGoodsOtherList(Condition condition) {
-        return null;
-    }
-
-    @Override
-    public Long selectGoodsOtherCount(Condition condition) {
-        return null;
-    }
-
-    @Override
-    public void updateGoodsState(int id) {
-
-    }
-
-    @Override
-    public List<Goods> selectGoodsListByCondition(Condition condition) {
-        List<Goods> goodsList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where 1 = 1 ");
+    public List<GoodsClass> selectGoodsClassListByCondition(Condition condition) {
+        List<GoodsClass> goodsClassList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_class where 1 = 1 ");
         List<Object> search = new ArrayList<>();
         if(condition != null){
             if(condition.getName() != null && !"".equals(condition.getName())){
@@ -76,16 +34,16 @@ public class GoodsDaoImpl implements IGoodsDao {
             search.add(condition.getPageSize());
         }
         try {
-            goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
+            goodsClassList = qr.query(sql.toString(),new BeanListHandler<>(GoodsClass.class),search.toArray());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return goodsList;
+        return goodsClassList;
     }
 
     @Override
-    public int selectGoodsCountByCondition(Condition condition) {
-        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
+    public int selectGoodsClassCountByCondition(Condition condition) {
+        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_class where 1 = 1 ");
         List<Object> search = new ArrayList<>();
         if(condition.getName() != null && !"".equals(condition.getName())){
             sql.append(" and name like ? ");
@@ -98,5 +56,33 @@ public class GoodsDaoImpl implements IGoodsDao {
             e.printStackTrace();
         }
         return Integer.valueOf(count.toString());
+    }
+
+    @Override
+    public List<GoodsClass> selectGoodsClassList() {
+        List<GoodsClass> goodsClassList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_class where 1 = 1 ");
+        List<Object> search = new ArrayList<>();
+        try {
+            goodsClassList = qr.query(sql.toString(),new BeanListHandler<>(GoodsClass.class),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsClassList;
+    }
+
+    @Override
+    public int insertGoodsClass(GoodsClass goodsClass) {
+        return 0;
+    }
+
+    @Override
+    public int updateGoodsClass(GoodsClass goodsClass) {
+        return 0;
+    }
+
+    @Override
+    public int deleteGoodsClassById(int id) {
+        return 0;
     }
 }

@@ -11,13 +11,18 @@ import java.util.List;
 /**
  * @Auther: WDS
  * @Date: 2019/4/3 23:06
- * @Description:
+ * @Description:用户管理
  */
 public class UserServiceImpl implements IUserService {
     IUserDao userDao = new UserDaoImpl();
     @Override
     public int addUser(User user) {
         return userDao.insertUser(user);
+    }
+
+    @Override
+    public int addManager(User user) {
+        return userDao.insertManager(user);
     }
 
     @Override

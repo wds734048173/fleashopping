@@ -1,7 +1,24 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+  <error-page>
+    <!-- 指定当发生了什么异常跳转到该页面 -->
+    <exception-type>java.lang.ArithmeticException</exception-type>
+    <!-- 指定异常了，跳转的页面 -->
+    <location>/error/error.jsp</location>
+  </error-page>
+  <error-page>
+    <!-- 当服务器发生了404 -->
+    <error-code>404</error-code>
+    <!-- 指定异常了，跳转的页面 -->
+    <location>/error/404.jsp</location>
+  </error-page>
+  <error-page>
+    <!-- 当服务器发生了404 -->
+    <error-code>500</error-code>
+    <!-- 指定异常了，跳转的页面 -->
+    <location>/error/500.jsp</location>
+  </error-page>
 </web-app>

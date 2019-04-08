@@ -1,24 +1,42 @@
 package org.lanqiao.control;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @Auther: WDS
  * @Date: 2019/4/4 19:12
  * @Description:
  */
+@WebServlet("/order.do")
 public class OrderServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            req.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        resp.setCharacterEncoding("utf-8");
+        resp.setContentType("text/json");
+        String method = req.getParameter("method");
+        switch (method){
+            case "getOrderListByCondition":
+                getOrderListByCondition(req,resp,"");
+                break;
+        }
+    }
+
+    private void getOrderListByCondition(HttpServletRequest req, HttpServletResponse resp, String s) {
     }
 }

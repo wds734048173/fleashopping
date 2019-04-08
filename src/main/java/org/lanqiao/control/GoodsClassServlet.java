@@ -1,10 +1,9 @@
 package org.lanqiao.control;
 
 import org.lanqiao.domain.Condition;
-import org.lanqiao.domain.Goods;
 import org.lanqiao.domain.GoodsClass;
-import org.lanqiao.service.IGoodsService;
-import org.lanqiao.service.impl.GoodsServiceImpl;
+import org.lanqiao.service.IGoodsClassService;
+import org.lanqiao.service.impl.GoodsClassServiceImpl;
 import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
@@ -18,12 +17,13 @@ import java.util.List;
 
 /**
  * @Auther: WDS
- * @Date: 2019/4/4 19:11
+ * @Date: 2019/4/4 23:07
  * @Description:
  */
-@WebServlet("/goods.do")
-public class GoodsServlet extends HttpServlet {
-    IGoodsService goodsService = new GoodsServiceImpl();
+@WebServlet("/goodsClass.do")
+public class GoodsClassServlet extends HttpServlet {
+    IGoodsClassService goodsClassService = new GoodsClassServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -40,13 +40,31 @@ public class GoodsServlet extends HttpServlet {
         resp.setContentType("text/json");
         String method = req.getParameter("method");
         switch (method){
-            case "getGoodsListByCondition":
-                getGoodsListByCondition(req,resp,"");
+            case "getGoodsClassListByCondition":
+                getGoodsClassListByCondition(req,resp,"");
                 break;
+            case "getGoodsClassById":
+                getGoodsClassById(req,resp);
+                break;
+            case "addGoodsClass":
+                addGoodsClass(req,resp);
+                break;
+            /*case "deleteGoodsClassById":
+                deleteGoodsClass(req,resp);
+                break;*/
         }
     }
 
-    private void getGoodsListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {
+    /*private void deleteGoodsClass(HttpServletRequest req, HttpServletResponse resp) {
+    }*/
+
+    private void addGoodsClass(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void getGoodsClassById(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void getGoodsClassListByCondition(HttpServletRequest req, HttpServletResponse resp,String mark) {
         int pageNum = 1;
         if(req.getParameter("currentPage") != null){
             pageNum = Integer.valueOf(req.getParameter("currentPage"));
@@ -63,7 +81,7 @@ public class GoodsServlet extends HttpServlet {
         }
         Condition condition = new Condition();
         condition.setName(searchGoodsClassName);
-        int totalRecords = goodsService.getGoodsCountByCondition(condition);
+        int totalRecords = goodsClassService.getGoodsClassCountByCondition(condition);
         //不同操作，不同的当前页设置
         PageModel pm = new PageModel(pageNum,totalRecords,pageSize);
         if("add".equals(mark)){
@@ -80,14 +98,14 @@ public class GoodsServlet extends HttpServlet {
         //分页条件封装
         condition.setCurrentPage(pageModel.getStartIndex());
         condition.setPageSize(pageModel.getPageSize());
-        List<Goods> goodsList = goodsService.getGoodsListByCondition(condition);
+        List<GoodsClass> goodsClassList = goodsClassService.getGoodsClassListByCondition(condition);
         req.setAttribute("currentPage",pageNum);
-        pageModel.setRecords(goodsList);
+        pageModel.setRecords(goodsClassList);
         req.setAttribute("pm",pageModel);
         req.setAttribute("condition",condition);
-        req.setAttribute("goodsList",goodsList);
+        req.setAttribute("goodsClassList",goodsClassList);
         try {
-            req.getRequestDispatcher("manager/goodsList.jsp").forward(req,resp);
+            req.getRequestDispatcher("manager/goodsClassList.jsp").forward(req,resp);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {

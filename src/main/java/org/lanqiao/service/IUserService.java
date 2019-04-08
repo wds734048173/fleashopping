@@ -13,6 +13,8 @@ import java.util.List;
 public interface IUserService {
     //注册用户
     public int addUser(User user);
+    //注册管理员
+    public int addManager(User user);
     //修改用户
     public void modifyUser(User user);
     //通过id查询用户信息

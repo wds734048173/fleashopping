@@ -75,7 +75,7 @@ public class RegisterServlet extends HttpServlet {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordMd5);
-        int result = userService.addUser(user);
+        int result = userService.addManager(user);
         if(result == 1){
             try {
                 resp.sendRedirect("/manager/login.jsp");
