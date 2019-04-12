@@ -18,9 +18,11 @@ public interface IGoodsClassService {
     //获取分类列表（全部，无查询条件）
     public List<GoodsClass> getGoodsClassList();
     //新增分类
-    public int addGoodsClass(GoodsClass goodsClass);
+    public void addGoodsClass(GoodsClass goodsClass);
     //修改分类
-    public int modifyGoodsClass(GoodsClass goodsClass);
+    public void modifyGoodsClass(GoodsClass goodsClass);
     //删除分类（假删，因为可能有商品已经在这个分类下）
-    public int deleteGoodsClassById(int id);
+    public void deleteGoodsClassById(int id);
+    //通过id获取商品分类信息
+    public GoodsClass getGoodsClassById(int id);
 }

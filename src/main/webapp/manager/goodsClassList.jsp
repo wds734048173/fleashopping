@@ -56,7 +56,7 @@
                 })
             })
             //删除
-            $(".deleteGoodsClass").click(function () {
+            /*$(".deleteGoodsClass").click(function () {
                 var isDelete = confirm ("确定删除吗？");
                 if(isDelete){
                     var id = $(this).parent().parent().children("td:eq(0)").text();
@@ -68,7 +68,7 @@
                 }else{
                     return;
                 }
-            })
+            })*/
         })
 
         //查询的手动提交方式
@@ -79,7 +79,7 @@
             }else{
                 var currentPage = currentPage;
             }
-            var url = "/goodsClass.do?method=getGoodsClassList&currentPage="+currentPage+"&searchGoodsClassName="+name;
+            var url = "/goodsClass.do?method=getGoodsClassListByCondition&currentPage="+currentPage+"&searchGoodsClassName="+name;
             $(".content").load(url);
         }
     </script>

@@ -1,5 +1,6 @@
 package org.lanqiao.control;
 
+import com.alibaba.fastjson.JSON;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.service.IGoodsClassService;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -59,9 +61,32 @@ public class GoodsClassServlet extends HttpServlet {
     }*/
 
     private void addGoodsClass(HttpServletRequest req, HttpServletResponse resp) {
+        String mark = null;
+        GoodsClass goodsClass = new GoodsClass();
+        String goodsClassName = req.getParameter("goodsClassName");
+        goodsClass.setName(goodsClassName);
+        String goodsClassId = req.getParameter("goodsClassId");
+        if(goodsClassId == null || "".equals(goodsClassId)){
+            mark = "add";
+            goodsClassService.addGoodsClass(goodsClass);
+        }else{
+            mark = "update";
+            goodsClass.setId(Integer.valueOf(goodsClassId));
+            goodsClassService.modifyGoodsClass(goodsClass);
+        }
+        getGoodsClassListByCondition(req, resp, mark);
     }
 
     private void getGoodsClassById(HttpServletRequest req, HttpServletResponse resp) {
+        int goodsClassId = Integer.valueOf(req.getParameter("goodsClassId"));
+        GoodsClass goodsClass = goodsClassService.getGoodsClassById(goodsClassId);
+        try {
+            PrintWriter out = resp.getWriter();
+            String bookTypeJson = JSON.toJSONString(goodsClass);
+            out.print(bookTypeJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getGoodsClassListByCondition(HttpServletRequest req, HttpServletResponse resp,String mark) {

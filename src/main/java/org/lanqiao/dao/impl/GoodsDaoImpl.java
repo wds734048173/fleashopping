@@ -6,7 +6,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.lanqiao.dao.IGoodsDao;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
-import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.SQLException;
@@ -23,42 +22,120 @@ public class GoodsDaoImpl implements IGoodsDao {
 
     @Override
     public void insertGoods(Goods goods) {
-
+        String sql = "INSERT INTO tb_goods (name,pic,classId,yprice,sprice,remark,ctime,uid) VALUES (?,?,?,?,?,?,now(),?)";
+        try {
+            qr.execute(sql,goods.getName(),goods.getPic(),goods.getClassId(),goods.getYprice(),goods.getSprice(),goods.getRemark(),goods.getuId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updateGoods(Goods goods) {
-
+        String sql = "UPDATE tb_goods SET name = ?,classId = ?, yprice = ?, sprice = ?, remark = ?,rtime = now() WHERE id = ?";
+        try {
+            qr.execute(sql,goods.getName(),goods.getClassId(),goods.getYprice(),goods.getSprice(),goods.getRemark(),goods.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteGoodsById(int id) {
-
+        String sql = "DELETE FROM tb_goods WHERE id = ?";
+        try {
+            qr.execute(sql,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Goods> selectGoodsList(Condition condition) {
-        return null;
+        List<Goods> goodsList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where 1 = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition != null){
+            if(condition.getName() != null && !"".equals(condition.getName())){
+                sql.append(" and name like ? ");
+                search.add("%" + condition.getName() + "%");
+            }
+            sql.append(" limit ?,?");
+            search.add(condition.getCurrentPage());
+            search.add(condition.getPageSize());
+        }
+        try {
+            goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsList;
     }
 
     @Override
-    public Long selectGoodsCount(Condition condition) {
-        return null;
+    public int selectGoodsCount(Condition condition) {
+        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition.getName() != null && !"".equals(condition.getName())){
+            sql.append(" and name like ? ");
+            search.add("%" + condition.getName() + "%");
+        }
+        Long count = 0L;
+        try {
+            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Integer.valueOf(count.toString());
     }
 
     @Override
     public List<Goods> selectGoodsOtherList(Condition condition) {
-        return null;
+        List<Goods> goodsList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where 1 = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition != null){
+            if(condition.getName() != null && !"".equals(condition.getName())){
+                sql.append(" and name like ? ");
+                search.add("%" + condition.getName() + "%");
+            }
+            sql.append(" limit ?,?");
+            search.add(condition.getCurrentPage());
+            search.add(condition.getPageSize());
+        }
+        try {
+            goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsList;
     }
 
     @Override
-    public Long selectGoodsOtherCount(Condition condition) {
-        return null;
+    public int selectGoodsOtherCount(Condition condition) {
+        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition.getName() != null && !"".equals(condition.getName())){
+            sql.append(" and name like ? ");
+            search.add("%" + condition.getName() + "%");
+        }
+        Long count = 0L;
+        try {
+            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Integer.valueOf(count.toString());
     }
 
     @Override
     public void updateGoodsState(int id) {
-
+        String sql = "UPDATE tb_goods SET state = 1,rtime = now() WHERE id = ?";
+        try {
+            qr.execute(sql,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

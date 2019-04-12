@@ -21,15 +21,19 @@ public class Address {
     private String address;
     //地址状态，0表示默认地址，1表示其他地址
     private int state;
+    private String realname;
+    private String telphone;
 
-    /*public Address() {
+    public Address() {
     }
 
-    public Address(int id, int uid, String address, int state) {
+    public Address(int id, int uid, String address, int state, String realname, String telphone) {
         this.id = id;
         this.uid = uid;
         this.address = address;
         this.state = state;
+        this.realname = realname;
+        this.telphone = telphone;
     }
 
     public int getId() {
@@ -64,6 +68,22 @@ public class Address {
         this.state = state;
     }
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getTelphone() {
+        return telphone;
+    }
+
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -71,6 +91,8 @@ public class Address {
                 ", uid=" + uid +
                 ", address='" + address + '\'' +
                 ", state=" + state +
+                ", realname='" + realname + '\'' +
+                ", telphone='" + telphone + '\'' +
                 '}';
-    }*/
+    }
 }

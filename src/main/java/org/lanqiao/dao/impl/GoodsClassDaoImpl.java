@@ -1,6 +1,7 @@
 package org.lanqiao.dao.impl;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.lanqiao.dao.IGoodsClassDao;
@@ -72,17 +73,44 @@ public class GoodsClassDaoImpl implements IGoodsClassDao {
     }
 
     @Override
-    public int insertGoodsClass(GoodsClass goodsClass) {
-        return 0;
+    public void insertGoodsClass(GoodsClass goodsClass) {
+        String sql = "INSERT INTO tb_class (name,ctime) VALUES (?,now())";
+        try {
+            qr.execute(sql,goodsClass.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public int updateGoodsClass(GoodsClass goodsClass) {
-        return 0;
+    public void updateGoodsClass(GoodsClass goodsClass) {
+        String sql = "UPDATE tb_class SET name = ?,rtime = now() WHERE id = ?";
+        try {
+            qr.execute(sql,goodsClass.getName(),goodsClass.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public int deleteGoodsClassById(int id) {
-        return 0;
+    public void deleteGoodsClassById(int id) {
+        String sql = "DELETE FROM tb_class WHERE id = ?";
+        try {
+            qr.execute(sql,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public GoodsClass selectGoodsClassById(int id) {
+        GoodsClass goodsClass = null;
+        String sql = "SELECT * from tb_class where id = ?";
+        try {
+            goodsClass = qr.query(sql,new BeanHandler<>(GoodsClass.class),id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsClass;
     }
 }

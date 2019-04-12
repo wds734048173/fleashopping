@@ -32,7 +32,7 @@ public class DataMap {
     }*/
 
     //订单状态
-    public static Map<Integer,String> getOrderStateIdName(){
+    public static Map<Integer,String> getOrderStateIdNameMap(){
         Map<Integer,String> map = new HashMap<>();
         map.put(1,"未付款");
         map.put(2,"已付款");

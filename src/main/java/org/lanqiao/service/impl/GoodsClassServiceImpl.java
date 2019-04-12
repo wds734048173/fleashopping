@@ -33,17 +33,22 @@ public class GoodsClassServiceImpl implements IGoodsClassService {
     }
 
     @Override
-    public int addGoodsClass(GoodsClass goodsClass) {
-        return goodsClassDao.insertGoodsClass(goodsClass);
+    public void addGoodsClass(GoodsClass goodsClass) {
+        goodsClassDao.insertGoodsClass(goodsClass);
     }
 
     @Override
-    public int modifyGoodsClass(GoodsClass goodsClass) {
-        return goodsClassDao.updateGoodsClass(goodsClass);
+    public void modifyGoodsClass(GoodsClass goodsClass) {
+        goodsClassDao.updateGoodsClass(goodsClass);
     }
 
     @Override
-    public int deleteGoodsClassById(int id) {
-        return goodsClassDao.deleteGoodsClassById(id);
+    public void deleteGoodsClassById(int id) {
+        goodsClassDao.deleteGoodsClassById(id);
+    }
+
+    @Override
+    public GoodsClass getGoodsClassById(int id) {
+        return goodsClassDao.selectGoodsClassById(id);
     }
 }

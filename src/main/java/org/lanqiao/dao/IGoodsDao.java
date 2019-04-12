@@ -20,11 +20,11 @@ public interface IGoodsDao {
     //获取商品信息列表（自己）
     public List<Goods> selectGoodsList(Condition condition);
     //获取商品信息数量（自己）
-    public Long selectGoodsCount(Condition condition);
+    public int selectGoodsCount(Condition condition);
     //获取其他人商品信息（他人）
     public List<Goods> selectGoodsOtherList(Condition condition);
     //获取其他人商品数量（他人）
-    public Long selectGoodsOtherCount(Condition condition);
+    public int selectGoodsOtherCount(Condition condition);
     //修改商品状态
     public void updateGoodsState(int id);
     //通过模糊查询获取商品列表（后台）

@@ -19,7 +19,7 @@ public interface IAddressDao {
     //获取收货地址列表
     public List<Address> selectAddressList(int uId);
     //获取收货地址数量
-    public Long selectAddressCount(int uId);
+    public int selectAddressCount(int uId);
     //设置默认收货地址
-    public void updateAddressStateById(int id,int uId);
+//    public void updateAddressStateById(int id,int uId);
 }
