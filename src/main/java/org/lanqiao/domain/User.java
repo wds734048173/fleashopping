@@ -36,7 +36,7 @@ public class User {
     private int state;
     private String stateStr;
 
-    public User() {
+   /* public User() {
     }
 
     public User(int id, String username, String password, int sex, String sexStr, String collage, int age, String realname, int role, String roleStr, int state, String stateStr) {
@@ -166,5 +166,5 @@ public class User {
                 ", state=" + state +
                 ", stateStr='" + stateStr + '\'' +
                 '}';
-    }
+    }*/
 }

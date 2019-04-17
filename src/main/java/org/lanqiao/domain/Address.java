@@ -24,7 +24,7 @@ public class Address {
     private String realname;
     private String telphone;
 
-    public Address() {
+   /* public Address() {
     }
 
     public Address(int id, int uid, String address, int state, String realname, String telphone) {
@@ -94,5 +94,5 @@ public class Address {
                 ", realname='" + realname + '\'' +
                 ", telphone='" + telphone + '\'' +
                 '}';
-    }
+    }*/
 }

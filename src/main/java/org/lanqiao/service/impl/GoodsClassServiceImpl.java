@@ -51,4 +51,9 @@ public class GoodsClassServiceImpl implements IGoodsClassService {
     public GoodsClass getGoodsClassById(int id) {
         return goodsClassDao.selectGoodsClassById(id);
     }
+
+    @Override
+    public List<GoodsClass> getGoodsClassListForSelect() {
+        return goodsClassDao.selectGoodsClassListForSelect();
+    }
 }

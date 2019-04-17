@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 public class Condition {
     private String name;
-    private int state;
+    private String state;
     private String goodsClassId;
     private Date date;
     private int bId;
@@ -24,7 +24,7 @@ public class Condition {
     private int currentPage;
     private int pageSize;
 
-    public Condition() {
+    /*public Condition() {
     }
 
     public Condition(String name, int state, String goodsClassId, Date date, int bId, int sId, int currentPage, int pageSize) {
@@ -114,5 +114,5 @@ public class Condition {
                 ", currentPage=" + currentPage +
                 ", pageSize=" + pageSize +
                 '}';
-    }
+    }*/
 }

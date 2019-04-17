@@ -41,7 +41,7 @@ public class Order {
     //订单详情列表
     private List<OrderInfo> orderInfoList;
 
-    public Order() {
+    /*public Order() {
     }
 
     public Order(int id, String no, int state, String stateStr, int type, int price, int freight, int sid, String sStr, int bid, String bStr, String realname, String telphone, String address, List<OrderInfo> orderInfoList) {
@@ -201,5 +201,5 @@ public class Order {
                 ", address='" + address + '\'' +
                 ", orderInfoList=" + orderInfoList +
                 '}';
-    }
+    }*/
 }

@@ -24,4 +24,6 @@ public interface IGoodsClassDao {
     //删除分类（假删，因为可能有商品已经在这个分类下）
     public void deleteGoodsClassById(int id);
     public GoodsClass selectGoodsClassById(int id);
+    //获取分类列表（下拉列表）
+    public List<GoodsClass> selectGoodsClassListForSelect();
 }

@@ -56,19 +56,19 @@
                 })
             })
             //删除
-            /*$(".deleteGoodsClass").click(function () {
+            $(".deleteGoodsClass").click(function () {
                 var isDelete = confirm ("确定删除吗？");
                 if(isDelete){
                     var id = $(this).parent().parent().children("td:eq(0)").text();
                     //查询条件
                     var searchGoodsClassName = $("#searchGoodsClassName").val();
                     var currentPage = $("#currentPage").val();
-                    var url = "/goodsClass.do?method=deleteGoodsClass&goodsClassId=" + id + "&searchGoodsClassName=" + searchGoodsClassName + "&currentPage=" + currentPage;
+                    var url = "/goodsClass.do?method=deleteGoodsClassById&goodsClassId=" + id + "&searchGoodsClassName=" + searchGoodsClassName + "&currentPage=" + currentPage;
                     $(".content").load(url);
                 }else{
                     return;
                 }
-            })*/
+            })
         })
 
         //查询的手动提交方式
@@ -115,7 +115,7 @@
                 <td>${goodsClass.name}</td>
                 <td>
                     <a class="btn btn-default updateGoodsClass" href="#" role="button"  name="updateGoodsClass">修改</a>
-                    <%--<a class="btn btn-default deleteGoodsClass" href="#" role="button"  name="deleteGoodsClass">删除</a>--%>
+                    <a class="btn btn-default deleteGoodsClass" href="#" role="button"  name="deleteGoodsClass">删除</a>
                 </td>
             </tr>
             </c:forEach>

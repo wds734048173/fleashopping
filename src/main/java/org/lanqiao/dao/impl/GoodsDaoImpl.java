@@ -1,11 +1,13 @@
 package org.lanqiao.dao.impl;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.lanqiao.dao.IGoodsDao;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
+import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.SQLException;
@@ -24,7 +26,7 @@ public class GoodsDaoImpl implements IGoodsDao {
     public void insertGoods(Goods goods) {
         String sql = "INSERT INTO tb_goods (name,pic,classId,yprice,sprice,remark,ctime,uid) VALUES (?,?,?,?,?,?,now(),?)";
         try {
-            qr.execute(sql,goods.getName(),goods.getPic(),goods.getClassId(),goods.getYprice(),goods.getSprice(),goods.getRemark(),goods.getuId());
+            qr.execute(sql,goods.getName(),goods.getPic(),goods.getClassId(),goods.getYprice(),goods.getSprice(),goods.getRemark(),goods.getUId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,6 +50,28 @@ public class GoodsDaoImpl implements IGoodsDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void downGoodsById(int id) {
+        String sql = "UPDATE tb_goods SET state = 1,rtime = now() WHERE id = ?";
+        try {
+            qr.execute(sql,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Goods selectGoodsById(int id) {
+        Goods goods = null;
+        String sql = "SELECT * from tb_goods where id = ?";
+        try {
+            goods = qr.query(sql,new BeanHandler<>(Goods.class),id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goods;
     }
 
     @Override
@@ -148,6 +172,14 @@ public class GoodsDaoImpl implements IGoodsDao {
                 sql.append(" and name like ? ");
                 search.add("%" + condition.getName() + "%");
             }
+            if(condition.getGoodsClassId() != null && !"-1".equals(condition.getGoodsClassId())){
+                sql.append(" and classId = ? ");
+                search.add(condition.getGoodsClassId());
+            }
+            if(condition.getState() != null && !"-1".equals(condition.getState())){
+                sql.append(" and state = ? ");
+                search.add(condition.getState());
+            }
             sql.append(" limit ?,?");
             search.add(condition.getCurrentPage());
             search.add(condition.getPageSize());
@@ -167,6 +199,14 @@ public class GoodsDaoImpl implements IGoodsDao {
         if(condition.getName() != null && !"".equals(condition.getName())){
             sql.append(" and name like ? ");
             search.add("%" + condition.getName() + "%");
+        }
+        if(condition.getGoodsClassId() != null && !"-1".equals(condition.getGoodsClassId())){
+            sql.append(" and classId = ? ");
+            search.add(condition.getGoodsClassId());
+        }
+        if(condition.getState() != null && !"-1".equals(condition.getState())){
+            sql.append(" and state = ? ");
+            search.add(condition.getState());
         }
         Long count = 0L;
         try {

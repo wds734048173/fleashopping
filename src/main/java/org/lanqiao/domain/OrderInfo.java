@@ -31,7 +31,7 @@ public class OrderInfo {
     //商品图片
     private String gpic;
 
-    public OrderInfo() {
+   /* public OrderInfo() {
     }
 
     public OrderInfo(int id, int oId, int gId, int num, int yprice, int sprice, String gname, String gpic) {
@@ -121,5 +121,5 @@ public class OrderInfo {
                 ", gname='" + gname + '\'' +
                 ", gpic='" + gpic + '\'' +
                 '}';
-    }
+    }*/
 }

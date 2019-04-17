@@ -1,10 +1,12 @@
 package org.lanqiao.control;
 
+import com.alibaba.fastjson.JSON;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
 import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.service.IGoodsService;
 import org.lanqiao.service.impl.GoodsServiceImpl;
+import org.lanqiao.utils.DataMap;
 import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
@@ -13,8 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: WDS
@@ -43,7 +47,33 @@ public class GoodsServlet extends HttpServlet {
             case "getGoodsListByCondition":
                 getGoodsListByCondition(req,resp,"");
                 break;
+            case "DownGoodsById":
+                DownGoodsById(req,resp);
+                break;
+            case "getGoodsById":
+                getGoodsById(req,resp);
+                break;
         }
+    }
+
+    private void getGoodsById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String goodsId = req.getParameter("goodsId");
+        Goods goods = goodsService.getGoodsById(Integer.valueOf(goodsId));
+        try {
+            PrintWriter out = resp.getWriter();
+            String goodsJson = JSON.toJSONString(goods);
+            out.print(goodsJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        req.setAttribute("goods",goods);
+//        req.getRequestDispatcher("/manager/goodsInfo.jsp").forward(req,resp);
+    }
+
+    private void DownGoodsById(HttpServletRequest req, HttpServletResponse resp) {
+        int goodsId = Integer.valueOf(req.getParameter("goodsId"));
+        goodsService.downGoodsById(goodsId);
+        getGoodsListByCondition(req,resp,"update");
     }
 
     private void getGoodsListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {
@@ -57,12 +87,22 @@ public class GoodsServlet extends HttpServlet {
         }
 
         //查询条件
-        String searchGoodsClassName = "";
-        if(req.getParameter("searchGoodsClassName") != null){
-            searchGoodsClassName = req.getParameter("searchGoodsClassName");
+        String searchGoodsName = "";
+        if(req.getParameter("searchGoodsName") != null){
+            searchGoodsName = req.getParameter("searchGoodsName");
+        }
+        String searchGoodsClassId = "-1";
+        if(req.getParameter("searchGoodsClassId") != null || "-1".equals(req.getParameter("searchGoodsClassId"))){
+            searchGoodsClassId = req.getParameter("searchGoodsClassId");
+        }
+        String searchGoodsState = "-1";
+        if(req.getParameter("searchGoodsState") != null  || "-1".equals(req.getParameter("searchGoodsState"))){
+            searchGoodsState = req.getParameter("searchGoodsState");
         }
         Condition condition = new Condition();
-        condition.setName(searchGoodsClassName);
+        condition.setName(searchGoodsName);
+        condition.setGoodsClassId(searchGoodsClassId);
+        condition.setState(searchGoodsState);
         int totalRecords = goodsService.getGoodsCountByCondition(condition);
         //不同操作，不同的当前页设置
         PageModel pm = new PageModel(pageNum,totalRecords,pageSize);

@@ -23,7 +23,7 @@ public class GoodsClassDaoImpl implements IGoodsClassDao {
     @Override
     public List<GoodsClass> selectGoodsClassListByCondition(Condition condition) {
         List<GoodsClass> goodsClassList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_class where 1 = 1 ");
+        StringBuffer sql = new StringBuffer("SELECT * from tb_class where state = 0 ");
         List<Object> search = new ArrayList<>();
         if(condition != null){
             if(condition.getName() != null && !"".equals(condition.getName())){
@@ -44,7 +44,7 @@ public class GoodsClassDaoImpl implements IGoodsClassDao {
 
     @Override
     public int selectGoodsClassCountByCondition(Condition condition) {
-        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_class where 1 = 1 ");
+        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_class where state = 0 ");
         List<Object> search = new ArrayList<>();
         if(condition.getName() != null && !"".equals(condition.getName())){
             sql.append(" and name like ? ");
@@ -94,7 +94,13 @@ public class GoodsClassDaoImpl implements IGoodsClassDao {
 
     @Override
     public void deleteGoodsClassById(int id) {
-        String sql = "DELETE FROM tb_class WHERE id = ?";
+        /*String sql = "DELETE FROM tb_class WHERE id = ?";
+        try {
+            qr.execute(sql,id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        String sql = "UPDATE tb_class SET state = 1,rtime = now() WHERE id = ?";
         try {
             qr.execute(sql,id);
         } catch (SQLException e) {
@@ -112,5 +118,18 @@ public class GoodsClassDaoImpl implements IGoodsClassDao {
             e.printStackTrace();
         }
         return goodsClass;
+    }
+
+    @Override
+    public List<GoodsClass> selectGoodsClassListForSelect() {
+        List<GoodsClass> goodsClassList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_class where state = 0 ");
+        List<Object> search = new ArrayList<>();
+        try {
+            goodsClassList = qr.query(sql.toString(),new BeanListHandler<>(GoodsClass.class),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsClassList;
     }
 }

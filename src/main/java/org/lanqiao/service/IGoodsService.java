@@ -15,4 +15,8 @@ public interface IGoodsService {
     public List<Goods> getGoodsListByCondition(Condition condition);
     //通过模糊查询获取商品数量（后台）
     public int getGoodsCountByCondition(Condition condition);
+    //下架商品
+    public void downGoodsById(int id);
+    //通过id获取商品详情
+    public Goods getGoodsById(int id);
 }

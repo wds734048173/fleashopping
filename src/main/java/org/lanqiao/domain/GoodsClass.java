@@ -22,7 +22,7 @@ public class GoodsClass {
     private int state;
     private String stateStr;
 
-    public GoodsClass() {
+    /*public GoodsClass() {
     }
 
     public GoodsClass(int id, String name, int state, String stateStr) {
@@ -72,5 +72,5 @@ public class GoodsClass {
                 ", state=" + state +
                 ", stateStr='" + stateStr + '\'' +
                 '}';
-    }
+    }*/
 }

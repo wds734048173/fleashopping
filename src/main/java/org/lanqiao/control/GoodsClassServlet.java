@@ -51,14 +51,31 @@ public class GoodsClassServlet extends HttpServlet {
             case "addGoodsClass":
                 addGoodsClass(req,resp);
                 break;
-            /*case "deleteGoodsClassById":
-                deleteGoodsClass(req,resp);
-                break;*/
+            case "deleteGoodsClassById":
+                deleteGoodsClassById(req,resp);
+                break;
+            case "getGoodsClassListForSelect":
+                getGoodsClassListForSelect(req,resp);
+                break;
         }
     }
 
-    /*private void deleteGoodsClass(HttpServletRequest req, HttpServletResponse resp) {
-    }*/
+    private void getGoodsClassListForSelect(HttpServletRequest req, HttpServletResponse resp) {
+        List<GoodsClass> goodsClassList = goodsClassService.getGoodsClassListForSelect();
+        try {
+            PrintWriter out = resp.getWriter();
+            String goodsClassListJson = JSON.toJSONString(goodsClassList);
+            out.print(goodsClassListJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteGoodsClassById(HttpServletRequest req, HttpServletResponse resp) {
+        int goodsClassId = Integer.valueOf(req.getParameter("goodsClassId"));
+        goodsClassService.deleteGoodsClassById(goodsClassId);
+        getGoodsClassListByCondition(req,resp,"delete");
+    }
 
     private void addGoodsClass(HttpServletRequest req, HttpServletResponse resp) {
         String mark = null;

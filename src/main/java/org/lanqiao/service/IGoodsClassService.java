@@ -25,4 +25,6 @@ public interface IGoodsClassService {
     public void deleteGoodsClassById(int id);
     //通过id获取商品分类信息
     public GoodsClass getGoodsClassById(int id);
+    //获取分类列表（下拉列表）
+    public List<GoodsClass> getGoodsClassListForSelect();
 }
