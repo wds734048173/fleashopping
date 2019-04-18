@@ -22,7 +22,7 @@ public interface IUserService {
     //获取用户列表
     public List<User> getUserList(Condition condition);
     //获取用户列表数量
-    public Long getUserCount(Condition condition);
+    public int getUserCount(Condition condition);
     //通过用户名密码查询用户
     public User getUserByUserNameAndPassword(String username,String password);
     //通过用户名查询用户信息

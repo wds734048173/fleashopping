@@ -1,8 +1,11 @@
 package org.lanqiao.control;
 
+import org.lanqiao.domain.Condition;
+import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.domain.User;
 import org.lanqiao.service.IUserService;
 import org.lanqiao.service.impl.UserServiceImpl;
+import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * @Auther: WDS
@@ -41,6 +45,63 @@ public class UserServlet extends HttpServlet {
             case "addUser":
                 addUser(req, resp);
                 break;
+            case "getUserListByCondition":
+                getUserListByCondition(req, resp,"");
+                break;
+        }
+    }
+
+    private void getUserListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {
+        int pageNum = 1;
+        if(req.getParameter("currentPage") != null){
+            pageNum = Integer.valueOf(req.getParameter("currentPage"));
+        }
+        int pageSize = 5;
+        if(req.getParameter("pageSize") != null){
+            pageSize = Integer.valueOf(req.getParameter("pageSize"));
+        }
+
+        //查询条件
+        String searchName = "";
+        if(req.getParameter("searchName") != null){
+            searchName = req.getParameter("searchName");
+        }
+        String searchState = "-1";
+        if(req.getParameter("searchState") != null  || "-1".equals(req.getParameter("searchState"))){
+            searchState = req.getParameter("searchState");
+        }
+        Condition condition = new Condition();
+        condition.setName(searchName);
+        condition.setState(searchState);
+        int totalRecords = userService.getUserCount(condition);
+        //不同操作，不同的当前页设置
+        PageModel pm = new PageModel(pageNum,totalRecords,pageSize);
+        if("add".equals(mark)){
+            pageNum = pm.getEndPage();
+        }else if("update".equals(mark)){
+            pageNum = Integer.valueOf(req.getParameter("currentPage"));
+        }else{
+            //如果当前页大于总页数，但是排除查询不到数据的情况。当前页等于最大页
+            if(pageNum > pm.getTotalPageNum() && pm.getTotalPageNum() != 0){
+                pageNum = pm.getTotalPageNum();
+            }
+        }
+        PageModel pageModel = new PageModel(pageNum,totalRecords,pageSize);
+        //分页条件封装
+        condition.setCurrentPage(pageModel.getStartIndex());
+        condition.setPageSize(pageModel.getPageSize());
+        List<User> userList = userService.getUserList(condition);
+        req.setAttribute("currentPage",pageNum);
+        pageModel.setRecords(userList);
+        req.setAttribute("pm",pageModel);
+        req.setAttribute("condition",condition);
+        req.setAttribute("userList",userList);
+        try {
+            req.getRequestDispatcher("manager/userList.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

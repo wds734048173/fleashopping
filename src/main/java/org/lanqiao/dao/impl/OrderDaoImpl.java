@@ -38,7 +38,7 @@ public class OrderDaoImpl implements IOrderDao {
         String sql3 = "insert into tb_order_info (oid,gid,gname,yprice,sprice,num,gpic) values (?,?,?,?,?,?,?)";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         try {
-            qr.execute(sql1,order.getNo(),order.getState(),order.getType(),order.getPrice(),order.getSid(),order.getFreight(),order.getBid(),order.getRealname(),order.getTelphone(),order.getAddress());
+            qr.execute(sql1,order.getNo(),order.getState(),order.getType(),order.getMoney(),order.getSid(),order.getFreight(),order.getBid(),order.getRealname(),order.getTelphone(),order.getAddress());
             int oId = qr.query(sql2,new ScalarHandler<>(1));
             for (int i = 0; i < orderInfoList.size(); i++) {
                 qr.execute(sql3,oId,orderInfoList.get(i).getOId(),orderInfoList.get(i).getGId(),orderInfoList.get(i).getGname(),orderInfoList.get(i).getYprice(),orderInfoList.get(i).getSprice(),orderInfoList.get(i).getNum(),orderInfoList.get(i).getGpic());
@@ -94,6 +94,14 @@ public class OrderDaoImpl implements IOrderDao {
         List<Order> orderList = null;
         StringBuffer sql = new StringBuffer("SELECT * from tb_order where 1 = 1 ");
         List<Object> search = new ArrayList<>();
+        if(condition.getOrderNo() != null && !"".equals(condition.getOrderNo())){
+            sql.append(" and no like ? ");
+            search.add("%" + condition.getOrderNo() + "%");
+        }
+        if(condition.getState() != null && !"".equals(condition.getState())){
+            sql.append(" and state = ? ");
+            search.add(condition.getState());
+        }
         try {
             orderList = qr.query(sql.toString(),new BeanListHandler<>(Order.class),search.toArray());
         } catch (SQLException e) {
@@ -106,9 +114,13 @@ public class OrderDaoImpl implements IOrderDao {
     public int selectOrderCount(Condition condition) {
         StringBuffer sql = new StringBuffer("SELECT count(1) from tb_order where 1 = 1 ");
         List<Object> search = new ArrayList<>();
-        if(condition.getName() != null && !"".equals(condition.getName())){
-            sql.append(" and name like ? ");
-            search.add("%" + condition.getName() + "%");
+        if(condition.getOrderNo() != null && !"".equals(condition.getOrderNo())){
+            sql.append(" and no like ? ");
+            search.add("%" + condition.getOrderNo() + "%");
+        }
+        if(condition.getState() != null && !"".equals(condition.getState())){
+            sql.append(" and state = ? ");
+            search.add(condition.getState());
         }
         Long count = 0L;
         try {

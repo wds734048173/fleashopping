@@ -1,12 +1,10 @@
 package org.lanqiao.control;
 
 import com.alibaba.fastjson.JSON;
+import org.lanqiao.domain.Comment;
 import org.lanqiao.domain.Condition;
-import org.lanqiao.domain.Goods;
-import org.lanqiao.domain.GoodsClass;
-import org.lanqiao.service.IGoodsService;
-import org.lanqiao.service.impl.GoodsServiceImpl;
-import org.lanqiao.utils.DataMap;
+import org.lanqiao.service.ICommentService;
+import org.lanqiao.service.impl.CommentServiceImpl;
 import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
@@ -17,22 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
-/**
- * @Auther: WDS
- * @Date: 2019/4/4 19:11
- * @Description:
- */
-@WebServlet("/goods.do")
-public class GoodsServlet extends HttpServlet {
-    IGoodsService goodsService = new GoodsServiceImpl();
+@WebServlet("/comment.do")
+public class CommentServlet extends HttpServlet {
+    ICommentService commentService = new CommentServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        doPost(req,resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -44,37 +36,55 @@ public class GoodsServlet extends HttpServlet {
         resp.setContentType("text/json");
         String method = req.getParameter("method");
         switch (method){
-            case "getGoodsListByCondition":
-                getGoodsListByCondition(req,resp,"");
+            case "getCommentListByCondition":
+                getCommentListByCondition(req,resp,null);
                 break;
-            case "DownGoodsById":
-                DownGoodsById(req,resp);
+            case "deleteComment":
+                try {
+                    delComment(req, resp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
-            case "getGoodsById":
-                getGoodsById(req,resp);
+            case "getCommentById":
+                try {
+                    getCommentById(req,resp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
+
+    }
+    //通过commentId获取一条评语
+    private void getCommentById(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+        int commentId = Integer.parseInt(req.getParameter("commentId"));
+        Comment commentById = commentService.selectOne(commentId);
+        PrintWriter out = resp.getWriter();
+        String comment = JSON.toJSONString(commentById);
+        out.print(comment);
     }
 
-    private void getGoodsById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String goodsId = req.getParameter("goodsId");
-        Goods goods = goodsService.getGoodsById(Integer.valueOf(goodsId));
+
+    //获取全部评语
+    private void getCommentlist(HttpServletRequest req, HttpServletResponse resp) {
+        List<Comment> commentList = commentService.getCommentList();
+        req.setAttribute("commentList",commentList);
         try {
-            PrintWriter out = resp.getWriter();
-            String goodsJson = JSON.toJSONString(goods);
-            out.print(goodsJson);
+            req.getRequestDispatcher("manager/commentList.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    private void DownGoodsById(HttpServletRequest req, HttpServletResponse resp) {
-        int goodsId = Integer.valueOf(req.getParameter("goodsId"));
-        goodsService.downGoodsById(goodsId);
-        getGoodsListByCondition(req,resp,"update");
+    //删除
+    public void delComment(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        int commentId = Integer.valueOf(req.getParameter("bookId"));
+        commentService.delComment(commentId);
+        getCommentListByCondition(req,resp,"delete");
     }
-
-    private void getGoodsListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {
+    private void getCommentListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {
         int pageNum = 1;
         if(req.getParameter("currentPage") != null){
             pageNum = Integer.valueOf(req.getParameter("currentPage"));
@@ -89,21 +99,17 @@ public class GoodsServlet extends HttpServlet {
         if(req.getParameter("searchGoodsName") != null){
             searchGoodsName = req.getParameter("searchGoodsName");
         }
-        String searchGoodsClassId = "-1";
-        if(req.getParameter("searchGoodsClassId") != null || "-1".equals(req.getParameter("searchGoodsClassId"))){
-            searchGoodsClassId = req.getParameter("searchGoodsClassId");
-        }
-        String searchGoodsState = "-1";
-        if(req.getParameter("searchGoodsState") != null  || "-1".equals(req.getParameter("searchGoodsState"))){
-            searchGoodsState = req.getParameter("searchGoodsState");
+        String searchCommentGrade = "-1";
+        if(req.getParameter("searchCommentGrade") != null  || "-1".equals(req.getParameter("searchCommentGrade"))){
+            searchCommentGrade = req.getParameter("searchCommentGrade");
         }
         Condition condition = new Condition();
         condition.setName(searchGoodsName);
-        condition.setGoodsClassId(searchGoodsClassId);
-        condition.setState(searchGoodsState);
-        int totalRecords = goodsService.getGoodsCountByCondition(condition);
+        condition.setGrade(searchCommentGrade);
+        int totalRecords = commentService.getCommentCountByCondition(condition);
         //不同操作，不同的当前页设置
         PageModel pm = new PageModel(pageNum,totalRecords,pageSize);
+
         if("add".equals(mark)){
             pageNum = pm.getEndPage();
         }else if("update".equals(mark)){
@@ -115,21 +121,27 @@ public class GoodsServlet extends HttpServlet {
             }
         }
         PageModel pageModel = new PageModel(pageNum,totalRecords,pageSize);
+
         //分页条件封装
         condition.setCurrentPage(pageModel.getStartIndex());
         condition.setPageSize(pageModel.getPageSize());
-        List<Goods> goodsList = goodsService.getGoodsListByCondition(condition);
+        List<Comment> commentList= commentService.getCommentListByCondition(condition);
         req.setAttribute("currentPage",pageNum);
-        pageModel.setRecords(goodsList);
+        pageModel.setRecords(commentList);
         req.setAttribute("pm",pageModel);
         req.setAttribute("condition",condition);
-        req.setAttribute("goodsList",goodsList);
+        req.setAttribute("commentList",commentList);
         try {
-            req.getRequestDispatcher("manager/goodsList.jsp").forward(req,resp);
+            req.getRequestDispatcher("manager/commentList.jsp").forward(req,resp);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
+
+
+
 }

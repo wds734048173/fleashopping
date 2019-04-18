@@ -2,12 +2,15 @@ package org.lanqiao.dao.impl;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.lanqiao.dao.IUserDao;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.User;
 import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,12 +55,49 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public List<User> selectUserList(Condition condition) {
-        return null;
+        List<User> userList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_user where role = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition != null){
+            if(condition.getName() != null && !"".equals(condition.getName())){
+                sql.append(" and username like ? ");
+                search.add("%" + condition.getName() + "%");
+            }
+            if(condition.getState() != null && !"-1".equals(condition.getState())){
+                sql.append(" and state = ? ");
+                search.add(condition.getState());
+            }
+            sql.append(" limit ?,?");
+            search.add(condition.getCurrentPage());
+            search.add(condition.getPageSize());
+        }
+        try {
+            userList = qr.query(sql.toString(),new BeanListHandler<>(User.class),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 
     @Override
-    public Long selectUserCount(Condition condition) {
-        return null;
+    public int selectUserCount(Condition condition) {
+        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_user where role = 1 ");
+        List<Object> search = new ArrayList<>();
+        if(condition.getName() != null && !"".equals(condition.getName())){
+            sql.append(" and username like ? ");
+            search.add("%" + condition.getName() + "%");
+        }
+        if(condition.getState() != null && !"-1".equals(condition.getState())){
+            sql.append(" and state = ? ");
+            search.add(condition.getState());
+        }
+        Long count = 0L;
+        try {
+            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Integer.valueOf(count.toString());
     }
 
     @Override

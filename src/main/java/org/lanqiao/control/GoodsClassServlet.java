@@ -117,12 +117,12 @@ public class GoodsClassServlet extends HttpServlet {
         }
 
         //查询条件
-        String searchGoodsClassName = "";
-        if(req.getParameter("searchGoodsClassName") != null){
-            searchGoodsClassName = req.getParameter("searchGoodsClassName");
+        String searchName = "";
+        if(req.getParameter("searchName") != null){
+            searchName = req.getParameter("searchName");
         }
         Condition condition = new Condition();
-        condition.setName(searchGoodsClassName);
+        condition.setName(searchName);
         int totalRecords = goodsClassService.getGoodsClassCountByCondition(condition);
         //不同操作，不同的当前页设置
         PageModel pm = new PageModel(pageNum,totalRecords,pageSize);

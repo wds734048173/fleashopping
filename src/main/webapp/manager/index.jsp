@@ -34,7 +34,7 @@
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-3.png" />订单管理</div>
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-4.png" />用户信息管理</div>
                 <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />评价管理</div>
-                <div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />信息反馈管理</div>
+                <%--<div onclick="pageClick(this)"><img src="/manager/img/icon-5.png" />信息反馈管理</div>--%>
             </div>
         </div>
         <div class="top">

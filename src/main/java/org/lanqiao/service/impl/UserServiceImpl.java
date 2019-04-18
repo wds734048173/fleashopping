@@ -37,12 +37,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getUserList(Condition condition) {
-        return null;
+        return userDao.selectUserList(condition);
     }
 
     @Override
-    public Long getUserCount(Condition condition) {
-        return null;
+    public int getUserCount(Condition condition) {
+        return userDao.selectUserCount(condition);
     }
 
     @Override

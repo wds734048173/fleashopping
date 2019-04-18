@@ -17,55 +17,6 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
         $(function () {
-            //新增
-            $("#addComment").click(function () {
-                $('#addcommentModel').modal({
-                    keyboard: false,
-                    show: true
-                })
-            })
-
-            //保存
-            $("#save").click(function () {
-                var commentId = $("#commentId").val();
-                var BookId = $("#BookId").val();
-                var BookName = $("#BookName").val();
-                var CustomerId = $("#CustomerId").val();
-                var UserName = $("#UserName").val();
-                var commentContent = $("#commentContent").val();
-                var commentGrade = $("#commentGrade").val();
-                //查询条件
-                var searchBookName = $("#searchBookName").val();
-                var currentPage = $("#currentPage").val();
-                var url = "/comment.do?method=addComment&searchBookName="+searchBookName+"&currentPage="+currentPage+"&commentId="+commentId+"&BookId="+BookId+"&BookName="+BookName+"&CustomerId="+CustomerId+"&UserName="+UserName+"&commentContent="+commentContent+"&commentGrade="+commentGrade;
-                //进去对应selvet
-                $(".content").load(url);
-                $(".modal-backdrop").remove();
-            })
-            //修改
-            $(".updateComment").click(function () {
-                var id = $(this).parent().parent().children("td:eq(0)").text();
-                document.getElementById("gridSystemModalLabel").innerHTML = "修改评语";
-                $.ajax({
-                    //通过id获取评语信息
-                    url:"/comment.do?method=getCommentById&commentId=" + id,
-                    success:function (data) {
-                        var comment = eval(data);
-                        $("#commentId").val(comment.commentId);
-                        $("#BookId").val(comment.bookId);
-                        $("#BookName").val(comment.bookName);
-                        $("#CustomerId").val(comment.customerId);
-                        $("#UserName").val(comment.userName);
-                        $("#Commentdate").val(comment.commentdate);
-                        $("#commentContent").val(comment.commentcontent);
-                        $("#commentGrade").val(comment.commentgrade);
-                    }
-                })
-                $('#addcommentModel').modal({
-                    keyboard: false,
-                    show:true
-                })
-            })
             //删除
             $(".deleteComment").click(function () {
                 var isDelete = confirm ("确定删除吗?");
@@ -84,13 +35,14 @@
 
         //查询的手动提交方式
         function search(currentPage) {
-            var name = $("#searchBookName").val();
+            var searchGoodsName = $("#searchGoodsName").val();
+            var searchCommentGrade = $("#searchCommentGrade option:selected").val();
             if(currentPage == null){
                 var currentPage = $("#currentPage").val();
             }else{
                 var currentPage = currentPage;
             }
-            var url = "/comment.do?method=getCommentlist&currentPage="+currentPage+"&searchBookName="+name;
+            var url = "/comment.do?method=getCommentListByCondition&currentPage="+currentPage+"&searchGoodsName="+searchGoodsName+"&searchCommentGrade="+searchCommentGrade;
             $(".content").load(url);
         }
     </script>
@@ -101,8 +53,17 @@
 <div class="modal-body">
     <div class="form-group row">
         <div class="col-xs-3">
-            <label for="searchBookName" >图书名称:</label>
-            <input type="text" class="myinput"  placeholder="" id="searchBookName" name="searchBookName" value="${condition.name}">
+            <label for="searchGoodsName" >商品名称:</label>
+            <input type="text" class="myinput"  placeholder="" id="searchGoodsName" name="searchGoodsName" value="${condition.name}">
+        </div>
+        <div class="col-xs-3">
+            <label for="searchCommentGrade">评论等级</label>
+            <select class="myinput" name="searchCommentGrade" id="searchCommentGrade">
+                <option value="-1" <c:if test="${condition.grade == -1}" > selected </c:if>>全部</option>
+                <option value="0" <c:if test="${condition.grade == 0}" > selected </c:if>>好评</option>
+                <option value="1" <c:if test="${condition.grade == 1}" > selected </c:if>>一般</option>
+                <option value="2" <c:if test="${condition.grade == 2}" > selected </c:if>>差评</option>
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -112,85 +73,32 @@
 <div class="modal-body">
     <table class="table table-hover table-bordered">
         <thead>
-        <th style="display: none">订单评价id</th>
-        <th style="display: none">图书编号</th>
-        <th>图书名</th>
-        <th style="display: none">评论客户编号</th>
-        <th >评论客户名</th>
-        <th>评论时间</th>
-        <th>评论内容</th>
+        <th>图片</th>
+        <th>商品名称</th>
+        <th>商品价格</th>
         <th>评论等级</th>
+        <th>评论内容</th>
+        <th>回复内容</th>
+        <th>评论时间</th>
         </thead>
         <tbody>
-        <c:forEach begin="0" end="${commentListCur.size()}" items="${commentListCur}" var="commentList" step="1">
+        <c:forEach begin="0" end="${commentList.size()}" items="${commentList}" var="comment" step="1">
             <tr>
-                <td style="display: none">${commentList.commentId}</td>
-                <td style="display: none">${commentList.bookId}</td>
-                <td>${commentList.bookName}</td>
-                <td style="display: none">${commentList.customerId}</td>
-                <td>${commentList.userName}</td>
-                <td><fmt:formatDate value="${commentList.commentdate}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-                <td>${commentList.commentcontent}</td>
-                <td>${commentList.commentgradeStr}</td>
+                <%--注意el表达式与java实体类中字段的对应关系--%>
+                <td><img src="${comment.GPic}" style="height: 50px;width: 50px;"></td>
+                <td>${comment.GName}</td>
+                <td>${comment.GSPrice}</td>
+                <td>${comment.gradeStr}</td>
+                <td>${comment.comment}</td>
+                <td>${comment.reply}</td>
+                <td><fmt:formatDate value="${comment.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
-
-<%--新增模态框插件--%>
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="addcommentModel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">新增评价</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/bookType.do?method=addComment" id="addForm">
-                    <div class="form-group hidden">
-                        <label for="commentId" class="control-label">订单评价id:</label>
-                        <input type="text" class="form-control" id="commentId" name="commentId">
-                    </div>
-                    <div class="form-group">
-                        <label for="BookId" class="control-label">图书编号:</label>
-                        <input type="text" class="form-control" id="BookId" name="BookId">
-                    </div>
-                    <div class="form-group">
-                        <label for="BookName" class="control-label">图书名称:</label>
-                        <input type="text" class="form-control" id="BookName" name="BookName">
-                    </div>
-                    <div class="form-group">
-                        <label for="CustomerId" class="control-label">评论客服编号:</label>
-                        <input type="text" class="form-control" id="CustomerId" name="CustomerId">
-                    </div>
-                    <div class="form-group">
-                        <label for="UserName" class="control-label">评论客服名:</label>
-                        <input type="text" class="form-control" id="UserName" name="UserName">
-                    </div>
-                    <div class="form-group hidden">
-                        <label for="Commentdate" class="control-label">评论客服名:</label>
-                        <input type="text" class="form-control" id="Commentdate" name="Commentdate">
-                    </div>
-                    <div class="form-group">
-                        <label for="commentContent" class="control-label">评语:</label>
-                        <input type="text" class="form-control" id="commentContent" name="commentContent">
-                    </div>
-                    <div class="form-group">
-                        <label for="commentGrade" class="control-label">评论等级:</label>
-                        <input type="text" class="form-control" id="commentGrade" name="commentGrade">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="save">保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <%--分页插件--%>
-<c:if test="${commentListCur.size() != 0}">
+<c:if test="${commentList.size() != 0}">
     <center>
         <nav aria-label="Page navigation">
             <ul class="pagination">
