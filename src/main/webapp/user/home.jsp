@@ -222,7 +222,7 @@
                     for (GoodsClass goodsClass:goodsClassList){
                 %>
                 <li>
-                    <a href="/home.do?method=booklist&typeId=<%=goodsClass.getId()%>&typename=<%=goodsClass.getName()%>"><%=goodsClass.getName()%></a>
+                    <a href="/home.do?method=bookList&goodsClassId=<%=goodsClass.getId()%>&goodsClassName=<%=goodsClass.getName()%>"><%=goodsClass.getName()%></a>
                     <div class="pop">
                         <div class="left fl">
                             <%
@@ -267,10 +267,13 @@
     </div>
     <div class="danpin center">
         <div class="biaoti center">好物推荐</div>
-        <div class="main center">
+        <%--<div class="main center">
             <%
-                for (int i=0;i<5;i++){
-                   Goods goods= goodsList.get(i);
+                if(goodsList.size() <= 5){
+            %>
+            <%
+                for (int i=0;i<goodsList.size();i++){
+                    Goods goods= goodsList.get(i);
             %>
             <div class="mingxing fl">
                 <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
@@ -282,23 +285,76 @@
                 }
             %>
             <div class="clear"></div>
-        </div>
-        <div class="main center">
             <%
-                for (int i=5;i<10;i++){
+                }else if(goodsClassList.size() <= 10){
+            %>
+            <%
+                for (int i=0;i<5;i++){
                     Goods goods= goodsList.get(i);
             %>
             <div class="mingxing fl">
                 <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
                 <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
                 <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                <div class="jiage"><%=goods.getSpricereal()%>元</div>
+                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
             </div>
             <%
                 }
             %>
             <div class="clear"></div>
-        </div>
+            <div class="main center">
+                <%
+                    for (int i=5;i<goodsClassList.size();i++){
+                        Goods goods= goodsList.get(i);
+                %>
+                <div class="mingxing fl">
+                    <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
+                    <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
+                    <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
+                    <div class="jiage"><%=goods.getSpricereal()%>元</div>
+                </div>
+                <%
+                    }
+                %>
+                <div class="clear"></div>
+            </div>
+            <%
+                }else if(goodsList.size() > 10){
+                    %>
+            <%
+                for (int i=0;i<5;i++){
+                    Goods goods= goodsList.get(i);
+            %>
+            <div class="mingxing fl">
+                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
+                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
+                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
+                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
+            </div>
+            <%
+                }
+            %>
+            <div class="clear"></div>
+            <div class="main center">
+                <%
+                    for (int i=5;i<10;i++){
+                        Goods goods= goodsList.get(i);
+                %>
+                <div class="mingxing fl">
+                    <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
+                    <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
+                    <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
+                    <div class="jiage"><%=goods.getSpricereal()%>元</div>
+                </div>
+                <%
+                    }
+                %>
+                <div class="clear"></div>
+            </div>
+            <%
+                }
+            %>
+        </div>--%>
     </div>
 
 

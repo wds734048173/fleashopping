@@ -64,7 +64,7 @@ public class HomeServlet extends HttpServlet {
 
     private void getBookList(HttpServletRequest req, HttpServletResponse resp) {
         //根据商品分类id获取商品列表
-        String goodsClassId=  req.getParameter("goodsClassId");
+        String goodsClassId =  req.getParameter("goodsClassId");
         Condition condition = new Condition();
         condition.setGoodsClassId(goodsClassId);
         List<Goods> goodsList = goodsService.getGoodsListAll(condition);
