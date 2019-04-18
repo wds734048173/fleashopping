@@ -16,7 +16,7 @@ public interface IOrderDao {
     //新增订单
     public void insertOrder(Order order,List<OrderInfo> orderInfoList);
     //修改订单状态
-//    public void updateOrderState(Order order);
+    public void updateOrderState(int orderId,int state);
     //获取个人订单列表
     public List<Order> selectOwnerOrderList(int uId);
     //获取个人订单数量

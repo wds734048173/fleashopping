@@ -56,14 +56,6 @@
             var url = "/order.do?method=getOrderListByCondition&currentPage="+currentPage+"&searchOrderNo="+searchOrderNo+"&searchOrderState="+searchOrderState;
             $(".content").load(url);
         }
-
-        /*$('#searchOrderCtime').datetimepicker({
-            format: 'yyyy-mm-dd',
-            language:"zh-CN",
-            minView:"month",
-            autoclose:true,
-            todayBtn:true
-        })*/
     </script>
 </head>
 <body>
@@ -74,10 +66,6 @@
             <label for="searchOrderNo" >订单编号:</label>
             <input type="text" class="myinput"  placeholder="" id="searchOrderNo" name="searchOrderNo" value="${condition.orderNo}">
         </div>
-        <%--<div class="col-xs-3">
-            <label for="searchOrderCtime" >下单日期:</label>
-            <input type="text" class="myinput"  placeholder="" id="searchOrderCtime" name="searchOrderCtime" value="${condition.date}">
-        </div>--%>
         <div class="col-xs-2">
             <label for="searchOrderState">订单状态</label>
             <select class=" myinput" name="searchOrderState" id="searchOrderState">
@@ -105,8 +93,6 @@
         <th>实付金额</th>
         <th>状态</th>
         <th>创建时间</th>
-        <%--<th>修改时间</th>--%>
-        <%--<th>客户名称</th>--%>
         <th>操作</th>
         </thead>
         <tbody>
@@ -114,13 +100,11 @@
                 <tr>
                     <td hidden>${order.id}</td>
                     <td>${order.no}</td>
-                    <td>${order.price}</td>
-                    <td>${order.freight}</td>
-                    <td>${order.money}</td>
+                    <td>${order.pricereal}</td>
+                    <td>${order.freightreal}</td>
+                    <td>${order.moneyreal}</td>
                     <td>${order.stateStr}</td>
                     <td><fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-                    <%--<td>${order.rtime}</td>--%>
-                    <%--<td>${order.customerName}</td>--%>
                     <td>
                         <a class="btn btn-default getOrderInfo" href="#" role="button"  name="getOrderInfo"  onclick="getOrderInfo(${order.id})">订单详情</a>
                         <%--已付款的订单可发货--%>

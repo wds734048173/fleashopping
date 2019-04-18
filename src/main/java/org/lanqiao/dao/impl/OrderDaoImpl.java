@@ -49,15 +49,26 @@ public class OrderDaoImpl implements IOrderDao {
         }
     }
 
-    /*@Override
-    public void updateOrderState(Order order) {
-        String sql = "UPDATE tb_order SET name = ?,rtime = now() WHERE id = ?";
+    @Override
+    public void updateOrderState(int orderId, int state) {
+        String sql = "";
+        if(state == 6){
+            sql = "UPDATE tb_order SET canceltime = now(),state = ? WHERE id = ?";
+        }else if(state == 2){
+            sql = "UPDATE tb_order SET paytime = now(),state = ? WHERE id = ?";
+        }else if(state == 3){
+            sql = "UPDATE tb_order SET sendtime = now(),state = ? WHERE id = ?";
+        }else if(state == 4){
+            sql = "UPDATE tb_order SET receivetime = now(),state = ? WHERE id = ?";
+        }else if(state == 5){
+            sql = "UPDATE tb_order SET commenttime = now(),state = ? WHERE id = ?";
+        }
         try {
-            qr.execute(sql,goodsClass.getName(),goodsClass.getId());
+            qr.execute(sql,state,orderId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Override
     public List<Order> selectOwnerOrderList(int uId) {
@@ -76,10 +87,6 @@ public class OrderDaoImpl implements IOrderDao {
     public int selectOwnerOrderCount(int uId) {
         StringBuffer sql = new StringBuffer("SELECT count(1) from tb_order where 1 = 1 ");
         List<Object> search = new ArrayList<>();
-        /*if(condition.getName() != null && !"".equals(condition.getName())){
-            sql.append(" and name like ? ");
-            search.add("%" + condition.getName() + "%");
-        }*/
         Long count = 0L;
         try {
             count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
@@ -146,10 +153,9 @@ public class OrderDaoImpl implements IOrderDao {
     @Override
     public List<OrderInfo> selectOrderInfoListById(int orderId) {
         List<OrderInfo> orderInfoList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_order_info where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
+        String sql = "SELECT * from tb_order_info where oid = ? ";
         try {
-            orderInfoList = qr.query(sql.toString(),new BeanListHandler<>(OrderInfo.class),search.toArray());
+            orderInfoList = qr.query(sql,new BeanListHandler<>(OrderInfo.class),orderId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

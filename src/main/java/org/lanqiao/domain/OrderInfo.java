@@ -24,8 +24,10 @@ public class OrderInfo {
     private int num;
     //商品原价
     private int yprice;
+    private String ypricereal;
     //商品销售价
     private int sprice;
+    private String spricereal;
     //商品名称
     private String gname;
     //商品图片

@@ -17,23 +17,24 @@
 </head>
 <body>
 <div class="modal-body">
+    <h3>订单详情</h3>
     <div class="col-xs-6">
         <label for="orderNo" class="control-label">订单编号:</label>
-        <input type="text" class="form-control" id="orderNo" name="orderNo" value="${order.id}" disabled>
+        <input type="text" class="form-control" id="orderNo" name="orderNo" value="${order.no}" disabled>
     </div>
     <div class="col-xs-6">
         <label for="price" class="control-label">商品原价:</label>
-        <input type="text" class="form-control" id="price" name="price" value="${order.price}" disabled>
+        <input type="text" class="form-control" id="price" name="price" value="${order.pricereal}" disabled>
     </div>
     <br>
     <br>
     <div class="col-xs-6">
         <label for="freight" class="control-label">运费:</label>
-        <input type="text" class="form-control" id="freight" name="freight" value="${order.freight}" disabled>
+        <input type="text" class="form-control" id="freight" name="freight" value="${order.freightreal}" disabled>
     </div>
     <div class="col-xs-6">
         <label for="money" class="control-label">商品实付金额:</label>
-        <input type="text" class="form-control" id="money" name="money" value="${order.money}" disabled>
+        <input type="text" class="form-control" id="money" name="money" value="${order.moneyreal}" disabled>
     </div>
     <br>
     <br>
@@ -41,25 +42,96 @@
         <label for="stateStr" class="control-label">状态:</label>
         <input type="text" class="form-control" id="stateStr" name="stateStr" value="${order.stateStr}" disabled>
     </div>
-    <div class="col-xs-6">
-        <label for="ctime" class="control-label">创建时间:</label>
-        <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
-    </div>
+    <c:if test="${order.state == 1}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
+    <c:if test="${order.state == 2}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">付款时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.paytime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
+    <c:if test="${order.state == 3}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">付款时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.paytime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">发货时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.sendtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
+    <c:if test="${order.state == 4}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">付款时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.paytime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">发货时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.sendtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">收货时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.receivetime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
+    <c:if test="${order.state == 5}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">付款时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.paytime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">发货时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.sendtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">收货时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.receivetime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">评论时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.commenttime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
+    <c:if test="${order.state == 6}">
+        <div class="col-xs-6">
+            <label for="ctime" class="control-label">创建时间:</label>
+            <input type="text" class="form-control" id="ctime" name="ctime" value="<fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+        <div class="col-xs-6">
+            <label for="rtime" class="control-label">取消时间:</label>
+            <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.canceltime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
+        </div>
+    </c:if>
     <br>
     <br>
-    <div class="col-xs-6">
-        <label for="rtime" class="control-label">修改时间:</label>
-        <input type="text" class="form-control" id="rtime" name="rtime" value="<fmt:formatDate value="${order.rtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>" disabled>
-    </div>
+
     <div class="col-xs-6">
         <label for="name" class="control-label">收货人姓名:</label>
-        <input type="text" class="form-control" id="name" name="name" value="${order.name}" disabled>
+        <input type="text" class="form-control" id="name" name="name" value="${order.realname}" disabled>
     </div>
-    <br>
-    <br>
     <div class="col-xs-6">
         <label for="phone" class="control-label">收货人电话:</label>
-        <input type="text" class="form-control" id="phone" name="phone" value="${order.phone}" disabled>
+        <input type="text" class="form-control" id="phone" name="phone" value="${order.telphone}" disabled>
     </div>
     <div class="col-xs-6">
         <label for="address" class="control-label">收货人地址:</label>
@@ -67,22 +139,23 @@
     </div>
 </div>
 <div class="modal-body" style="margin-top: 150px;">
+    <h3>订单商品详情</h3>
     <table class="table table-hover table-bordered">
         <thead>
         <th>商品图片</th>
         <th>商品名称</th>
         <th>原价</th>
         <th>售价</th>
-        <th>数量</th>
+        <%--<th>数量</th>--%>
         </thead>
         <tbody>
-            <c:forEach begin="0" end="${orderItemList.size()}" var="orderItem" items="${orderItemList}" step="1">
+            <c:forEach begin="0" end="${orderInfoList.size()}" var="orderInfo" items="${orderInfoList}" step="1">
                 <tr>
-                    <td><img src="${orderItem.bookPic}" width="100px;" height="100px;"></td>
-                    <td>${orderItem.bookName}</td>
-                    <td>${orderItem.mprice}</td>
-                    <td>${orderItem.price}</td>
-                    <td>${orderItem.num}</td>
+                    <td><img src="${orderInfo.gpic}" width="50px;" height="50px;"></td>
+                    <td>${orderInfo.gname}</td>
+                    <td>${orderInfo.ypricereal}</td>
+                    <td>${orderInfo.spricereal}</td>
+                    <%--<td>${orderInfo.num}</td>--%>
                 </tr>
             </c:forEach>
         </tbody>

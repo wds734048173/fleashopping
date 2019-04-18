@@ -27,10 +27,13 @@ public class Order {
     private int type;
     //销售单价格（包含运费）
     private int price;
+    private String pricereal;
     //实际支付金额
     private int money;
+    private String moneyreal;
     //销售单运费
     private int freight;
+    private String freightreal;
     //销售人id
     private int sid;
     private String sStr;
