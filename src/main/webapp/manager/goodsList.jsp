@@ -153,6 +153,10 @@
                         <input type="text" class="form-control" id="goodsId" name="goodsId" disabled value="${goods.id}">
                     </div>
                     <div class="form-group">
+                        <label class="control-label">商品图片:</label>
+                        <img src="${goods.pic}" width="200px" height="200px" id="pic">
+                    </div>
+                    <div class="form-group">
                         <label for="goodsName" class="control-label">商品名称:</label>
                         <input type="text" class="form-control" id="goodsName" name="goodsName" disabled value="${goods.name}">
                     </div>
@@ -170,12 +174,10 @@
                     </div>
                     <div class="form-group">
                         <label for="remark" class="control-label">商品介绍:</label>
-                        <input type="text" class="form-control" id="remark" name="remark" disabled value="${goods.remark}">
+                        <%--<input type="text" class="form-control" id="remark" name="remark" disabled value="${goods.remark}">--%>
+                        <textarea class="layui-textarea"  name="remark" id="remark" style="margin: 0px; width: 567px; height: 134px;resize: none;"  disabled>${goods.remark}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">商品图片:</label>
-                        <img src="${goods.pic}" width="200px" height="200px" id="pic">
-                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
