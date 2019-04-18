@@ -67,4 +67,29 @@ public class DataMap {
         }
         return map;
     }
+
+    //性别
+    public static Map<Integer,String> getSexIdNameMap(){
+        Map<Integer,String> map = new HashMap<>();
+        map.put(0,"男");
+        map.put(1,"女");
+        return map;
+    }
+
+    //用户状态
+    public static Map<Integer,String> getUserStateIdNameMap(){
+        Map<Integer,String> map = new HashMap<>();
+        map.put(0,"启用");
+        map.put(1,"停用");
+        return map;
+    }
+
+    //评论等级
+    public static Map<Integer,String> getGradeIdNameMap(){
+        Map<Integer,String> map = new HashMap<>();
+        map.put(0,"好评");
+        map.put(1,"中评");
+        map.put(2,"差评");
+        return map;
+    }
 }

@@ -121,4 +121,25 @@ public class UserDaoImpl implements IUserDao {
     public void deleteUserById(int id) {
 
     }
+
+    @Override
+    public void updateUserState(int userId, int state) {
+        String sql = "UPDATE tb_user SET rtime = now(),state = ? WHERE id = ?";
+        try {
+            qr.execute(sql,state,userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public int updateUserPassword(User user){
+        String sql = "UPDATE tb_user SET password = ? WHERE username = ?";
+        int result = -1;
+        try {
+            result = qr.execute(sql,user.getPassword(),user.getUsername());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

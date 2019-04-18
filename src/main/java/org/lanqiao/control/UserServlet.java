@@ -48,7 +48,17 @@ public class UserServlet extends HttpServlet {
             case "getUserListByCondition":
                 getUserListByCondition(req, resp,"");
                 break;
+            case "updateUserState":
+                updateUserState(req, resp);
+                break;
         }
+    }
+
+    private void updateUserState(HttpServletRequest req, HttpServletResponse resp) {
+        int userId = Integer.valueOf(req.getParameter("userId"));
+        int state = Integer.valueOf(req.getParameter("state"));
+        userService.modifyUserState(userId,state);
+        getUserListByCondition(req,resp,"update");
     }
 
     private void getUserListByCondition(HttpServletRequest req, HttpServletResponse resp, String mark) {

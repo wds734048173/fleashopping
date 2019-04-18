@@ -5,12 +5,16 @@ import org.lanqiao.dao.impl.CommentDaoImpl;
 import org.lanqiao.domain.Comment;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.service.ICommentService;
+import org.lanqiao.utils.DataMap;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 
 public class CommentServiceImpl implements ICommentService {
     ICommentDao commentDao = new CommentDaoImpl();
+    DecimalFormat df=new DecimalFormat("0.00");
     @Override
     public List<Comment> getCommentList() {
         return commentDao.getCommentList();
@@ -46,16 +50,17 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public List<Comment> getCommentListByCondition(Condition condition) {
         List<Comment> commentList = commentDao.getCommentListByCondition(condition);
-        /*for (int i = 0; i < commentList.size(); i++) {
-            int Commentgrade = Integer.valueOf(commentList.get(i).getCommentgrade());
-            if(Commentgrade == 0){
-                commentList.get(i).setCommentgradeStr("好评");
-            }else if(Commentgrade == 1){
-                commentList.get(i).setCommentgradeStr("一般");
-            }else{
-                commentList.get(i).setCommentgradeStr("差评");
+        Map<Integer,String> gradeIdNameMap = DataMap.getGradeIdNameMap();
+        for (Comment comment : commentList) {
+            //对级别进行处理
+            int grade = comment.getGrade();
+            if(gradeIdNameMap.containsKey(grade)){
+                comment.setGradeStr(gradeIdNameMap.get(grade));
             }
-        }*/
+            //对价格进行处理
+            comment.setSpricereal(df.format((double)comment.getSprice()/100));
+            comment.setYpricereal(df.format((double)comment.getYprice()/100));
+        }
         return commentList;
     }
 }

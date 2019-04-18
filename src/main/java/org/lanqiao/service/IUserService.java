@@ -31,4 +31,6 @@ public interface IUserService {
     public void deleteUserById(int id);
     //修改密码
     public int modifyUserPassword(User user);
+    //修改用户状态
+    public void modifyUserState(int userId,int state);
 }

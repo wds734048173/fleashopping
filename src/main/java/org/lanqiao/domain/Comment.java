@@ -17,8 +17,10 @@ public class Comment {
     private int gId;
     private String gName;
     private String gPic;
-    private int gSPrice;
-    private int gYPrice;
+    private int sprice;
+    private String spricereal;
+    private int yprice;
+    private String ypricereal;
 
     //评论用户id
     private int cuid;

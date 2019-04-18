@@ -71,11 +71,11 @@
     </div>
 </div>
 <div class="modal-body">
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered" style="table-layout: fixed;">
         <thead>
         <th>图片</th>
         <th>商品名称</th>
-        <th>商品价格</th>
+        <th>商品销售价格</th>
         <th>评论等级</th>
         <th>评论内容</th>
         <th>回复内容</th>
@@ -87,10 +87,10 @@
                 <%--注意el表达式与java实体类中字段的对应关系--%>
                 <td><img src="${comment.GPic}" style="height: 50px;width: 50px;"></td>
                 <td>${comment.GName}</td>
-                <td>${comment.GSPrice}</td>
+                <td>${comment.spricereal}</td>
                 <td>${comment.gradeStr}</td>
-                <td>${comment.comment}</td>
-                <td>${comment.reply}</td>
+                <td style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis" title="${comment.comment}">${comment.comment}</td>
+                <td style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis" title="${comment.reply}">${comment.reply}</td>
                 <td><fmt:formatDate value="${comment.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
             </tr>
         </c:forEach>

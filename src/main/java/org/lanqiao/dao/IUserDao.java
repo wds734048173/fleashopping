@@ -29,4 +29,8 @@ public interface IUserDao {
     public User selectUserByUserName(String username);
     //删除用户
     public void deleteUserById(int id);
+    //修改用户状态
+    public void updateUserState(int userId,int state);
+
+    public int updateUserPassword(User user);
 }

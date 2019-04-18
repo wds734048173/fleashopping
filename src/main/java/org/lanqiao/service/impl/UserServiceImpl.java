@@ -5,8 +5,10 @@ import org.lanqiao.dao.impl.UserDaoImpl;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.User;
 import org.lanqiao.service.IUserService;
+import org.lanqiao.utils.DataMap;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: WDS
@@ -37,7 +39,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getUserList(Condition condition) {
-        return userDao.selectUserList(condition);
+        List<User> userList = userDao.selectUserList(condition);
+        Map<Integer,String> sexIdNameMap = DataMap.getSexIdNameMap();
+        Map<Integer,String> userStateIdNameMap = DataMap.getUserStateIdNameMap();
+        for(User user : userList){
+            //对性别进行处理
+            int sex = user.getSex();
+            if(sexIdNameMap.containsKey(sex)){
+                user.setSexStr(sexIdNameMap.get(sex));
+            }
+            //对状态进行处理
+            int state = user.getState();
+            if(userStateIdNameMap.containsKey(state)){
+                user.setStateStr(userStateIdNameMap.get(state));
+            }
+        }
+        return userList;
     }
 
     @Override
@@ -62,6 +79,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public int modifyUserPassword(User user) {
-        return 0;
+        return userDao.updateUserPassword(user);
+    }
+
+    @Override
+    public void modifyUserState(int userId, int state) {
+        userDao.updateUserState(userId,state);
     }
 }

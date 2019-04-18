@@ -15,6 +15,39 @@
     <script type="text/javascript" src="js/jquery.min.js" ></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
+        $(function () {
+            //启用
+            $(".enableUser").click(function () {
+                var userId = $(this).parent().parent().children("td:eq(0)").text();
+                var isUpdate = confirm("确定启用该用户吗？");
+                if (isUpdate) {
+                    //查询条件
+                    var searchName = $("#searchName").val();
+                    var searchState = $("#searchState option:selected").val();
+                    var currentPage = $("#currentPage").val();
+                    var url = "/user.do?method=updateUserState&userId=" + userId + "&state=0&searchName="+searchName+"&searchState="+searchState + "&currentPage=" + currentPage;
+                    $(".content").load(url);
+                } else {
+                    return;
+                }
+            })
+
+            //停用
+            $(".disableUser").click(function () {
+                var userId = $(this).parent().parent().children("td:eq(0)").text();
+                var isUpdate = confirm("确定停用该用户吗？");
+                if (isUpdate) {
+                    //查询条件
+                    var searchName = $("#searchName").val();
+                    var searchState = $("#searchState option:selected").val();
+                    var currentPage = $("#currentPage").val();
+                    var url = "/user.do?method=updateUserState&userId=" + userId + "&state=1&searchName="+searchName+"&searchState="+searchState + "&currentPage=" + currentPage;
+                    $(".content").load(url);
+                } else {
+                    return;
+                }
+            })
+        })
 
         //查询的手动提交方式
         function search(currentPage) {
@@ -54,7 +87,7 @@
 <div class="modal-body">
     <table class="table table-hover table-bordered">
         <thead>
-            <th>用户编号</th>
+            <th hidden>用户编号</th>
             <th>用户名</th>
             <th>真实姓名</th>
             <th>性别</th>
@@ -63,19 +96,28 @@
             <th>状态</th>
             <th>所属学校</th>
             <th>注册时间</th>
+            <th>操作</th>
         </thead>
         <tbody>
             <c:forEach begin="0" end="${userList.size()}" var="user" items="${userList}" step="1">
                 <tr>
-                    <td>${user.id}</td>
+                    <td hidden>${user.id}</td>
                     <td>${user.username}</td>
                     <td>${user.realname}</td>
-                    <td>${user.sex}</td>
+                    <td>${user.sexStr}</td>
                     <td>${user.telphone}</td>
                     <td>${user.email}</td>
-                    <td>${user.state}</td>
+                    <td>${user.stateStr}</td>
                     <td>${user.collage}</td>
                     <td><fmt:formatDate value="${user.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                    <td>
+                        <c:if test="${user.state == 0}">
+                            <a class="btn btn-default disableUser" href="#" role="button"  name="disableUser">停用</a>
+                        </c:if>
+                        <c:if test="${user.state == 1}">
+                            <a class="btn btn-default enableUser" href="#" role="button"  name="enableUser">启用</a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
