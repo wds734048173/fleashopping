@@ -5,6 +5,7 @@ import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.domain.User;
 import org.lanqiao.service.IUserService;
 import org.lanqiao.service.impl.UserServiceImpl;
+import org.lanqiao.utils.MD5Utils;
 import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
@@ -115,14 +116,36 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+    //前端注册
     private void addUser(HttpServletRequest req, HttpServletResponse resp) {
+        String username = req.getParameter("username");
+        String password1 = req.getParameter("password1");
+        String password2 = req.getParameter("password2");
+        String sex = req.getParameter("sex");
+        String realname = req.getParameter("realname");
+        String collage = req.getParameter("collage");
+        String telphone = req.getParameter("telphone");
+        String email = req.getParameter("email");
+        String address = req.getParameter("address");
+
         User user = new User();
-        user.setUsername("admin");
-        user.setPassword("123456");
-        user.setRealname("管理员");
-        user.setSex(0);
-        user.setCollage("吕梁学院");
-        user.setAge(21);
+        user.setUsername(username);
+        user.setPassword(MD5Utils.MD5(password1));
+        user.setSex(Integer.valueOf(sex));
+        user.setRealname(realname);
+        user.setCollage(collage);
+        user.setTelphone(telphone);
+        user.setEmail(email);
+        user.setAddress(address);
+        user.setRole(1);
         userService.addUser(user);
+        try {
+            req.setAttribute("success","success");
+            req.getRequestDispatcher("/user/login.jsp").forward(req,resp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 }

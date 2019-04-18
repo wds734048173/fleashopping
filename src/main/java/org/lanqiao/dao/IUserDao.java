@@ -23,8 +23,10 @@ public interface IUserDao {
     public List<User> selectUserList(Condition condition);
     //获取用户列表数量
     public int selectUserCount(Condition condition);
-    //通过用户名密码查询用户
+    //通过用户名密码查询普通用户
     public User selectUserByUserNameAndPassword(String username,String password);
+    //通过用户名密码查询管理员用户
+//    public User selectManagerByUserNameAndPassword(String username,String password);
     //通过用户名查询用户信息
     public User selectUserByUserName(String username);
     //删除用户

@@ -18,8 +18,8 @@ public class logoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.removeAttribute("name");
+        session.removeAttribute("realname");
         session.removeAttribute("username");
-        req.getRequestDispatcher("/sale/login.jsp").forward(req,resp);
+        req.getRequestDispatcher("/user/login.jsp").forward(req,resp);
     }
 }

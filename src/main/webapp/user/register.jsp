@@ -10,58 +10,61 @@
 <head>
     <title>注册</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
-    <link rel="stylesheet" type="text/css" href="../sale/css/login.css">
-    <script type="text/javascript"  src="../sale/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../sale/js/login.js"></script>
+    <link rel="stylesheet" type="text/css" href="../user/css/login.css">
+    <script type="text/javascript"  src="../user/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../user/js/login.js"></script>
 </head>
 <style>
 </style>
 <body>
-<form  method="post" action="/customer.do?method=addCustomer">
+<form  method="post" action="/user.do?method=addUser">
     <div class="regist">
         <div class="regist_center ">
             <div class="regist_top">
                 <div class="left fl">会员注册</div>
-                <div class="right fr"><a href="./index.jsp" target="_self">首页</a></div>
+                <div class="right fr"><a href="../user/index.jsp" target="_self">首页</a></div>
                 <div class="clear"></div>
                 <div class="xian center"></div>
             </div>
             <div style="margin-left: 15%;">
                 <div class="regist_main center">
                     <div class="username check-height">
-                        <label for="user">&nbsp;&nbsp;&nbsp;&nbsp;用户名</label>
-                        <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="user"/>
+                        <label for="username">&nbsp;&nbsp;&nbsp;&nbsp;用户名</label>
+                        <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="username"/>
                         <span class="error" style="float: none"></span>
                     </div>
                     <div class="username check-height">
                         <label for="password1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码</label>
-                        <input class="shurukuang" type="password" name="password" placeholder="请输入6位以上密码" id="password1"/>
+                        <input class="shurukuang" type="password" name="password1" placeholder="请输入6位以上密码" id="password1"/>
                         <span class="error" style="float: none"></span>
                     </div>
                     <div class="username check-height">
                         <label for="password2">确认密码</label>
-                        <input class="shurukuang" type="password" name="repassword" placeholder="请确认你的密码" id="password2"/>
+                        <input class="shurukuang" type="password" name="password2" placeholder="请确认你的密码" id="password2"/>
                         <span class="error" style="float: none"></span>
                     </div>
                     <div class="username check-height">
                         <label class="control-label">&nbsp;&nbsp;&nbsp;&nbsp;性&nbsp;&nbsp;&nbsp;别</label>
                         <%--性别：--%>
-                        <div style="margin-left: 85px ; display: inline ">
-                            <input type="radio" name="radio1" value="男">男
+                        <div style="margin-left: 58px ; display: inline ">
+                            <input type="radio" name="sex" value="0">男
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="radio1" value="女">女
+                            <input type="radio" name="sex" value="1">女
                         </div>
-
                     </div>
                     <div class="username check-height">
-                        <label for="name">真实姓名</label>
-                        <input class="shurukuang" type="text" name="name" placeholder="请填写正确的真实姓名" id="name"/>
+                        <label for="realname">真实姓名</label>
+                        <input class="shurukuang" type="text" name="realname" placeholder="请填写正确的真实姓名" id="realname"/>
                         <span class=""></span>
                     </div>
-
                     <div class="username check-height">
-                        <label for="phonenum">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电&nbsp;&nbsp;&nbsp;话</label>
-                        <input class="shurukuang" type="text" name="tel" placeholder="请填写正确的手机号" id="phonenum"/>
+                        <label for="collage">学校名称</label>
+                        <input class="shurukuang" type="text" name="collage" placeholder="请填写正确的学校名称" id="collage"/>
+                        <span class=""></span>
+                    </div>
+                    <div class="username check-height">
+                        <label for="telphone">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电&nbsp;&nbsp;&nbsp;话</label>
+                        <input class="shurukuang" type="text" name="telphone" placeholder="请填写正确的手机号" id="telphone"/>
                         <span class="error" style="float: none"></span>
                     </div>
 
@@ -72,8 +75,8 @@
                     </div>
 
                     <div class="username check-height">
-                        <label for="addr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;址</label>
-                        <input class="shurukuang" type="text" name="addr" placeholder="请填写正确的邮箱地址" id="addr"/>
+                        <label for="address">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地&nbsp;&nbsp;&nbsp;址</label>
+                        <input class="shurukuang" type="text" name="address" placeholder="请填写正确的收货地址" id="address"/>
                         <span class=""></span>
                     </div>
                 </div>

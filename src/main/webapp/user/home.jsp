@@ -1,7 +1,7 @@
-<%@ page import="org.lanqiao.domain.BookType" %>
+<%@ page import="org.lanqiao.domain.GoodsClass" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.lanqiao.domain.Book" %>
-<%@ page import="org.lanqiao.domain.Customer" %>
+<%@ page import="org.lanqiao.domain.Goods" %>
+<%--<%@ page import="org.lanqiao.domain.User" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -13,13 +13,15 @@
 <html>
 <head>
     <title>主页</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../sale/imges/book.ico">
-    <link rel="stylesheet" type="text/css" href="../sale/css/style.css">
-    <script type="text/javascript" src="../sale/js/jquery.min.js"></script>
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    %>
+
+    <link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>user/imges/book.ico">
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>user/css/style.css">
+    <script type="text/javascript" src="<%=basePath%>user/js/jquery.min.js"></script>
     <style>
-        /*在主要内容不足以铺满整个屏幕的情况下，footer居于屏幕低部显示，
-使得整个页面占满屏幕。而当主要内容高度大于整个屏幕高度的时候，
-footer跟随主要内容进行显示；*/
         html,body{
             height: 100%;
             margin: 0;
@@ -166,46 +168,38 @@ footer跟随主要内容进行显示；*/
         }
 
     </style>
-    <script type="text/javascript">
-        $(function () {
-        })
-    </script>
 </head>
 <body>
     <header>
         <div class="top center">
             <div class="left fl">
                 <ul>
-                    <%--点击进入反馈页面--%>
-                    <li><a href="/reply.do?method=getHomeList">问题反馈</a></li>
+                    <li><a href="../user/index.jsp">首页</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
             <div class="right fr">
                 <%
-                    String name = (String) session.getAttribute("name");
-                    if (name == null){
+                    String realname = (String) session.getAttribute("realname");
+                    if (realname == null){
                 %>
-                <%--购物车页面--%>
-                <div class="gouwuche fr"><a href="/sale/login.jsp">购物车</a></div>
                 <div class="fr">
                     <ul>
                         <%--登录页面--%>
-                        <li><a href="../sale/login.jsp" target="_blank">登录</a></li>
+                        <li><a href="../user/login.jsp" target="_blank">登录</a></li>
                         <li>|</li>
                         <%--注册页面--%>
-                        <li><a href="../sale/register.jsp" target="_blank" >注册</a></li>
+                        <li><a href="../user/register.jsp" target="_blank" >注册</a></li>
                     </ul>
                 </div>
                 <%
                 }else {
                 %>
-                <div class="gouwuche fr"><a href="/bookshop.do?method=getCartItemList&id=<%=session.getAttribute("CustomerId")%>" target="_blank">购物车</a></div>
                 <div class="fr">
                     <ul>
-                        <li>欢迎您：<%=name%></li>
+                        <li>欢迎您：<%=realname%></li>
                         <li>|</li>
-                        <li><a href="/customer.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                        <li><a href="/userIndex.do?method=getMyInfo" target="_blank">个人中心</a></li>
                         <li>|</li>
                         <li><a href="/logout.do">退出登录</a></li>
                     </ul>
@@ -223,36 +217,36 @@ footer跟随主要内容进行显示；*/
         <div class="nav">
             <ul>
                 <%
-                    List<BookType> typeList = (List<BookType>) request.getAttribute("typeList");
-                    List<Book> bookList = (List<Book>) request.getAttribute("bookList");
-                    for (BookType bookType:typeList){
+                    List<GoodsClass> goodsClassList = (List<GoodsClass>) request.getAttribute("goodsClassList");
+                    List<Goods> goodsList = (List<Goods>) request.getAttribute("goodsList");
+                    for (GoodsClass goodsClass:goodsClassList){
                 %>
                 <li>
-                    <a href="/home.do?method=booklist&typeId=<%=bookType.getBookTypeId()%>&typename=<%=bookType.getBookTypeName()%>"><%=bookType.getBookTypeName()%></a>
+                    <a href="/home.do?method=booklist&typeId=<%=goodsClass.getId()%>&typename=<%=goodsClass.getName()%>"><%=goodsClass.getName()%></a>
                     <div class="pop">
                         <div class="left fl">
                             <%
                                 int firstNum = 6;
-                                if(bookList.size() < 6){
-                                    firstNum = bookList.size();
+                                if(goodsList.size() < 6){
+                                    firstNum = goodsList.size();
                                 }
                                 for (int i = 0; i < firstNum; i++){
-                                    Book book = bookList.get(i);
-                                    if (book.getBookTypeid() == bookType.getBookTypeId()){
-                                        String bookName = book.getBookName();
-                                        if(bookName.length() > 10){
-                                            bookName = book.getBookName().substring(0,10);
+                                    Goods goods = goodsList.get(i);
+                                    if (goods.getClassId() == goodsClass.getId()){
+                                        String goodsName = goods.getName();
+                                        if(goodsName.length() > 10){
+                                            goodsName = goods.getName().substring(0,10);
                                         }
                             %>
                             <div>
                                 <div class="xuangou_left fl">
-                                    <a href="" title="<%=book.getBookName()%>">
-                                        <%--<div class="img fl"><img src="<%=book.getBookPic()%>" alt=""></div>--%>
-                                        <span class="fl"><%=bookName%></span>
+                                    <a href="" title="<%=goods.getName()%>">
+                                        <div class="img fl"><%--<img src="<%=goods.getPic()%>" alt="">--%></div>
+                                        <span class="fl"><%=goodsName%></span>
                                         <div class="clear"></div>
                                     </a>
                                 </div>
-                                <div class="xuangou_right fr"><a href="/bookinfo.do?method=detail&bookId=<%=book.getBookId()%>" target="_blank">选购</a></div>
+                                <div class="xuangou_right fr"><a href="/goods.do?method=detail&bookId=<%=goods.getId()%>" target="_blank">选购</a></div>
                                 <div class="clear"></div>
                             </div>
                             <%
@@ -272,18 +266,17 @@ footer跟随主要内容进行显示；*/
         </div>
     </div>
     <div class="danpin center">
-
-        <div class="biaoti center">好书推荐</div>
+        <div class="biaoti center">好物推荐</div>
         <div class="main center">
             <%
                 for (int i=0;i<5;i++){
-                   Book book= bookList.get(i);
+                   Goods goods= goodsList.get(i);
             %>
             <div class="mingxing fl">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=book.getBookId()%>"><img src="<%=book.getBookPic()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=book.getBookId()%>"><%=book.getBookName()%></a></div>
-                <div class="youhui"><%=book.getBookOutline().substring(0,9)%></div>
-                <div class="jiage"><%=book.getBookPrice()%>元起</div>
+                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
+                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
+                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
+                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
             </div>
             <%
                 }
@@ -293,13 +286,13 @@ footer跟随主要内容进行显示；*/
         <div class="main center">
             <%
                 for (int i=5;i<10;i++){
-                    Book book= bookList.get(i);
+                    Goods goods= goodsList.get(i);
             %>
             <div class="mingxing fl">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=book.getBookId()%>"><img src="<%=book.getBookPic()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=book.getBookId()%>"><%=book.getBookName()%></a></div>
-                <div class="youhui"><%=book.getBookOutline().substring(0,9)%></div>
-                <div class="jiage"><%=book.getBookPrice()%>元</div>
+                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
+                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
+                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
+                <div class="jiage"><%=goods.getSpricereal()%>元</div>
             </div>
             <%
                 }
@@ -318,10 +311,10 @@ footer跟随主要内容进行显示；*/
                         <span class="footer-slogan">买书看书 · 不求人</span>
                     </div>
                     <div class="fl footer-function">
-                        <a href="/site/publicity-page" rel="nofollow">关于我们</a>
-                        <a href="/page/1" rel="nofollow">用户协议</a>
-                        <a href="/new.html" target="_blank">最新信息</a>
-                        <a class="feedback" href="javascript:void(0)" rel="nofollow">意见反馈</a>
+                        <a href="#" rel="nofollow">关于我们</a>
+                        <a href="#" rel="nofollow">用户协议</a>
+                        <a href="#" rel="nofollow">最新信息</a>
+                        <a href="#" rel="nofollow">意见反馈</a>
                     </div>
                     <div class="fr footer-kefu">
                         <a href="javascript:void(0)" rel="nofollow" class="lxkf">
@@ -339,7 +332,7 @@ footer跟随主要内容进行显示；*/
                 <p class="footer-bottom-size">© 2018 在线买书 晋ICP备17020445号-1
                     <span id="exec_time"></span>|
                     <span id="load_time"></span>
-                    <a class="shgongshang" rel="nofollow" href="https://218.242.124.22:8082/businessCheck/verifKey.do?serial=31000091310109a39a271a33581338001001-SAIC_SHOW_310000-20180529191514943297&signData=MEUCIQD6MewiSJbo/K3QqHOUQ32W0Sz5eIDH7e/Pj+NN6bV2bAIgcn+Om5EWFphn3dXtnJLthBaySLicwitlhKiXsP9lV9M=">
+                    <a class="shgongshang" rel="nofollow" href="#">
                         <img src="" alt="">山西工商</a>
                 </p>
             </div>

@@ -19,4 +19,6 @@ public interface IGoodsService {
     public void downGoodsById(int id);
     //通过id获取商品详情
     public Goods getGoodsById(int id);
+    //查询所有的商品
+    public List<Goods> getGoodsListAll(Condition condition);
 }

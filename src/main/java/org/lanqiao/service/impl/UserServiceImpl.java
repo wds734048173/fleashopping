@@ -67,6 +67,11 @@ public class UserServiceImpl implements IUserService {
         return userDao.selectUserByUserNameAndPassword(username,password);
     }
 
+    /*@Override
+    public User getManagerByUserNameAndPassword(String username, String password) {
+        return userDao.selectManagerByUserNameAndPassword(username,password);
+    }*/
+
     @Override
     public User selectUserByUserName(String username) {
         return null;

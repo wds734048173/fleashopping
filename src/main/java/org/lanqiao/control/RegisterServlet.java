@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 
 
 /*
-* 注册
+* 后台注册
 * */
 @WebServlet("/register.do")
 public class RegisterServlet extends HttpServlet {

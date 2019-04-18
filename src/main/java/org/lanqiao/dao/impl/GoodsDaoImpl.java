@@ -114,18 +114,19 @@ public class GoodsDaoImpl implements IGoodsDao {
     }
 
     @Override
-    public List<Goods> selectGoodsOtherList(Condition condition) {
+    public List<Goods> selectGoodsListAll(Condition condition) {
         List<Goods> goodsList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where 1 = 1 ");
+        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where state = 0 ");
         List<Object> search = new ArrayList<>();
         if(condition != null){
             if(condition.getName() != null && !"".equals(condition.getName())){
                 sql.append(" and name like ? ");
                 search.add("%" + condition.getName() + "%");
             }
-            sql.append(" limit ?,?");
-            search.add(condition.getCurrentPage());
-            search.add(condition.getPageSize());
+            if(condition.getGoodsClassId() != null && !"-1".equals(condition.getGoodsClassId())){
+                sql.append(" and classId = ? ");
+                search.add(condition.getGoodsClassId());
+            }
         }
         try {
             goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
@@ -133,23 +134,6 @@ public class GoodsDaoImpl implements IGoodsDao {
             e.printStackTrace();
         }
         return goodsList;
-    }
-
-    @Override
-    public int selectGoodsOtherCount(Condition condition) {
-        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
-        if(condition.getName() != null && !"".equals(condition.getName())){
-            sql.append(" and name like ? ");
-            search.add("%" + condition.getName() + "%");
-        }
-        Long count = 0L;
-        try {
-            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Integer.valueOf(count.toString());
     }
 
     @Override

@@ -73,4 +73,15 @@ public class GoodsServiceImpl implements IGoodsService {
         }
         return goods;
     }
+
+    @Override
+    public List<Goods> getGoodsListAll(Condition condition) {
+        List<Goods> goodsList = goodsDao.selectGoodsListAll(condition);
+        for(Goods goods : goodsList){
+            //对价格进行处理
+            goods.setSpricereal(df.format((double)goods.getSprice()/100));
+            goods.setYpricereal(df.format((double)goods.getYprice()/100));
+        }
+        return goodsList;
+    }
 }

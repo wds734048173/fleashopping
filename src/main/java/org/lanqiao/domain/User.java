@@ -27,8 +27,6 @@ public class User {
     private String sexStr;
     //大学名称
     private String collage;
-    //年龄
-    private int age;
     //真实名称
     private String realname;
     //角色（0管理员，1普通用户）

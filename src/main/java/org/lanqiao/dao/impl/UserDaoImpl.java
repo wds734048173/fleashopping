@@ -34,9 +34,9 @@ public class UserDaoImpl implements IUserDao {
     @Override
     public int insertUser(User user) {
         int result = -1;
-        String sql = "INSERT INTO tb_user (username,password,role,ctime) VALUES (?,?,1,now())";
+        String sql = "INSERT INTO tb_user (username,password,role,sex,collage,realname,telphone,email,address,ctime) VALUES (?,?,?,?,?,?,?,?,?,now())";
         try {
-            result = qr.execute(sql,user.getUsername(),user.getPassword());
+            result = qr.execute(sql,user.getUsername(),user.getPassword(),user.getRole(),user.getSex(),user.getCollage(),user.getRealname(),user.getTelphone(),user.getEmail(),user.getAddress());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -111,6 +111,18 @@ public class UserDaoImpl implements IUserDao {
         }
         return user;
     }
+
+    /*@Override
+    public User selectManagerByUserNameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM tb_user WHERE role = 0 and username = ? AND password = ?";
+        User user = null;
+        try {
+            user = qr.query(sql,new BeanHandler<>(User.class),username,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }*/
 
     @Override
     public User selectUserByUserName(String username) {

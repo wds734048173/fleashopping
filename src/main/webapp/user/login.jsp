@@ -10,10 +10,10 @@
 <head>
     <title>登录</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
-    <link rel="stylesheet" type="text/css" href="../sale/css/login.css">
-    <link rel="stylesheet" type="text/css" href="../sale/css/style.css">
-    <script type="text/javascript"  src="../sale/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../sale/js/login.js"></script>
+    <link rel="stylesheet" type="text/css" href="../user/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../user/css/style.css">
+    <script type="text/javascript"  src="../user/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../user/js/login.js"></script>
     <script type="text/javascript" >
         <%
             String success=(String) request.getAttribute("success");
@@ -32,10 +32,7 @@
         <div class="top center" style="background: #333">
             <div class="left fl">
                 <ul>
-                    <li><a href="/sale/index.jsp">首页</a></li>
-                    <li>|</li>
-                    <%--点击进入反馈页面--%>
-                    <li><a href="/reply.do?method=getHomeList">问题反馈</a></li>
+                    <li><a href="../user/index.jsp">首页</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -43,7 +40,7 @@
                 <div class="fr">
                     <ul>
                         <%--注册页面--%>
-                        <li><a href="../sale/register.jsp" target="_blank" >注册</a></li>
+                        <li><a href="../user/register.jsp" target="_blank" >注册</a></li>
                     </ul>
                 </div>
                 <div class="clear"></div>
@@ -57,11 +54,11 @@
                 <div class="login_center">
                     <div class="login_top">
                         <div class="left fl">会员登录</div>
-                        <div class="right fr">您还不是我们的会员？<a href="../sale/register.jsp" target="_self">立即注册</a></div>
+                        <div class="right fr">您还不是我们的会员？<a href="../user/register.jsp" target="_self">立即注册</a></div>
                         <div class="clear"></div>
                         <div class="xian center"></div>
                     </div>
-                    <form method="post" action="/login.do?method=customer">
+                    <form method="post" action="/login.do?method=userLogin">
                     <div class="login_main center">
                         <div class="username">
                             用户名:&nbsp;<input class="shurukuang" type="text" name="username" placeholder="请输入你的用户名" id="user"/>
@@ -90,7 +87,7 @@
     </div>
     <footer>
         <div class="copyright">简体 | 繁体 | English | 常见问题</div>
-        <div class="copyright">公司版权所有-京ICP备10046444-<img src="../sale/imges/ghs.png" alt="">京公网安备11010802020134号-京ICP证110507号</div>
+        <div class="copyright">公司版权所有-京ICP备10046444-<img src="../user/imges/ghs.png" alt="">京公网安备11010802020134号-京ICP证110507号</div>
 
     </footer>
 </body>

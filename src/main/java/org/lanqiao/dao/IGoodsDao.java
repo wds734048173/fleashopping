@@ -25,10 +25,8 @@ public interface IGoodsDao {
     public List<Goods> selectGoodsList(Condition condition);
     //获取商品信息数量（自己）
     public int selectGoodsCount(Condition condition);
-    //获取其他人商品信息（他人）
-    public List<Goods> selectGoodsOtherList(Condition condition);
-    //获取其他人商品数量（他人）
-    public int selectGoodsOtherCount(Condition condition);
+    //获取其他人商品信息（全部）
+    public List<Goods> selectGoodsListAll(Condition condition);
     //修改商品状态
     public void updateGoodsState(int id);
     //通过模糊查询获取商品列表（后台）
