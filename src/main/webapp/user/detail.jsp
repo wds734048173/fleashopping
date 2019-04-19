@@ -170,7 +170,17 @@ footer跟随主要内容进行显示；*/
         $(function () {
             //立即购买
             $("#addOrder").click(function () {
-                alert("立即购买");
+                var goodsId = $("#goodsId").val();
+                alert("立即购买"+goodsId);
+                var url = "/order.do?method=placeOrder&goodsId="+goodsId;
+                window.location.href = url;
+            })
+            //加入收藏
+            $("#addCollection").click(function () {
+                var goodsId = $("#goodsId").val();
+                alert("加入收藏" + goodsId);
+                var url = "/collection.do?method=addCollection&goodsId="+goodsId;
+                window.location.href = url;
             })
         })
     </script>
@@ -230,6 +240,7 @@ footer跟随主要内容进行显示；*/
         <div class="jieshao mt20 w">
             <div class="left fl"><img src="${goods.pic}" style="background-size:cover;width: 500px;height: 500px;margin: 30px 0 0 30px"></div>
             <div class="right fr">
+                <input hidden id="goodsId" name="goodsId" value="${goods.id}">
                 <div class="h3 ml20 mt20">${goods.name}</div>
                 <br><br><br>
                 <div class="jianjie mr40 ml20">所属分类：${goods.classStr}</div>
@@ -239,8 +250,7 @@ footer跟随主要内容进行显示；*/
                 <div class="jianjie mr40 ml20">原价:${goods.ypricereal}元</div>
                 <br><br><br><br><br><br><br><br><br>
                 <div class="xiadan ml20 mt20">
-                    <input hidden id="goodsId" name="goodsId" value="${goods.id}">
-                    <input class="jrgwc" type="submit" name="jrgwc" value="加入收藏" id="addCollection"/>
+                    <input class="jrgwc" type="button" name="jrgwc" value="加入收藏" id="addCollection"/>
                     <input class="jrgwc" type="button" name="jrgwc" value="立即购买" id="addOrder"/>
                 </div>
             </div>

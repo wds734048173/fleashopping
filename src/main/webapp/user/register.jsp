@@ -11,12 +11,34 @@
     <title>注册</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <script type="text/javascript"  src="../user/js/jquery.min.js"></script>
     <script type="text/javascript" src="../user/js/login.js"></script>
 </head>
 <style>
 </style>
 <body>
+<%--页眉--%>
+<header>
+    <div class="top center" style="background: #333">
+        <div class="left fl">
+            <ul>
+                <li><a href="../user/index.jsp">首页</a></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="right fr">
+            <div class="fr">
+                <ul>
+                    <%--注册页面--%>
+                    <li><a href="../user/register.jsp" target="_blank" >注册</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</header>
 <form  method="post" action="/user.do?method=addUser">
     <div class="regist">
         <div class="regist_center ">
@@ -88,5 +110,9 @@
     </div>
 </form>
 </div>
+<footer>
+    <div class="copyright">简体 | 繁体 | English | 常见问题</div>
+    <div class="copyright">公司版权所有-京ICP备10046444-<img src="../user/imges/ghs.png" alt="">京公网安备11010802020134号-京ICP证110507号</div>
+</footer>
 </body>
 </html>

@@ -1,15 +1,23 @@
 package org.lanqiao.control;
 
+import org.lanqiao.domain.Collection;
+import org.lanqiao.service.ICollectionService;
+import org.lanqiao.service.impl.CollectionServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
-@WebServlet("collection")
+@WebServlet("/collection.do")
 public class CollectionServlet extends HttpServlet {
+
+    ICollectionService collectionService = new CollectionServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,13 +50,42 @@ public class CollectionServlet extends HttpServlet {
         }
     }
 
-    private void removeCollection(HttpServletRequest req, HttpServletResponse resp) {
+    private void removeCollection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("collectionId");
+        collectionService.removeCollection(Integer.valueOf(id));
+        getCollectionList(req, resp);
     }
 
-    private void getCollectionList(HttpServletRequest req, HttpServletResponse resp) {
+    private void getCollectionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            List<Collection> collectionList =  collectionService.getCollectionList(Integer.valueOf(userId.toString()));
+            req.setAttribute("collectionList",collectionList);
+            req.getRequestDispatcher("user/collectionList.jsp").forward(req,resp);
+        }
     }
 
-    private void addCollection(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("添加收藏、、、、、、、");
+    private void addCollection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            String goodsId = req.getParameter("goodsId");
+            Collection collection = Collection.builder().build();
+            collection.setGId(Integer.valueOf(goodsId));
+            collection.setUId(Integer.valueOf(userId.toString()));
+            Collection collection1 = collectionService.getCollection(collection);
+            if(collection1 == null){
+                collectionService.addCollection(collection);
+            }else{
+                collectionService.modifyCollection(collection);
+            }
+            getCollectionList(req, resp);
+        }
+
     }
 }
