@@ -70,14 +70,10 @@ public class CommentDaoImpl implements ICommentDao {
         sql.append(" limit ?,?");
         search.add(condition.getCurrentPage());
         search.add(condition.getPageSize());
-        System.out.println(condition.getCurrentPage() +"---------"+ condition.getPageSize());
         try {
             comments = qr.query(sql.toString(),new BeanListHandler<>(Comment.class),search.toArray());
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        for (Comment comment:comments){
-            System.out.println(comment);
         }
         return comments;
     }

@@ -14,161 +14,16 @@
 <html>
 <head>
     <title>主页</title>
-    <%
+   <%-- <%
         String path = request.getContextPath();
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     %>
-
     <link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>user/imges/book.ico">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>user/css/style.css">
-    <script type="text/javascript" src="<%=basePath%>user/js/jquery.min.js"></script>
-    <style>
-        html,body{
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        /*需将主区域内容（不包括footer）设置为此class，一般为div*/
-        .page{
-            box-sizing: border-box;/*为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制*/
-            min-height: 100%;
-            padding-bottom: 25px;
-        }
-        footer{
-            height: 25px;
-            margin-top: -25px;
-            opacity: 0.5;
-            color: #5E5E5E;
-        }
-        /*footer 结束*/
-        .footer {
-            background: #3F3E3E;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            border: 0 solid #000000;
-        }
-
-        div {
-            display: block;
-        }
-
-        .w1200 {
-            width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footet-jiesao {
-            height: 100px;
-            font-size: 14px;
-        }
-
-        .footet-jiesao>div {
-            height: 100%;
-        }
-
-        .footer-logo-box {
-            vertical-align: middle;
-            line-height: 100px;
-            margin-right: 60px;
-        }
-
-        .fl {
-            float: left;
-        }
-
-        .footer-logo {
-            width: 192px;
-            height: 74px;
-            vertical-align: middle;
-            margin-top: -10px;
-        }
-
-        .footer-slogan {
-            color: #EC7043;
-            font-size: 14px;
-            border-left: 1px solid #EC7043;
-            padding-left: 13px;
-            margin-left: 18px;
-        }
-
-        .footer-function {
-            height: 100%;
-            line-height: 100px;
-        }
-
-        .footer-function a {
-            height: 22px;
-            border-right: 1px #6C6C6C solid;
-            font-size: 14px;
-            color: #9A9A9A;
-            padding: 0 10px;
-        }
-
-        a {
-            color: #666666;
-            text-decoration: none;
-        }
-
-        .footer-function a:last-child {
-            border: none;
-        }
-
-        .footer-kefu {
-            line-height: 100px;
-            margin-right: 10px;
-        }
-
-        .footer-kefu .lxkf {
-            margin-right: 40px;
-        }
-
-        .footer-kefu a {
-            color: #9A9A9A;
-            font-size: 12px;
-        }
-
-        .footer-kefu a .iconfont {
-            color: #FF8B36;
-        }
-
-        .iconfont {
-            font-family: "iconfont" !important;
-            font-size: 16px;
-            font-style: normal;
-            -webkit-font-smoothing: antialiased;
-            -webkit-text-stroke-width: 0.2px;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .footer-bottom-size {
-            font-size: 14px;
-            color: #999999;
-            height: 48px;
-            line-height: 48px;
-            text-align: center;
-            background: #333333;
-        }
-        html, body, h1, h2, h3, h4, input, p, ul {
-            margin: 0;
-            padding: 0;
-        }
-        p {
-            display: block;
-            margin-block-start: 1em;
-            margin-block-end: 1em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-        }
-        body {
-            font-family: "PingFang SC", "Lantinghei SC", "Microsoft YaHei", "HanHei SC", "Helvetica Neue", "Open Sans", Arial, "Hiragino Sans GB", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", SimSun, sans-serif;
-            color: rgb(173, 173, 173);
-            background: rgb(250, 250, 250);
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>user/css/style.css">--%>
+    <link rel="shortcut icon" type="image/x-icon" href="/user/imges/book.ico">
+    <link rel="stylesheet" type="text/css" href="/user/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/user/css/index.css">
+    <script type="text/javascript" src="/user/js/jquery.min.js"></script>
 </head>
 <body>
     <%--页眉--%>

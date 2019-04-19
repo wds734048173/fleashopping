@@ -16,8 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" href="../bootstrap/css/orderconfirm.css"/>
     <link rel="stylesheet" href="../bootstrap/css/tasp.css"/>
-    <link rel="stylesheet" href="../bootstrap/css/orderconfirm.css"/>
-    <link rel="stylesheet" href="../bootstrap/css/tasp.css"/>
+    <link rel="stylesheet" type="text/css" href="/user/css/index.css">
     <style>
         #page{width:auto;}
         #comm-header-inner,#content{width:950px;margin:auto;}
@@ -255,9 +254,46 @@
             </div>
         </form>
     </div>
-    <div id="footer"></div>
 </div>
 <div style="text-align:center;">
+</div>
+
+<%--页脚--%>
+<div class="footer">
+    <div class="footer-content">
+        <div class="w1200">
+            <div class="footet-jiesao clearfix">
+                <div class="fl footer-logo-box">
+                    <img src="/user/imges/new_logo.png" class="footer-logo">
+                    <span class="footer-slogan">买书看书 · 不求人</span>
+                </div>
+                <div class="fl footer-function">
+                    <a href="#" rel="nofollow">关于我们</a>
+                    <a href="#" rel="nofollow">用户协议</a>
+                    <a href="#" rel="nofollow">最新信息</a>
+                    <a href="#" rel="nofollow">意见反馈</a>
+                </div>
+                <div class="fr footer-kefu">
+                    <a href="javascript:void(0)" rel="nofollow" class="lxkf">
+                        <i class="iconfont">&#xe601;</i>
+                        立即联系
+                    </a>
+                    <a rel="nofollow">
+                        <i class="iconfont">&#xe61a;</i>
+                        021-61097639
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="w1200">
+            <p class="footer-bottom-size">© 2018 在线买书 晋ICP备17020445号-1
+                <span id="exec_time"></span>|
+                <span id="load_time"></span>
+                <a class="shgongshang" rel="nofollow" href="#">
+                    <img src="" alt="">山西工商</a>
+            </p>
+        </div>
+    </div>
 </div>
 </body>
 </html>
