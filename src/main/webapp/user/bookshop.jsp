@@ -108,14 +108,9 @@
         </thead>
     </table>
     <div class="foot" id="foot">
-        <%if(cartItemList.size() != 0){
+        <%if(cartItemList.size() == 0){
             %>
-            <div class="fr closing"><a href="/bookshop.do?method=findByCustomerId&total=<%=request.getAttribute("total")%>">结 算</a></div>
-            <div class="fr total">合计：￥<span id="priceTotal"><%=request.getAttribute("total")%></span></div>
-                <%
-        }else{
-            %>
-        <center><div><a href="/sale/index.jsp">请您去首页选购商品</a></div></center>
+            <center><div><a href="/user/index.jsp">请您去首页选购商品</a></div></center>
                 <%
         }%>
 </body>

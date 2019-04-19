@@ -88,7 +88,6 @@
     <footer>
         <div class="copyright">简体 | 繁体 | English | 常见问题</div>
         <div class="copyright">公司版权所有-京ICP备10046444-<img src="../user/imges/ghs.png" alt="">京公网安备11010802020134号-京ICP证110507号</div>
-
     </footer>
 </body>
 </html>

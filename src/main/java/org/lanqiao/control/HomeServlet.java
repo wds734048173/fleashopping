@@ -86,7 +86,7 @@ public class HomeServlet extends HttpServlet {
         }
         req.setAttribute("titleCount",titleCount);
         try {
-            req.getRequestDispatcher("user/bookList.jsp").forward(req,resp);
+            req.getRequestDispatcher("user/goodsList.jsp").forward(req,resp);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
