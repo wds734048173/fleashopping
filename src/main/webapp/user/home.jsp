@@ -10,6 +10,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>主页</title>
@@ -267,94 +268,37 @@
     </div>
     <div class="danpin center">
         <div class="biaoti center">好物推荐</div>
-        <%--<div class="main center">
-            <%
-                if(goodsList.size() <= 5){
-            %>
-            <%
-                for (int i=0;i<goodsList.size();i++){
-                    Goods goods= goodsList.get(i);
-            %>
-            <div class="mingxing fl">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
-                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
-            </div>
-            <%
-                }
-            %>
-            <div class="clear"></div>
-            <%
-                }else if(goodsClassList.size() <= 10){
-            %>
-            <%
-                for (int i=0;i<5;i++){
-                    Goods goods= goodsList.get(i);
-            %>
-            <div class="mingxing fl">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
-                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
-            </div>
-            <%
-                }
-            %>
-            <div class="clear"></div>
+        <c:if test="${goodsList.size() == 0}">
             <div class="main center">
-                <%
-                    for (int i=5;i<goodsClassList.size();i++){
-                        Goods goods= goodsList.get(i);
-                %>
-                <div class="mingxing fl">
-                    <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
-                    <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
-                    <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                    <div class="jiage"><%=goods.getSpricereal()%>元</div>
-                </div>
-                <%
-                    }
-                %>
-                <div class="clear"></div>
+                <span>还没有好的商品，请等待商家发布商品！</span>
             </div>
-            <%
-                }else if(goodsList.size() > 10){
-                    %>
-            <%
-                for (int i=0;i<5;i++){
-                    Goods goods= goodsList.get(i);
-            %>
-            <div class="mingxing fl">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
-                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
-            </div>
-            <%
-                }
-            %>
-            <div class="clear"></div>
+        </c:if>
+        <c:if test="${goodsList.size() != 0}">
             <div class="main center">
-                <%
-                    for (int i=5;i<10;i++){
-                        Goods goods= goodsList.get(i);
-                %>
-                <div class="mingxing fl">
-                    <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><img src="<%=goods.getPic()%>" alt=""></a></div>
-                    <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>"><%=goods.getName()%></a></div>
-                    <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                    <div class="jiage"><%=goods.getSpricereal()%>元</div>
-                </div>
-                <%
-                    }
-                %>
-                <div class="clear"></div>
-            </div>
-            <%
-                }
-            %>
-        </div>--%>
+            <c:forEach var="i" begin="0" end="${titleCount-1}" step="1">
+                <c:if test="${goodsList.size()/5 >= i}">
+                    <c:forEach begin="${i * 5}" end="${(i+1)*5}" var="goods" items="${goodsList}" step="1">
+                        <div class="mingxing fl">
+                            <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                            <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=${goods.id}">${goods.name}</a></div>
+                            <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                            <div class="jiage">${goods.spricereal}元</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${goodsList.size()/5 < i}">
+                    <c:forEach begin="${i * 5}" end="${goodsList.size() - i * 5}" var="goods" items="${goodsList}" step="1">
+                        <div class="mingxing fl">
+                            <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                            <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=${goods.id}">${goods.name}</a></div>
+                            <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                            <div class="jiage">${goods.spricereal}元</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
+            </c:forEach>
+            </div><div class="clear"></div>
+        </c:if>
     </div>
 
 
@@ -363,7 +307,7 @@
             <div class="w1200">
                 <div class="footet-jiesao clearfix">
                     <div class="fl footer-logo-box">
-                        <img src="imges/new_logo.png" class="footer-logo">
+                        <img src="/user/imges/new_logo.png" class="footer-logo">
                         <span class="footer-slogan">买书看书 · 不求人</span>
                     </div>
                     <div class="fl footer-function">

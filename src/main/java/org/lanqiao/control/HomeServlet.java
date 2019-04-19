@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @WebServlet("/home.do")
@@ -52,7 +53,14 @@ public class HomeServlet extends HttpServlet {
 
         req.setAttribute("goodsList",goodsList);
         req.setAttribute("goodsClassList",goodsClassList);
-
+        //获取商品列表是5的倍数，向上取整
+        int titleCount = 0;
+        if(goodsList.size() % 5 != 0){
+            titleCount = goodsList.size()/5 + 1;
+        }else{
+            titleCount = goodsList.size()/5;
+        }
+        req.setAttribute("titleCount",titleCount);
         try {
             req.getRequestDispatcher("user/home.jsp").forward(req,resp);
         } catch (ServletException e) {
@@ -69,7 +77,14 @@ public class HomeServlet extends HttpServlet {
         condition.setGoodsClassId(goodsClassId);
         List<Goods> goodsList = goodsService.getGoodsListAll(condition);
         req.setAttribute("goodsList",goodsList);
-
+        //获取商品列表是5的倍数，向上取整
+        int titleCount = 0;
+        if(goodsList.size() % 5 != 0){
+            titleCount = goodsList.size()/5 + 1;
+        }else{
+            titleCount = goodsList.size()/5;
+        }
+        req.setAttribute("titleCount",titleCount);
         try {
             req.getRequestDispatcher("user/bookList.jsp").forward(req,resp);
         } catch (ServletException e) {
