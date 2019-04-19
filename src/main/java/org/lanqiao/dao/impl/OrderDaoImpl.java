@@ -33,15 +33,15 @@ public class OrderDaoImpl implements IOrderDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String sql1 = "insert into tb_order(no,state,type,price,sid,freight,bid,realname,telphone,address,ctime) values(?,?,?,?,?,?,?,?,?,?,now())";
+        String sql1 = "insert into tb_order(no,state,type,price,sid,freight,bid,realname,telphone,address,ctime,money) values(?,?,?,?,?,?,?,?,?,?,now(),?)";
         String sql2 = "select max(id) from tb_order";
         String sql3 = "insert into tb_order_info (oid,gid,gname,yprice,sprice,num,gpic) values (?,?,?,?,?,?,?)";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         try {
-            qr.execute(sql1,order.getNo(),order.getState(),order.getType(),order.getMoney(),order.getSid(),order.getFreight(),order.getBid(),order.getRealname(),order.getTelphone(),order.getAddress());
+            qr.execute(sql1,order.getNo(),order.getState(),order.getType(),order.getMoney(),order.getSid(),order.getFreight(),order.getBid(),order.getRealname(),order.getTelphone(),order.getAddress(),order.getMoney());
             int oId = qr.query(sql2,new ScalarHandler<>(1));
             for (int i = 0; i < orderInfoList.size(); i++) {
-                qr.execute(sql3,oId,orderInfoList.get(i).getOId(),orderInfoList.get(i).getGId(),orderInfoList.get(i).getGname(),orderInfoList.get(i).getYprice(),orderInfoList.get(i).getSprice(),orderInfoList.get(i).getNum(),orderInfoList.get(i).getGpic());
+                qr.execute(sql3,oId,orderInfoList.get(i).getGId(),orderInfoList.get(i).getGname(),orderInfoList.get(i).getYprice(),orderInfoList.get(i).getSprice(),orderInfoList.get(i).getNum(),orderInfoList.get(i).getGpic());
             }
             conn.commit();
         } catch (SQLException e) {
@@ -101,13 +101,18 @@ public class OrderDaoImpl implements IOrderDao {
         List<Order> orderList = null;
         StringBuffer sql = new StringBuffer("SELECT * from tb_order where 1 = 1 ");
         List<Object> search = new ArrayList<>();
-        if(condition.getOrderNo() != null && !"".equals(condition.getOrderNo())){
-            sql.append(" and no like ? ");
-            search.add("%" + condition.getOrderNo() + "%");
-        }
-        if(condition.getState() != null && !"".equals(condition.getState())){
-            sql.append(" and state = ? ");
-            search.add(condition.getState());
+        if(condition != null){
+            if(condition.getOrderNo() != null && !"".equals(condition.getOrderNo())){
+                sql.append(" and no like ? ");
+                search.add("%" + condition.getOrderNo() + "%");
+            }
+            if(condition.getState() != null && !"".equals(condition.getState())){
+                sql.append(" and state = ? ");
+                search.add(condition.getState());
+            }
+            sql.append(" order by ctime desc limit ?,?");
+            search.add(condition.getCurrentPage());
+            search.add(condition.getPageSize());
         }
         try {
             orderList = qr.query(sql.toString(),new BeanListHandler<>(Order.class),search.toArray());
@@ -160,5 +165,29 @@ public class OrderDaoImpl implements IOrderDao {
             e.printStackTrace();
         }
         return orderInfoList;
+    }
+
+    @Override
+    public Order selectOrderByUId(int uid) {
+        String sql = "SELECT * FROM tb_order WHERE bid = ? order by ctime desc limit 1";
+        Order order = null;
+        try {
+            order = qr.query(sql,new BeanHandler<>(Order.class),uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return order;
+    }
+
+    @Override
+    public List<Order> selectOwnBuyerOrderList(int uid) {
+        List<Order> orderList = null;
+        String sql = "SELECT * from tb_order where bid = ? order by ctime desc ";
+        try {
+            orderList = qr.query(sql,new BeanListHandler<>(Order.class),uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderList;
     }
 }

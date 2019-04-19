@@ -75,4 +75,43 @@ public class OrderServiceImpl implements IOrderService {
         }
         return orderInfoList;
     }
+
+    @Override
+    public void addOrder(Order order, List<OrderInfo> orderInfoList) {
+        orderDao.insertOrder(order,orderInfoList);
+    }
+
+    @Override
+    public Order getOrderByUId(int uid) {
+        Order order = orderDao.selectOrderByUId(uid);
+        Map<Integer,String> stateMap = DataMap.getOrderStateIdNameMap();
+        //对订单状态进行转换
+        if(stateMap.containsKey(order.getState())){
+            order.setStateStr(stateMap.get(order.getState()));
+        }
+        //对价格进行转换
+        order.setPricereal(df.format((double)order.getPrice()/100));
+        order.setMoneyreal(df.format((double)order.getMoney()/100));
+        order.setFreightreal(df.format((double)order.getFreight()/100));
+        return order;
+    }
+
+    @Override
+    public List<Order> getOwnBuyerOrderList(int uid) {
+        List<Order> orderList = orderDao.selectOwnBuyerOrderList(uid);
+        Map<Integer,String> orderStateIdNameMap = DataMap.getOrderStateIdNameMap();
+        //对订单进行处理
+        for(Order order : orderList){
+            //对订单金额进行处理
+            order.setPricereal(df.format((double)order.getPrice()/100));
+            order.setMoneyreal(df.format((double)order.getMoney()/100));
+            order.setFreightreal(df.format((double)order.getFreight()/100));
+            //对订单状态进行处理
+            int state = order.getState();
+            if(orderStateIdNameMap.containsKey(state)){
+                order.setStateStr(orderStateIdNameMap.get(state));
+            }
+        }
+        return orderList;
+    }
 }

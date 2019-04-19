@@ -22,4 +22,10 @@ public interface IOrderService {
     public Order getOrderById(int orderId);
     //通过订单id获取订单子表信息
     public List<OrderInfo> getOrderInfoList(int orderId);
+    //创建订单
+    public void addOrder(Order order,List<OrderInfo> orderInfoList);
+    //订单生成后，通过用户id拿最新的订单
+    public Order getOrderByUId(int uid);
+    //获取自己下单订单列表
+    public List<Order> getOwnBuyerOrderList(int uid);
 }

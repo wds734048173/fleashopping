@@ -1,4 +1,3 @@
-<%@ page import="org.lanqiao.domain.CartItem" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: lyj
@@ -14,17 +13,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="description" content=""/>
     <meta name="format-detection" content="telephone=no" />
-    <link rel="stylesheet" type="text/css" href="../sale/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" href="../bootstrap/css/orderconfirm.css"/>
     <link rel="stylesheet" href="../bootstrap/css/tasp.css"/>
-    <link rel="stylesheet" type="text/css" href="../sale/css/style.css">
     <link rel="stylesheet" href="../bootstrap/css/orderconfirm.css"/>
     <link rel="stylesheet" href="../bootstrap/css/tasp.css"/>
-    <script type="text/javascript">
-        $(function () {
-            
-        })
-    </script>
     <style>
         #page{width:auto;}
         #comm-header-inner,#content{width:950px;margin:auto;}
@@ -32,6 +25,9 @@
         #header .wrap-box{margin-top:-67px;}
         #logo .logo{position:relative;overflow:hidden;display:inline-block;width:140px;height:35px;font-size:35px;line-height:35px;color:#f40;}
         #logo .logo .i{position:absolute;width:140px;height:35px;top:0;left:0;background:url(http://a.tbcdn.cn/tbsp/img/header/logo.png);}
+        .blue-line{
+            background:url(http://img04.taobaocdn.com/tps/i4/T1Ll1iXfNXXXXXXXXX-950-1.png) repeat-x 0 bottom
+        }
     </style>
 
 </head>
@@ -77,8 +73,8 @@
                         <span class="marker-tip">寄送至</span>
                         <div class="address-info">
                             <label  class="user-address">
-                                <h4><%=session.getAttribute("CustomerAddr")%></h4> <br>
-                                <h4><%=name%> 收 <em><%=session.getAttribute("CustomerTel")%></em></h4>
+                                <h4><%=session.getAttribute("address")%></h4> <br>
+                                <h4><%=realname%> 收 <em><%=session.getAttribute("telphone")%></em></h4>
                             </label>
                         </div>
                     </li>
@@ -99,83 +95,57 @@
                 <table cellspacing="0" cellpadding="0" class="order-table" id="J_OrderTable" summary="统一下单订单信息区域">
                     <caption style="display: none">统一下单订单信息区域</caption>
                     <thead>
-                    <tr>
-                        <th class="s-title">店铺宝贝<hr/></th>
-                        <th class="s-price">单价(元)<hr/></th>
-                        <th class="s-amount">数量<hr/></th>
-                        <th class="s-agio">优惠方式(元)<hr/></th>
-                        <th class="s-total">小计(元)<hr/></th>
-                    </tr>
+                        <tr>
+                            <th class="s-title">宝贝<hr/></th>
+                            <th class="s-price">原价(元)<hr/></th>
+                            <th class="s-price">销售价(元)<hr/></th>
+                            <th class="s-amount">数量<hr/></th>
+                            <th class="s-total">小计(元)<hr/></th>
+                        </tr>
                     </thead>
                     <tbody data-spm="3" class="J_Shop" data-tbcbid="0" data-outorderid="47285539868"  data-isb2c="false" data-postMode="2" data-sellerid="1704508670">
-                    <tr class="first">
-                        <td colspan="5"></td></tr>
-                    <tr class="shop blue-line">
-                        <td colspan="3">
-                            店铺：<a class="J_ShopName J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.6" href="#"
-                                  target="_blank" title="#">书籍是人类进步的阶梯</a>
+
+                    <tr class="shop">
+                        <td colspan="5">
+                            店铺：<a class="J_ShopName J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.6" href="#" target="_blank" title="#">书籍是人类进步的阶梯</a>
                             <span class="seller">卖家：<a href="#" target="_blank" class="J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.15">高尔基</a></span>
-                            <span class="J_WangWang"  data-nick="淘米魅"   data-display="inline" ></span>
-                        </td>
-                        <td colspan="2" class="promo">
-                            <div>
-                                <ul class="scrolling-promo-hint J_ScrollingPromoHint">
-                                </ul>
-                            </div>
                         </td>
                     </tr>
-                    <%
-                        List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
-                        for (CartItem item:cartItems){
-                    %>
+
+                    <tr class="blue-line" style="height: 2px;"><td colspan="5"></td></tr>
+
+
                     <tr class="item" data-lineid="19614514619:31175333266:35612993875" data-pointRate="0">
                         <td class="s-title">
+                            <input type="hidden" name="goodsId" id="goodsId" value="${goods.id}">
                             <a href="#" target="_blank"  data-point-url="http://log.mmstat.com/buy.1.5">
-                                <img src="<%=item.getBookPic()%>" class="itempic"><span class="title J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.5"><%=item.getBookName()%></span></a>
-
-                            <div class="props">
-                                <span><%=item.getBookId()%></span>
-                                <span><%=item.getOrdermount()%>本</span>
-                            </div>
-                            <%--<a  href="#" target="_blank">--%>
-                                <%--<img src="#"/>--%>
-                            <%--</a>--%>
+                                <img src="${goods.pic}" class="itempic"><span class="title J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.5">${goods.name}</span></a>
                             <div>
                                 <span style="color:gray;">卖家承诺72小时内发货</span>
                             </div>
                         </td>
                         <td class="s-price">
-
                           <span class='price '>
-                         <em class="style-normal-small-black J_ItemPrice"  ><%=item.getBookPrice()%></em>
+                            <em class="style-normal-small-black J_ItemPrice"  >${goods.ypricereal}</em>
                           </span>
-                            <input type="hidden" name="costprice" value="630.00" class="J_CostPrice" />
+                        </td>
+                        <td class="s-price">
+                          <span class='price '>
+                            <em class="style-normal-small-black J_ItemPrice"  >${goods.spricereal}</em>
+                          </span>
                         </td>
                         <td class="s-amount" data-point-url="">
                             <input type="hidden" class="J_Quantity" value="1" name="19614514619_31175333266_35612993875_quantity"/>1
-
-                        </td>
-                        <td class="s-agio">
-                            <div class="J_Promotion promotion" data-point-url="">打折</div>
                         </td>
                         <td class="s-total">
-
                            <span class='price '>
-                         <em class="style-normal-bold-red ItemTotal "><%=item.getBookPrice()*item.getOrdermount()%></em>
+                            <em class="style-normal-bold-red ItemTotal ">${goods.spricereal}</em>
                           </span>
-                            <input id="furniture_service_list_b_47285539868" type="hidden" name="furniture_service_list_b_47285539868"/>
                         </td>
-                    </tr>
-                    <%
-                        }
-                    %>
-
-
-                    <tr class="item-service">
-                        <td colspan="5" class="servicearea" style="display: none"></td>
                     </tr>
 
                     <tr class="blue-line" style="height: 2px;"><td colspan="5"></td></tr>
+
                     <tr class="other other-line">
                         <td colspan="5">
                             <ul class="dib-wrap">
@@ -190,13 +160,12 @@
                                     </ul>
                                 </li>
                                 <li class="dib extra-info">
-
                                     <div class="shoparea">
                                         <ul class="dib-wrap">
                                             <li class="dib title">店铺优惠：</li>
                                             <li class="dib sel"><div class="J_ShopPromo J_Promotion promotion clearfix" data-point-url="http://log.mmstat.com/buy.1.16"></div></li>
                                             <li class="dib fee">  <span class='price '>
-                                             <em class="style-normal-bold-black J_ShopPromo_Result"  >打折</em>
+                                             <em class="style-normal-bold-black J_ShopPromo_Result">特价</em>
                                               </span>
                                             </li>
                                         </ul>
@@ -224,7 +193,7 @@
                                                         平邮 ？
                                                     </option>
                                                 </select>
-                                                <em tabindex="0" class="J_FareFree" style="display: none">免邮费</em>
+                                                <%--<em tabindex="0" class="J_FareFree" style="display: none">免邮费</em>--%>
                                             </li>
                                             <li class="dib fee">  <span class='price '>
                                              <em class="style-normal-bold-red J_FareSum"  >10.00</em>
@@ -238,68 +207,52 @@
                                             <li class="dib content">卖家承诺订单在买家付款后，72小时内<a href="#">发货</a></li>
                                         </ul>
                                     </div>
-
-                                    <div class="servicearea" style="display: none"></div>
+                                  <%--  <div class="servicearea" style="display: none"></div>--%>
                                 </li>
                             </ul>
                         </td>
                     </tr>
-
-                    <tr class="shop-total blue-line">
+                    <tr class="blue-line" style="height: 2px;"><td colspan="5"></td></tr>
+                    <tr class="shop-total">
                         <td colspan="5">店铺合计(<span class="J_Exclude" style="display: none">不</span>含运费<span class="J_ServiceText" style="display: none">，服务费</span>)：
                             <span class='price g_price '>
-                             <span>&yen;</span><em class="style-middle-bold-red J_ShopTotal"  ><%=request.getParameter("total")%></em>
+                             <span>&yen;</span><em class="style-middle-bold-red J_ShopTotal"  >${goods.spricereal + 10}元</em>
                               </span>
                             <input type="hidden" name="1704508670:2|creditcard" value="false" />
                             <input type="hidden" id="J_IsLadderGroup" name="isLadderGroup" value="false"/>
-
                         </td>
                     </tr>
+                    <tr class="blue-line" style="height: 2px;"><td colspan="5"></td></tr>
                     </tbody>
                     <tfoot>
                     <tr>
                         <td colspan="5">
-
                             <div class="order-go" data-spm="4">
                                 <div class="J_AddressConfirm address-confirm">
                                     <div class="kd-popup pop-back" style="margin-bottom: 40px;">
                                         <div class="box">
                                             <div class="bd">
                                                 <div class="point-in">
-
-                                                    <em class="t">实付款：</em>  <span class='price g_price '><%String total = request.getParameter("total");%>
-                                                     <span>&yen;</span><em class="style-large-bold-red"  id="J_ActualFee"  ><%=Integer.parseInt(total)+10%>.00</em>
-                                                      </span>
+                                                    <em class="t">实付款：</em>
+                                                    <span class='price g_price '>
+                                                     <span>&yen;</span><em class="style-large-bold-red"  id="J_ActualFee"  >${goods.spricereal + 10}元</em>
+                                                    </span>
                                                 </div>
-
-                                                <ul >
-                                                    <li><em>寄送至:</em><span id="J_AddrConfirm" style="word-break: break-all;"><%=session.getAttribute("CustomerAddr")%>.00</span></li>
-                                                </ul>
                                             </div>
                                         </div>
-                                        <a href="/bookshop.do?method=getCartItemList&id=<%=session.getAttribute("CustomerId")%>"
-                                           class="back J_MakePoint" target="_top"
-                                           data-point-url="">返回购物车</a>
-                                        <a id="J_Go"   title="点击此按钮，确认付款。" class="btn btn-primary btn-warning active"><input type="submit" value="确认付款"/></a>
+                                        <a id="J_Go" title="点击此按钮，提交订单。" class="btn btn-primary btn-warning active"><input type="submit" value="提交订单"/></a>
                                     </div>
                                 </div>
-
-                                <div class="J_confirmError confirm-error">
-                                    <div class="msg J_shopPointError" style="display: none;"><p class="error">积分点数必须为大于0的整数</p></div>
-                                </div>
-
-
                                 <div class="msg" style="clear: both;">
                                     <p class="tips naked" style="float:right;padding-right: 0">若价格变动，请在提交订单后联系卖家改价，并查看已买到的宝贝</p>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    <tr class="blue-line" style="height: 2px;"><td colspan="5"></td></tr>
                     </tfoot>
-
                 </table>
             </div>
-            <input type="hidden" id="total" name="totalPrice" value="<%=Integer.parseInt(total)+10%>" />
         </form>
     </div>
     <div id="footer"></div>

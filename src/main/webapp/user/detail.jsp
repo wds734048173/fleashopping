@@ -171,14 +171,12 @@ footer跟随主要内容进行显示；*/
             //立即购买
             $("#addOrder").click(function () {
                 var goodsId = $("#goodsId").val();
-                alert("立即购买"+goodsId);
                 var url = "/order.do?method=placeOrder&goodsId="+goodsId;
                 window.location.href = url;
             })
             //加入收藏
             $("#addCollection").click(function () {
                 var goodsId = $("#goodsId").val();
-                alert("加入收藏" + goodsId);
                 var url = "/collection.do?method=addCollection&goodsId="+goodsId;
                 window.location.href = url;
             })
