@@ -1,5 +1,4 @@
-<%@ page import="java.util.List" %>
-<%@ page import="org.lanqiao.domain.Goods" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -13,7 +12,6 @@
 <head>
     <%
         String goodsClassName=  request.getParameter("goodsClassName");
-        List<Goods> goodsList= (List<Goods>) request.getAttribute("goodsList");
     %>
     <title><%=goodsClassName%></title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">

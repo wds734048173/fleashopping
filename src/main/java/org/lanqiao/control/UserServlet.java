@@ -1,7 +1,6 @@
 package org.lanqiao.control;
 
 import org.lanqiao.domain.Condition;
-import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.domain.User;
 import org.lanqiao.service.IUserService;
 import org.lanqiao.service.impl.UserServiceImpl;
@@ -13,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -52,6 +52,23 @@ public class UserServlet extends HttpServlet {
             case "updateUserState":
                 updateUserState(req, resp);
                 break;
+            case "getMyInfo":
+                getMyInfo(req, resp);
+                break;
+        }
+    }
+
+    private void getMyInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        System.out.println(userId);
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            User user =userService.getUserById(Integer.valueOf(userId.toString()));
+            System.out.println(user+"==========================");
+            req.setAttribute("user",user);
+            req.getRequestDispatcher("user/myInfo.jsp").forward(req,resp);
         }
     }
 

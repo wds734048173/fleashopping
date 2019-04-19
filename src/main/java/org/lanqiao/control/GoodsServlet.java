@@ -3,10 +3,8 @@ package org.lanqiao.control;
 import com.alibaba.fastjson.JSON;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
-import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.service.IGoodsService;
 import org.lanqiao.service.impl.GoodsServiceImpl;
-import org.lanqiao.utils.DataMap;
 import org.lanqiao.utils.PageModel;
 
 import javax.servlet.ServletException;
@@ -18,7 +16,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Auther: WDS

@@ -1,7 +1,7 @@
 $(function () {
     //登录界面账户输入框失去焦点
     (function login_validate() {
-        $(".username #username").blur(function() {
+        $(".username #user").blur(function() {
             accountReg = /^[a-zA-Z0-9_-]{6,16}$/;
             if($(this).val() == "" || $(this).val() == "请输入您的账号") {
                 $(this).addClass("errorInput");
@@ -33,7 +33,7 @@ $(function () {
     // 注册页面的提示文字
     (function register() {
         //用户名失去焦点
-        $(".regist_main #username").blur(function() {
+        $(".regist_main #user").blur(function() {
             accountReg = /^[a-zA-Z0-9_-]{6,16}$/;
             if($(this).val() == "" || $(this).val() == "请输入您的账号") {
                 $(this).addClass("errorInput");
@@ -50,8 +50,8 @@ $(function () {
             }
         });
         // 注册界面手机号栏失去焦点
-        $(".regist_main #telphone").blur(function() {
-            phoneReg = /^[1][3,4,5,7,8][0-9]{9,13}$/;
+        $(".regist_main #phonenum").blur(function() {
+            phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
             if($(this).val() == "") {
                 $(this).addClass("errorInput");
                 $(this).next().css("display", "block").html("手机号码不能为空!");

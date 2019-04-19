@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>个人中心</title>
+    <title>个人中心-我收藏的商品</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" type="text/css" href="../user/css/login.css">
@@ -39,7 +39,7 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/userIndex.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
                     <li>|</li>
                     <li><a href="/logout.do">退出登录</a></li>
                 </ul>
@@ -65,7 +65,7 @@
         </div>
         <%--右侧代码--%>
         <div class="rtcont fr">
-            <div class="ddzxbt">我的收藏商品</div>
+            <div class="ddzxbt">我收藏的商品</div>
             <div class="modal-body">
                 <table class="table table-hover table-bordered">
                     <thead>

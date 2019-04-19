@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>个人中心</title>
+    <title>个人中心-我买到的订单</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" type="text/css" href="../user/css/login.css">
@@ -20,34 +20,6 @@
 
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
     <script type="text/javascript" src="../user/js/login.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#chphone").click(function () {
-                var flag = window.confirm("确定要修改吗？");
-                if (flag){
-                    $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
-                }
-            });
-            $("#chem").click(function () {
-                var flag = window.confirm("确定要修改吗？");
-                if (flag){
-                    $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
-                }
-            });
-            $("#chaddr").click(function () {
-                var flag = window.confirm("确定要修改吗？");
-                if (flag){
-                    $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
-                }
-            })
-        })
-    </script>
 </head>
 <body>
 <%--页眉--%>
@@ -67,7 +39,7 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/userIndex.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
                     <li>|</li>
                     <li><a href="/logout.do">退出登录</a></li>
                 </ul>
@@ -91,7 +63,7 @@
         </div>
         <%--右侧代码--%>
         <div class="rtcont fr">
-            <div class="ddzxbt">我的个人信息</div>
+            <div class="ddzxbt">我买到的订单</div>
 
             <div class="modal-body">
                 <table class="table table-hover table-bordered">

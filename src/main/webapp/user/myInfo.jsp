@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>个人中心</title>
+    <title>个人中心-我的个人信息</title>
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" type="text/css" href="../user/css/login.css">
@@ -20,33 +20,36 @@
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../user/js/login.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#chphone").click(function () {
-                var flag = window.confirm("确定要修改吗？");
+                var flag = window.confirm("确定要修改电话吗？");
                 if (flag){
+                    alert("请修改电话信息");
                     $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
                 }
             });
             $("#chem").click(function () {
-                var flag = window.confirm("确定要修改吗？");
+                var flag = window.confirm("确定要修改邮箱吗？");
                 if (flag){
+                    alert("请修改邮箱信息");
                     $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
                 }
             });
             $("#chaddr").click(function () {
-                var flag = window.confirm("确定要修改吗？");
+                var flag = window.confirm("确定要修改地址吗？");
                 if (flag){
+                    alert("请修改地址信息");
                     $(this).prev().removeAttr("readonly");
-                }else {
-                    alert("请修改框内信息");
                 }
             })
+            $("#chname").click(function () {
+                var flag = window.confirm("确定要修改真实姓名吗？");
+                if (flag){
+                    alert("请修改真实姓名");
+                    $(this).prev().removeAttr("readonly");
+                }
+            });
         })
     </script>
 </head>
@@ -68,7 +71,7 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/userIndex.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
                     <li>|</li>
                     <li><a href="/logout.do">退出登录</a></li>
                 </ul>
@@ -95,41 +98,42 @@
                 <div class="ddzxbt">我的个人信息</div>
                 <form action="/customer.do?method=updateCustomer" method="post">
                     <div class="login-main center mt20" style="margin-top: 30px">
-                        <input hidden name="CustomerId" value="<%=session.getAttribute("CustomerId")%>"/>
-                    <div class="username check-height">
-                        <label for="user" style="color: black">用户名</label>
-                        <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="user" readonly value="<%=customer.getCustomerName()%>"/>
-                        <span class="error"></span>
-                    </div>
-                    <div class="username check-height">
-                        <label for="name" style="color: black">真实姓名</label>
-                        <input class="shurukuang" type="text" name="name" placeholder="请填写正确的真实姓名" id="name" readonly value="<%=customer.getCustomertruename()%>"/>
-                        <span class="error"></span>
-                    </div>
+                        <input hidden name="userId" value="${user.id}"/>
+                        <div class="username check-height">
+                            <label for="username" style="color: black">用户名</label>
+                            <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="username" readonly value="${user.username}"/>
+                            <span class="error"></span>
+                        </div>
+                        <div class="username check-height">
+                            <label for="realname" style="color: black">真实姓名</label>
+                            <input class="shurukuang" type="text" name="realname" placeholder="请填写正确的真实姓名" id="realname" readonly value="${user.realname}"/>
+                            <input class="jrgwc" type="button" value="立即修改" id="chname">
+                            <span class="error"></span>
+                        </div>
 
-                    <div class="username check-height">
-                        <label for="phonenum" style="color: black">电话</label>
-                        <input class="shurukuang" type="text" name="tel" placeholder="请填写正确的手机号" id="phonenum" readonly value="<%=customer.getCustomerTel()%>"/>
-                        <input class="jrgwc" type="button" value="立即修改" id="chphone">
-                        <span class="error"></span>
-                    </div>
+                        <div class="username check-height">
+                            <label for="telphone" style="color: black">电话</label>
+                            <input class="shurukuang" type="text" name="telphone" placeholder="请填写正确的手机号" id="telphone" readonly value="${user.telphone}"/>
+                            <input class="jrgwc" type="button" value="立即修改" id="chphone">
+                            <span class="error"></span>
+                        </div>
 
-                    <div class="username check-height">
-                        <label for="email" style="color: black">邮箱</label>
-                        <input class="shurukuang" type="text" name="email" placeholder="请填写正确的邮箱地址" id="email" readonly value="<%=customer.getCustomerEmail()%>"/>
-                        <input class="jrgwc" type="button" value="立即修改" id="chem">
-                        <span class="error"></span>
-                    </div>
+                        <div class="username check-height">
+                            <label for="email" style="color: black">邮箱</label>
+                            <input class="shurukuang" type="text" name="email" placeholder="请填写正确的邮箱地址" id="email" readonly value="${user.email}"/>
+                            <input class="jrgwc" type="button" value="立即修改" id="chem">
+                            <span class="error"></span>
+                        </div>
 
-                    <div class="username check-height">
-                        <label for="addr" style="color: black">地址</label>
-                        <input class="shurukuang" type="text" name="addr" placeholder="请填写正确的邮寄地址" id="addr" readonly value="<%=customer.getCustomerAddr()%>"/>
-                        <input class="jrgwc" type="button" value="立即修改" id="chaddr">
-                        <span class="error"></span>
-                    </div>
-                    <div class="regist_submit">
-                        <input class="jrgwc btn btn-primary btn-warning active" type="submit" name="submit" value="保存" >
-                    </div>
+                        <div class="username check-height">
+                            <label for="address" style="color: black">地址</label>
+                            <input class="shurukuang" type="text" name="address" placeholder="请填写正确的邮寄地址" id="address" readonly value="${user.address}"/>
+                            <input class="jrgwc" type="button" value="立即修改" id="chaddr">
+                            <span class="error"></span>
+                        </div>
+                        <div class="regist_submit">
+                            <input class="jrgwc btn btn-primary btn-warning active" type="submit" name="submit" value="保存" >
+                        </div>
                     </div>
                 </form>
                 <div class="clear"></div>

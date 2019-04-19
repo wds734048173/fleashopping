@@ -7,7 +7,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.lanqiao.dao.IGoodsDao;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
-import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.SQLException;

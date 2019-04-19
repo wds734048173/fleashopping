@@ -50,7 +50,14 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User selectUserById(int userId) {
-        return null;
+        User user = null;
+        String sql = "SELECT * from tb_user where id = ?";
+        try {
+            user = qr.query(sql,new BeanHandler<>(User.class),userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override

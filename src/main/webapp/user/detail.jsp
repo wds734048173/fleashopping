@@ -40,7 +40,7 @@
         <div class="top center">
             <div class="left fl">
                 <ul>
-                    <li><a href="../user/index.jsp">返回首页</a></li>
+                    <li><a href="../user/index.jsp">首页</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -65,7 +65,7 @@
                     <ul>
                         <li>欢迎您：<%=realname%></li>
                         <li>|</li>
-                        <li><a href="/userIndex.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                        <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
                         <li>|</li>
                         <li><a href="/logout.do">退出登录</a></li>
                     </ul>
