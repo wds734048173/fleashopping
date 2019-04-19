@@ -213,6 +213,7 @@
             <div class="clear"></div>
         </div>
     </header>
+    <%--中间代码--%>
     <%--导航栏--%>
     <div class="banner_y center" style="background: url('imges/1.jpg')">
         <div class="nav">
@@ -247,7 +248,7 @@
                                         <div class="clear"></div>
                                     </a>
                                 </div>
-                                <div class="xuangou_right fr"><a href="/goods.do?method=detail&bookId=<%=goods.getId()%>" target="_blank">选购</a></div>
+                                <div class="xuangou_right fr"><a href="/goods.do?method=detail&goodsId=<%=goods.getId()%>" target="_blank">选购</a></div>
                                 <div class="clear"></div>
                             </div>
                             <%
@@ -257,15 +258,15 @@
                         </div>
                         <div class="clear"></div>
                     </div>
-
                 </li>
                 <%
                     }
                 %>
             </ul>
-
         </div>
     </div>
+
+    <%--商品列表--%>
     <div class="danpin center">
         <div class="biaoti center">好物推荐</div>
         <c:if test="${goodsList.size() == 0}">
@@ -279,9 +280,9 @@
                 <c:if test="${goodsList.size()/5 >= i}">
                     <c:forEach begin="${i * 5}" end="${(i+1)*5}" var="goods" items="${goodsList}" step="1">
                         <div class="mingxing fl">
-                            <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
-                            <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=${goods.id}">${goods.name}</a></div>
-                            <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                            <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                            <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                            <div class="youhui">${goods.remark}</div>
                             <div class="jiage">${goods.spricereal}元</div>
                         </div>
                     </c:forEach>
@@ -289,9 +290,9 @@
                 <c:if test="${goodsList.size()/5 < i}">
                     <c:forEach begin="${i * 5}" end="${goodsList.size() - i * 5}" var="goods" items="${goodsList}" step="1">
                         <div class="mingxing fl">
-                            <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
-                            <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=${goods.id}">${goods.name}</a></div>
-                            <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                            <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                            <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                            <div class="youhui">${goods.remark}</div>
                             <div class="jiage">${goods.spricereal}元</div>
                         </div>
                     </c:forEach>
@@ -301,7 +302,7 @@
         </c:if>
     </div>
 
-
+    <%--页脚--%>
     <div class="footer">
         <div class="footer-content">
             <div class="w1200">

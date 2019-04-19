@@ -50,9 +50,28 @@ public class GoodsServlet extends HttpServlet {
             case "DownGoodsById":
                 DownGoodsById(req,resp);
                 break;
+            //后端获取详情
             case "getGoodsById":
                 getGoodsById(req,resp);
                 break;
+            //前端获取详情
+            case "detail":
+                detail(req,resp);
+                break;
+        }
+    }
+
+    private void detail(HttpServletRequest req, HttpServletResponse resp) {
+        String goodsId = req.getParameter("goodsId");
+        //根据goodsId获取商品详情
+        Goods goods = goodsService.getGoodsById(Integer.parseInt(goodsId));
+        req.setAttribute("goods",goods);
+        try {
+            req.getRequestDispatcher("user/detail.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

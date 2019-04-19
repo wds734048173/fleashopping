@@ -167,6 +167,7 @@
     </style>
 </head>
 <body>
+    <%--页眉--%>
     <header>
         <div class="top center">
             <div class="left fl">
@@ -209,32 +210,50 @@
             <div class="clear"></div>
         </div>
     </header>
+
+    <%--中间代码--%>
     <div class="danpin center">
         <div class="biaoti center"><%=goodsClassName%></div>
-        <%--<div class="main center">
-            <%
-                for (Goods goods:goodsList){
-            %>
-            <div class="mingxing fl mb20" style="border:2px solid #fff;width:230px;cursor:pointer;" onmouseout="this.style.border='2px solid #fff'" onmousemove="this.style.border='2px solid red'">
-                <div class="sub_mingxing"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>" target="_blank"><img src="<%=goods.getName()%>" alt=""></a></div>
-                <div class="pinpai"><a href="/bookinfo.do?method=detail&bookId=<%=goods.getId()%>" target="_blank"><%=goods.getName()%></a></div>
-                <div class="youhui"><%=goods.getRemark().substring(0,9)%></div>
-                <div class="jiage"><%=goods.getSpricereal()%>元起</div>
+        <c:if test="${goodsList.size() == 0}">
+            <div class="main center">
+                <span>还没有好的商品，请等待商家发布商品！</span>
             </div>
-            <%
-                }
-            %>
-            <div class="clear"></div>
-        </div>--%>
-
+        </c:if>
+        <c:if test="${goodsList.size() != 0}">
+            <div class="main center">
+                <c:forEach var="i" begin="0" end="${titleCount-1}" step="1">
+                    <c:if test="${goodsList.size()/5 >= i}">
+                        <c:forEach begin="${i * 5}" end="${(i+1)*5}" var="goods" items="${goodsList}" step="1">
+                            <div class="mingxing fl">
+                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                                <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                                <div class="jiage">${goods.spricereal}元</div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${goodsList.size()/5 < i}">
+                        <c:forEach begin="${i * 5}" end="${goodsList.size() - i * 5}" var="goods" items="${goodsList}" step="1">
+                            <div class="mingxing fl">
+                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
+                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                                <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                                <div class="jiage">${goods.spricereal}元</div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                </c:forEach>
+            </div><div class="clear"></div>
+        </c:if>
     </div>
 
+    <%--页脚--%>
     <div class="footer">
         <div class="footer-content">
             <div class="w1200">
                 <div class="footet-jiesao clearfix">
                     <div class="fl footer-logo-box">
-                        <img src="imges/new_logo.png" class="footer-logo">
+                        <img src="/user/imges/new_logo.png" class="footer-logo">
                         <span class="footer-slogan">买书看书 · 不求人</span>
                     </div>
                     <div class="fl footer-function">

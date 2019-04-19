@@ -8,13 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-/**
- * @Auther: WDS
- * @Date: 2019/4/4 19:10
- * @Description:
- */
-@WebServlet("/address.do")
-public class AddressServlet extends HttpServlet {
+@WebServlet("collection")
+public class CollectionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,10 +26,29 @@ public class AddressServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
         resp.setContentType("text/json");
         String method = req.getParameter("method");
-        switch (method){
-            case "getGoodsClassListByCondition":
-//                getAddressListByCondition(req,resp,"");
+        switch (method) {
+            //添加收藏
+            case "addCollection":
+                addCollection(req, resp);
+                break;
+            //获取收藏列表
+            case "getCollectionList":
+                getCollectionList(req, resp);
+                break;
+            //取消收藏列表
+            case "removeCollection":
+                removeCollection(req, resp);
                 break;
         }
+    }
+
+    private void removeCollection(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void getCollectionList(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void addCollection(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("添加收藏、、、、、、、");
     }
 }
