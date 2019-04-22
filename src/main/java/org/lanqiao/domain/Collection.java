@@ -23,4 +23,6 @@ public class Collection {
     private String ypricereal;
     private String gPic;
     private Date ctime;
+    private int gState;
+    private String gStateStr;
 }

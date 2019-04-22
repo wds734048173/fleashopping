@@ -11,7 +11,9 @@ import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: WDS
@@ -198,5 +200,26 @@ public class GoodsDaoImpl implements IGoodsDao {
             e.printStackTrace();
         }
         return Integer.valueOf(count.toString());
+    }
+
+    @Override
+    public List<Goods> selectGoodsListByIds(List<String> idList) {
+        List<Goods> goodsList = null;
+        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where id in ");
+        for (int i = 0; i < idList.size(); i++) {
+            if(i == 0){
+                sql.append( "(" + idList.get(i) + ",");
+            }else if(i == idList.size() - 1){
+                sql.append(idList.get(i) + ")");
+            }else{
+                sql.append(idList.get(i) + ",");
+            }
+        }
+        try {
+            goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goodsList;
     }
 }

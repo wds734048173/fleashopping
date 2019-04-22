@@ -12,72 +12,12 @@
 <html>
 <head>
     <title>个人中心-我的个人信息</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../user/css/login.css">
-    <link rel="stylesheet" href="../bootstrap/css/bookshop.css"/>
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
-    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bookshop.css">
-    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
-
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
-    <%--<script type="text/javascript">
-        $(function () {
-            $("#chphone").click(function () {
-                var flag = window.confirm("确定要修改电话吗？");
-                if (flag){
-                    alert("请修改电话信息");
-                    $(this).prev().removeAttr("readonly");
-                }
-            });
-            $("#chem").click(function () {
-                var flag = window.confirm("确定要修改邮箱吗？");
-                if (flag){
-                    alert("请修改邮箱信息");
-                    $(this).prev().removeAttr("readonly");
-                }
-            });
-            $("#chaddr").click(function () {
-                var flag = window.confirm("确定要修改地址吗？");
-                if (flag){
-                    alert("请修改地址信息");
-                    $(this).prev().removeAttr("readonly");
-                }
-            })
-            $("#chname").click(function () {
-                var flag = window.confirm("确定要修改真实姓名吗？");
-                if (flag){
-                    alert("请修改真实姓名");
-                    $(this).prev().removeAttr("readonly");
-                }
-            });
-
-            $("#save").click(function () {
-                //真实名称
-                var realname = $("#realname").val().trim();
-                //性别
-                var sex = $("input[name='sex']:checked").val();
-                //联系电话
-                var telphone = $("#telphone").val().trim();
-                //邮箱
-                var email = $("#email").val().trim();
-                if (realname.length > 20) {
-                    alert("真实名称多于20字，请重新输入");
-                    return;
-                }
-                if (!(/^1[3|4|5|6|7|8][0-9]\d{8}$/.test(telphone))) {
-                    alert("手机号格式错误，请重新输入");
-                    return;
-                }
-                if (!(/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g).test(email)) {
-                    alert("邮箱格式错误，请重新输入");
-                    return;
-                }
-                var url = "/manager/updateUser?realname=" + realname + "&sex=" + sex + "&telphone=" + telphone + "&email=" + email;
-                $(".content").load(url);
-            })
-        })
-    </script>--%>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
 <%--页眉--%>
@@ -113,7 +53,7 @@
         <%--左侧导航栏--%>
         <div class="selfinfo center">
             <div class="lfnav fl">
-                <div class="ddzx"><li class="ml40 action"><a href="/user.do?method=getUserInfo">我的个人信息</a></li></div>
+                <div class="ddzx"><li class="ml40 action"><a href="user.do?method=getMyInfo">我的个人信息</a></li></div>
                 <div class="ddzx"><li class="ml40"><a href="/goods.do?method=getOwnGoodsList">我发布的商品</a></li></div>
                 <div class="ddzx"><li class="ml40"><a href="/collection.do?method=getCollectionList">我收藏的商品</a></li></div>
                 <div class="ddzx"><li class="ml40"><a href="/order.do?method=getSaleOrderList">我卖出的订单</a></li></div>
@@ -122,46 +62,34 @@
             <%--右侧代码--%>
             <div class="rtcont fr">
                 <div class="ddzxbt">我的个人信息</div>
-                <form action="/user.do?method=updateUser" method="post">
-                    <div class="login-main center mt20" style="margin-top: 30px">
-                        <input hidden name="userId" value="${user.id}" id="userId"/>
-                        <div class="username check-height">
-                            <label for="username" style="color: black">用户名</label>
-                            <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="username" readonly value="${user.username}"/>
-                            <span class="error"></span>
+                <div class="modal-body" style="margin-left: 100px;padding-top: 80px; font-size: 20px;">
+                    <form  action="/user.do?method=updateUser" method="post" id="form">
+                        <!--<input  type="hidden" id="id" name="userId" th:value="${session.user.id}">-->
+                        <div class="form-group row">
+                            <label for="username" class="control-label">用户名：</label>
+                            <input type="text" name="username" id="username" required value="${user.username}" disabled>
                         </div>
-                        <div class="username check-height">
-                            <label for="realname" style="color: black">真实姓名</label>
-                            <input class="shurukuang" type="text" name="realname" placeholder="请填写正确的真实姓名" id="realname" value="${user.realname}"/>
-                            <%--<input class="jrgwc" type="button" value="立即修改" id="chname">--%>
-                            <span class="error"></span>
+                        <div  class="form-group row">
+                            <label for="realname" class="control-label">真实姓名：</label>
+                            <input type="text" name="realname" id="realname" required value="${user.realname}">
                         </div>
-
-                        <div class="username check-height">
-                            <label for="telphone" style="color: black">电话</label>
-                            <input class="shurukuang" type="text" name="telphone" placeholder="请填写正确的手机号" id="telphone" value="${user.telphone}"/>
-                            <%--<input class="jrgwc" type="button" value="立即修改" id="chphone">--%>
-                            <span class="error"></span>
+                        <div  class="form-group row">
+                            <label for="telphone" class="control-label">电&nbsp;话&nbsp;：</label>
+                            <input type="text" name="telphone" id="telphone" required value="${user.telphone}">
                         </div>
-
-                        <div class="username check-height">
-                            <label for="email" style="color: black">邮箱</label>
-                            <input class="shurukuang" type="text" name="email" placeholder="请填写正确的邮箱地址" id="email" value="${user.email}"/>
-                            <%--<input class="jrgwc" type="button" value="立即修改" id="chem">--%>
-                            <span class="error"></span>
+                        <div class="form-group row">
+                            <label for="email" class="control-label">邮&nbsp;箱&nbsp;：</label>
+                            <input type="email" name="email" id="email" required value="${user.email}">
                         </div>
-
-                        <div class="username check-height">
-                            <label for="address" style="color: black">地址</label>
-                            <input class="shurukuang" type="text" name="address" placeholder="请填写正确的邮寄地址" id="address" value="${user.address}"/>
-                            <%--<input class="jrgwc" type="button" value="立即修改" id="chaddr">--%>
-                            <span class="error"></span>
+                        <div class="form-group row">
+                            <label for="address" class="control-label">地&nbsp;址&nbsp;：</label>
+                            <input type="text" name="address" id="address" required value="${user.address}">
                         </div>
-                        <div class="regist_submit">
-                            <input class="jrgwc btn btn-primary btn-warning active" type="submit" name="submit" value="保存" >
+                       <div class="form-group row">
+                            <input type="submit" value="修改" class="btn btn-primary"/>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>

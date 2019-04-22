@@ -11,15 +11,12 @@
 <html>
 <head>
     <title>个人中心-我卖出的订单</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
     <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../user/css/login.css">
-    <link rel="stylesheet" href="../bootstrap/css/bookshop.css"/>
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
-    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
-
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../user/js/login.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#chphone").click(function () {
@@ -83,7 +80,7 @@
     <%--左侧导航栏--%>
     <div class="selfinfo center">
         <div class="lfnav fl">
-            <div class="ddzx"><li class="ml40"><a href="/user.do?method=getUserInfo">我的个人信息</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="user.do?method=getMyInfo">我的个人信息</a></li></div>
             <div class="ddzx"><li class="ml40"><a href="/goods.do?method=getOwnGoodsList">我发布的商品</a></li></div>
             <div class="ddzx"><li class="ml40"><a href="/collection.do?method=getCollectionList">我收藏的商品</a></li></div>
             <div class="ddzx"><li class="ml40 action"><a href="/order.do?method=getSaleOrderList">我卖出的订单</a></li></div>

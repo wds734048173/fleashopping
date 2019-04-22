@@ -33,4 +33,6 @@ public interface IGoodsDao {
     public List<Goods> selectGoodsListByCondition(Condition condition);
     //通过模糊查询获取商品数量（后台）
     public int selectGoodsCountByCondition(Condition condition);
+    //通过ids获取商品列表
+    public List<Goods> selectGoodsListByIds(List<String> idList);
 }
