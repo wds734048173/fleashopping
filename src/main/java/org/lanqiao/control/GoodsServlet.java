@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -47,6 +48,12 @@ public class GoodsServlet extends HttpServlet {
             case "DownGoodsById":
                 DownGoodsById(req,resp);
                 break;
+            case "DownGoodsSaleById":
+                DownGoodsSaleById(req,resp);
+                break;
+            case "UpGoodsSaleById":
+                UpGoodsSaleById(req,resp);
+                break;
             //后端获取详情
             case "getGoodsById":
                 getGoodsById(req,resp);
@@ -55,6 +62,71 @@ public class GoodsServlet extends HttpServlet {
             case "detail":
                 detail(req,resp);
                 break;
+            case "getOwnGoodsList":
+                getOwnGoodsList(req,resp);
+                break;
+        }
+    }
+
+    private void UpGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            int goodsId = Integer.valueOf(req.getParameter("goodsId"));
+            goodsService.upGoodsById(goodsId);
+            getOwnGoodsList(req,resp);
+        }
+    }
+
+    private void DownGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            int goodsId = Integer.valueOf(req.getParameter("goodsId"));
+            goodsService.downGoodsById(goodsId);
+            getOwnGoodsList(req,resp);
+        }
+    }
+
+    private void getOwnGoodsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            //查询条件
+            String searchGoodsName = "";
+            if(req.getParameter("searchGoodsName") != null){
+                searchGoodsName = req.getParameter("searchGoodsName");
+            }
+            String searchGoodsClassId = "-1";
+            if(req.getParameter("searchGoodsClassId") != null || "-1".equals(req.getParameter("searchGoodsClassId"))){
+                searchGoodsClassId = req.getParameter("searchGoodsClassId");
+            }
+            String searchGoodsState = "-1";
+            if(req.getParameter("searchGoodsState") != null  || "-1".equals(req.getParameter("searchGoodsState"))){
+                searchGoodsState = req.getParameter("searchGoodsState");
+            }
+            Condition condition = new Condition();
+            condition.setName(searchGoodsName);
+            condition.setGoodsClassId(searchGoodsClassId);
+            condition.setState(searchGoodsState);
+            condition.setSId(userId.toString());
+
+            List<Goods> goodsList = goodsService.getGoodsListByCondition(condition);
+            req.setAttribute("condition",condition);
+            req.setAttribute("goodsList",goodsList);
+            try {
+                req.getRequestDispatcher("user/goodsSaleList.jsp").forward(req,resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

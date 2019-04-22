@@ -50,7 +50,12 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Override
     public void downGoodsById(int id) {
-        goodsDao.downGoodsById(id);
+        goodsDao.updateGoodsState(id,1);
+    }
+
+    @Override
+    public void upGoodsById(int id) {
+        goodsDao.updateGoodsState(id,0);
     }
 
     @Override

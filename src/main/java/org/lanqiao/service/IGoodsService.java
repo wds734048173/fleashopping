@@ -17,6 +17,8 @@ public interface IGoodsService {
     public int getGoodsCountByCondition(Condition condition);
     //下架商品
     public void downGoodsById(int id);
+    //上架商品
+    public void upGoodsById(int id);
     //通过id获取商品详情
     public Goods getGoodsById(int id);
     //查询所有的商品

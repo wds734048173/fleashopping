@@ -86,12 +86,10 @@ public class UserServlet extends HttpServlet {
     private void getMyInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Object userId = session.getAttribute("userId");
-        System.out.println(userId);
         if(userId == null){
             req.getRequestDispatcher("user/login.jsp").forward(req,resp);
         }else {
             User user =userService.getUserById(Integer.valueOf(userId.toString()));
-            System.out.println(user+"==========================");
             req.setAttribute("user",user);
             req.getRequestDispatcher("user/myInfo.jsp").forward(req,resp);
         }

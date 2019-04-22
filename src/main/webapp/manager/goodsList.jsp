@@ -216,7 +216,7 @@
 <script type="text/javascript">
     $(function(){
         $("#searchGoodsClassId").append("<option value='-1'>全部</option>")
-        //获取图书分类
+        //获取分类
         $.ajax({
             url:"/goodsClass.do?method=getGoodsClassListForSelect",
             success:function (data) {

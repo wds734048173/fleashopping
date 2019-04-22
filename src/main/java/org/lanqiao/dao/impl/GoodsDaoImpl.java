@@ -54,16 +54,6 @@ public class GoodsDaoImpl implements IGoodsDao {
     }
 
     @Override
-    public void downGoodsById(int id) {
-        String sql = "UPDATE tb_goods SET state = 1,rtime = now() WHERE id = ?";
-        try {
-            qr.execute(sql,id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public Goods selectGoodsById(int id) {
         Goods goods = null;
         String sql = "SELECT * from tb_goods where id = ?";
@@ -73,45 +63,6 @@ public class GoodsDaoImpl implements IGoodsDao {
             e.printStackTrace();
         }
         return goods;
-    }
-
-    @Override
-    public List<Goods> selectGoodsList(Condition condition) {
-        List<Goods> goodsList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_goods where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
-        if(condition != null){
-            if(condition.getName() != null && !"".equals(condition.getName())){
-                sql.append(" and name like ? ");
-                search.add("%" + condition.getName() + "%");
-            }
-            sql.append(" limit ?,?");
-            search.add(condition.getCurrentPage());
-            search.add(condition.getPageSize());
-        }
-        try {
-            goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return goodsList;
-    }
-
-    @Override
-    public int selectGoodsCount(Condition condition) {
-        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
-        if(condition.getName() != null && !"".equals(condition.getName())){
-            sql.append(" and name like ? ");
-            search.add("%" + condition.getName() + "%");
-        }
-        Long count = 0L;
-        try {
-            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Integer.valueOf(count.toString());
     }
 
     @Override
@@ -138,10 +89,10 @@ public class GoodsDaoImpl implements IGoodsDao {
     }
 
     @Override
-    public void updateGoodsState(int id) {
-        String sql = "UPDATE tb_goods SET state = 1,rtime = now() WHERE id = ?";
+    public void updateGoodsState(int id,int state) {
+        String sql = "UPDATE tb_goods SET state = ?,rtime = now() WHERE id = ?";
         try {
-            qr.execute(sql,id);
+            qr.execute(sql,state,id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -165,9 +116,16 @@ public class GoodsDaoImpl implements IGoodsDao {
                 sql.append(" and state = ? ");
                 search.add(condition.getState());
             }
-            sql.append(" limit ?,?");
-            search.add(condition.getCurrentPage());
-            search.add(condition.getPageSize());
+            if(condition.getSId() != null && !"".equals(condition.getSId())){
+                sql.append(" and uid = ? ");
+                search.add(condition.getSId());
+            }
+            sql.append(" order by ctime desc ");
+            if(condition.getCurrentPage() != 0){
+                sql.append( " limit ?,?");
+                search.add(condition.getCurrentPage());
+                search.add(condition.getPageSize());
+            }
         }
         try {
             goodsList = qr.query(sql.toString(),new BeanListHandler<>(Goods.class),search.toArray());
@@ -181,17 +139,19 @@ public class GoodsDaoImpl implements IGoodsDao {
     public int selectGoodsCountByCondition(Condition condition) {
         StringBuffer sql = new StringBuffer("SELECT count(1) from tb_goods where 1 = 1 ");
         List<Object> search = new ArrayList<>();
-        if(condition.getName() != null && !"".equals(condition.getName())){
-            sql.append(" and name like ? ");
-            search.add("%" + condition.getName() + "%");
-        }
-        if(condition.getGoodsClassId() != null && !"-1".equals(condition.getGoodsClassId())){
-            sql.append(" and classId = ? ");
-            search.add(condition.getGoodsClassId());
-        }
-        if(condition.getState() != null && !"-1".equals(condition.getState())){
-            sql.append(" and state = ? ");
-            search.add(condition.getState());
+        if(condition != null){
+            if(condition.getName() != null && !"".equals(condition.getName())){
+                sql.append(" and name like ? ");
+                search.add("%" + condition.getName() + "%");
+            }
+            if(condition.getGoodsClassId() != null && !"-1".equals(condition.getGoodsClassId())){
+                sql.append(" and classId = ? ");
+                search.add(condition.getGoodsClassId());
+            }
+            if(condition.getState() != null && !"-1".equals(condition.getState())){
+                sql.append(" and state = ? ");
+                search.add(condition.getState());
+            }
         }
         Long count = 0L;
         try {
