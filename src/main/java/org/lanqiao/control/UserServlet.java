@@ -55,6 +55,31 @@ public class UserServlet extends HttpServlet {
             case "getMyInfo":
                 getMyInfo(req, resp);
                 break;
+            case "updateUser":
+                updateUser(req,resp);
+                break;
+        }
+    }
+
+    private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        System.out.println(userId);
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            User user = User.builder().build();
+            user.setId(Integer.valueOf(userId.toString()));
+            String realname = req.getParameter("realname");
+            String telphone = req.getParameter("telphone");
+            String email = req.getParameter("email");
+            String address = req.getParameter("address");
+            user.setRealname(realname);
+            user.setTelphone(telphone);
+            user.setEmail(email);
+            user.setAddress(address);
+            userService.modifyUser(user);
+            getMyInfo(req,resp);
         }
     }
 

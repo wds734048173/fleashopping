@@ -29,7 +29,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void modifyUser(User user) {
-
+        userDao.updateUser(user);
     }
 
     @Override

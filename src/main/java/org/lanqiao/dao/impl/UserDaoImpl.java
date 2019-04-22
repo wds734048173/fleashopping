@@ -45,7 +45,12 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public void updateUser(User user) {
-
+        String sql = "UPDATE tb_user SET rtime = now(),realname = ?,email = ?,telphone = ?,address = ? WHERE id = ?";
+        try {
+            qr.execute(sql,user.getRealname(),user.getEmail(),user.getTelphone(),user.getAddress(),user.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -152,7 +157,7 @@ public class UserDaoImpl implements IUserDao {
     }
     @Override
     public int updateUserPassword(User user){
-        String sql = "UPDATE tb_user SET password = ? WHERE username = ?";
+        String sql = "UPDATE tb_user SET password = ?,rtime = now() WHERE username = ?";
         int result = -1;
         try {
             result = qr.execute(sql,user.getPassword(),user.getUsername());

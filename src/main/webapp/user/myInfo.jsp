@@ -17,10 +17,11 @@
     <link rel="stylesheet" type="text/css" href="../user/css/login.css">
     <link rel="stylesheet" href="../bootstrap/css/bookshop.css"/>
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bookshop.css">
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         $(function () {
             $("#chphone").click(function () {
                 var flag = window.confirm("确定要修改电话吗？");
@@ -50,8 +51,33 @@
                     $(this).prev().removeAttr("readonly");
                 }
             });
+
+            $("#save").click(function () {
+                //真实名称
+                var realname = $("#realname").val().trim();
+                //性别
+                var sex = $("input[name='sex']:checked").val();
+                //联系电话
+                var telphone = $("#telphone").val().trim();
+                //邮箱
+                var email = $("#email").val().trim();
+                if (realname.length > 20) {
+                    alert("真实名称多于20字，请重新输入");
+                    return;
+                }
+                if (!(/^1[3|4|5|6|7|8][0-9]\d{8}$/.test(telphone))) {
+                    alert("手机号格式错误，请重新输入");
+                    return;
+                }
+                if (!(/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g).test(email)) {
+                    alert("邮箱格式错误，请重新输入");
+                    return;
+                }
+                var url = "/manager/updateUser?realname=" + realname + "&sex=" + sex + "&telphone=" + telphone + "&email=" + email;
+                $(".content").load(url);
+            })
         })
-    </script>
+    </script>--%>
 </head>
 <body>
 <%--页眉--%>
@@ -96,9 +122,9 @@
             <%--右侧代码--%>
             <div class="rtcont fr">
                 <div class="ddzxbt">我的个人信息</div>
-                <form action="/customer.do?method=updateCustomer" method="post">
+                <form action="/user.do?method=updateUser" method="post">
                     <div class="login-main center mt20" style="margin-top: 30px">
-                        <input hidden name="userId" value="${user.id}"/>
+                        <input hidden name="userId" value="${user.id}" id="userId"/>
                         <div class="username check-height">
                             <label for="username" style="color: black">用户名</label>
                             <input class="shurukuang" type="text" name="username" placeholder="请输入用户名（字母、数字）" id="username" readonly value="${user.username}"/>
@@ -106,29 +132,29 @@
                         </div>
                         <div class="username check-height">
                             <label for="realname" style="color: black">真实姓名</label>
-                            <input class="shurukuang" type="text" name="realname" placeholder="请填写正确的真实姓名" id="realname" readonly value="${user.realname}"/>
-                            <input class="jrgwc" type="button" value="立即修改" id="chname">
+                            <input class="shurukuang" type="text" name="realname" placeholder="请填写正确的真实姓名" id="realname" value="${user.realname}"/>
+                            <%--<input class="jrgwc" type="button" value="立即修改" id="chname">--%>
                             <span class="error"></span>
                         </div>
 
                         <div class="username check-height">
                             <label for="telphone" style="color: black">电话</label>
-                            <input class="shurukuang" type="text" name="telphone" placeholder="请填写正确的手机号" id="telphone" readonly value="${user.telphone}"/>
-                            <input class="jrgwc" type="button" value="立即修改" id="chphone">
+                            <input class="shurukuang" type="text" name="telphone" placeholder="请填写正确的手机号" id="telphone" value="${user.telphone}"/>
+                            <%--<input class="jrgwc" type="button" value="立即修改" id="chphone">--%>
                             <span class="error"></span>
                         </div>
 
                         <div class="username check-height">
                             <label for="email" style="color: black">邮箱</label>
-                            <input class="shurukuang" type="text" name="email" placeholder="请填写正确的邮箱地址" id="email" readonly value="${user.email}"/>
-                            <input class="jrgwc" type="button" value="立即修改" id="chem">
+                            <input class="shurukuang" type="text" name="email" placeholder="请填写正确的邮箱地址" id="email" value="${user.email}"/>
+                            <%--<input class="jrgwc" type="button" value="立即修改" id="chem">--%>
                             <span class="error"></span>
                         </div>
 
                         <div class="username check-height">
                             <label for="address" style="color: black">地址</label>
-                            <input class="shurukuang" type="text" name="address" placeholder="请填写正确的邮寄地址" id="address" readonly value="${user.address}"/>
-                            <input class="jrgwc" type="button" value="立即修改" id="chaddr">
+                            <input class="shurukuang" type="text" name="address" placeholder="请填写正确的邮寄地址" id="address" value="${user.address}"/>
+                            <%--<input class="jrgwc" type="button" value="立即修改" id="chaddr">--%>
                             <span class="error"></span>
                         </div>
                         <div class="regist_submit">
