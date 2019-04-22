@@ -12,7 +12,7 @@
 <html>
 <head>
     <title><%=goods.getName()%></title>
-    <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../user/imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">

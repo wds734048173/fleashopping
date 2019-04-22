@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../user/imges/logo.ico">
 </head>
 <body>
     <jsp:forward page="/home.do?method=homeList"></jsp:forward>

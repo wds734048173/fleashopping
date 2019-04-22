@@ -10,9 +10,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
     <title>个人中心-我发布的商品</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
-    <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../user/imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
@@ -61,6 +64,8 @@
                     +"&goodsClassId="+goodsClassId+"&goodsName="+goodsName+"&ypricereal="+ypricereal+"&spricereal="+spricereal+"&remark="+remark+"&goodsPic="+goodsPic+"&goodsId="+goodsId;
                 window.location.href = url;
                 $(".modal-backdrop").remove();
+                /*url = "/goods.do?method=getOwnGoodsList&searchGoodsName="+searchGoodsName+"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
+                window.location.href = url;*/
             })
             //修改
             $(".getGoodsInfo").click(function () {
@@ -96,6 +101,7 @@
                     var searchGoodsState = $("#searchGoodsState option:selected").val();
                     var url = "/goods.do?method=DownGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
                     window.location.href = url;
+                    window.location.href = "/goods.do?method=getOwnGoodsList";
                 }else{
                     return;
                 }

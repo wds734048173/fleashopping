@@ -12,7 +12,7 @@
 <head>
     <title>个人中心-我卖出的订单</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
-    <link rel="shortcut icon" type="image/x-icon" href="imges/logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../user/imges/logo.ico">
     <link rel="stylesheet" type="text/css" href="../user/css/style.css">
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
