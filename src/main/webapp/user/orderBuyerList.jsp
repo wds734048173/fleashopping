@@ -40,8 +40,8 @@
 
         //查看订单详情
         function getOrderInfo(orderId) {
-            var url = "/order.do?method=getOrderInfo&orderId=" + orderId;
-            $(".content").load(url);
+            var url = "/order.do?method=getOrderBuyerInfo&orderId=" + orderId;
+            window.location.href = url;
         }
 
         //查询的手动提交方式

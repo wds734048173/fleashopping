@@ -77,6 +77,58 @@ public class OrderServlet extends HttpServlet {
             case "updateSaleOrderState":
                 updateSaleOrderState(req,resp);
                 break;
+            case "getOrderSaleInfo":
+                getOrderSaleInfo(req,resp);
+                break;
+            case "getOrderBuyerInfo":
+                getOrderBuyerInfo(req,resp);
+                break;
+        }
+    }
+
+    private void getOrderBuyerInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            int orderId = Integer.valueOf(req.getParameter("orderId"));
+            //获取订单列表的详细信息
+            Order order = orderService.getOrderById(orderId);
+            //获取订单子表信息
+            List<OrderInfo> orderInfoList = orderService.getOrderInfoList(orderId);
+            req.setAttribute("order",order);
+            req.setAttribute("orderInfoList",orderInfoList);
+            try {
+                req.getRequestDispatcher("/user/orderBuyerInfo.jsp").forward(req,resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getOrderSaleInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            int orderId = Integer.valueOf(req.getParameter("orderId"));
+            //获取订单列表的详细信息
+            Order order = orderService.getOrderById(orderId);
+            //获取订单子表信息
+            List<OrderInfo> orderInfoList = orderService.getOrderInfoList(orderId);
+            req.setAttribute("order",order);
+            req.setAttribute("orderInfoList",orderInfoList);
+            try {
+                req.getRequestDispatcher("/user/orderSaleInfo.jsp").forward(req,resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
