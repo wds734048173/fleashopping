@@ -20,8 +20,8 @@ public class Condition {
     private String orderNo;
     private String goodsClassId;
     private Date date;
-    private int bId;
-    private int sId;
+    private String bId;
+    private String sId;
 
     private int currentPage;
     private int pageSize;

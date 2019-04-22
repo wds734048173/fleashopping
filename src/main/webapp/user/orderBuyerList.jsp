@@ -17,6 +17,41 @@
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        //修改订单状态
+        function updateOrderState(orderId,state) {
+            if(state == 2){
+                var isUpdate = confirm("确定付款吗？");
+            }else if(state == 4){
+                var isUpdate = confirm("确定收货吗？");
+            }else if(state == 6){
+                var isUpdate = confirm("确定作废吗？");
+            }
+            if (isUpdate) {
+                //查询条件
+                var searchOrderNo = $("#searchOrderNo").val();
+                var searchOrderState = $("#searchOrderState").val();
+                var url = "/order.do?method=updateBuyerOrderState&orderId=" + orderId + "&state=" + state + "&searchOrderNo=" + searchOrderNo + "&searchOrderState=" + searchOrderState;
+                window.location.href = url;
+            } else {
+                return;
+            }
+        }
+
+        //查看订单详情
+        function getOrderInfo(orderId) {
+            var url = "/order.do?method=getOrderInfo&orderId=" + orderId;
+            $(".content").load(url);
+        }
+
+        //查询的手动提交方式
+        function search() {
+            var searchOrderNo = $("#searchOrderNo").val();
+            var searchOrderState = $("#searchOrderState").val();
+            var url = "/order.do?method=getBuyerOrderList&searchOrderNo="+searchOrderNo+"&searchOrderState="+searchOrderState;
+            window.location.href = url;
+        }
+    </script>
 </head>
 <body>
 <%--页眉--%>
@@ -61,7 +96,29 @@
         <%--右侧代码--%>
         <div class="rtcont fr">
             <div class="ddzxbt">我买到的订单</div>
-
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-xs-6">
+                        <label for="searchOrderNo" >订单编号:</label>
+                        <input type="text" class="myinput"  placeholder="" id="searchOrderNo" name="searchOrderNo" value="${condition.orderNo}">
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="searchOrderState">订单状态</label>
+                        <select class=" myinput" name="searchOrderState" id="searchOrderState">
+                            <option value="" <c:if test="${empty condition.state}" > selected </c:if> >全部</option>
+                            <option value="1" <c:if test="${condition.state == 1}" > selected </c:if> >未付款</option>
+                            <option value="2" <c:if test="${condition.state == 2}" > selected </c:if> >已付款</option>
+                            <option value="3" <c:if test="${condition.state == 3}" > selected </c:if> >已发货</option>
+                            <option value="4" <c:if test="${condition.state == 4}" > selected </c:if> >已收货</option>
+                            <option value="5" <c:if test="${condition.state == 5}" > selected </c:if> >已评价</option>
+                            <option value="6" <c:if test="${condition.state == 6}" > selected </c:if> >已作废</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" id="search" value="查询" onclick="search(null)"/>
+                </div>
+            </div>
             <div class="modal-body">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -86,17 +143,14 @@
                             <td><fmt:formatDate value="${order.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                             <td>
                                 <a class="btn btn-default getOrderInfo" href="#" role="button"  name="getOrderInfo"  onclick="getOrderInfo(${order.id})">订单详情</a>
-                                    <%--已付款的订单可发货--%>
-                                    <%--<c:choose>
-                                        <c:when test="${order.state == 2}">
-                                            <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},3)">发货</a>
-                                        </c:when>
-                                        &lt;%&ndash;未付款的订单可取消订单&ndash;%&gt;
-                                        <c:when test="${order.state == 1}">
-                                            <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},6)">作废</a>
-                                        </c:when>
-                                    </c:choose>--%>
+                                <c:if test="${order.state == 3}">
+                                    <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},4)">收货</a>
+                                </c:if>
+                                <%--<c:if test="${order.state == 4}">
+                                    <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},5)">评论</a>
+                                </c:if>--%>
                                 <c:if test="${order.state == 1}">
+                                    <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},2)">付款</a>
                                     <a class="btn btn-default updateOrderState" href="#" role="button"  name="updateOrderState" onclick="updateOrderState(${order.id},6)">作废</a>
                                 </c:if>
                             </td>
@@ -105,7 +159,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="clear"></div>
         </div>
         <div class="clear"></div>

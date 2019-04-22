@@ -66,7 +66,7 @@
                     <form  action="/user.do?method=updateUser" method="post" id="form">
                         <!--<input  type="hidden" id="id" name="userId" th:value="${session.user.id}">-->
                         <div class="form-group row">
-                            <label for="username" class="control-label">用户名：</label>
+                            <label for="username" class="control-label">用&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>
                             <input type="text" name="username" id="username" required value="${user.username}" disabled>
                         </div>
                         <div  class="form-group row">
@@ -74,15 +74,15 @@
                             <input type="text" name="realname" id="realname" required value="${user.realname}">
                         </div>
                         <div  class="form-group row">
-                            <label for="telphone" class="control-label">电&nbsp;话&nbsp;：</label>
+                            <label for="telphone" class="control-label">联系电话：</label>
                             <input type="text" name="telphone" id="telphone" required value="${user.telphone}">
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="control-label">邮&nbsp;箱&nbsp;：</label>
+                            <label for="email" class="control-label">邮箱地址：</label>
                             <input type="email" name="email" id="email" required value="${user.email}">
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="control-label">地&nbsp;址&nbsp;：</label>
+                            <label for="address" class="control-label">收货地址：</label>
                             <input type="text" name="address" id="address" required value="${user.address}">
                         </div>
                        <div class="form-group row">

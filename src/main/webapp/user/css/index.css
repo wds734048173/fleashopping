@@ -24,7 +24,7 @@ footer{
 * {
     margin: 0;
     padding: 0;
-    border: 0 solid #000000;
+    /*border: 0 solid #000000;*/
 }
 
 div {

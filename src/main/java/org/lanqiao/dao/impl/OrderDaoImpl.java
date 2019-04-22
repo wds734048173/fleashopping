@@ -110,9 +110,20 @@ public class OrderDaoImpl implements IOrderDao {
                 sql.append(" and state = ? ");
                 search.add(condition.getState());
             }
-            sql.append(" order by ctime desc limit ?,?");
-            search.add(condition.getCurrentPage());
-            search.add(condition.getPageSize());
+            if(condition.getBId() != null && !"".equals(condition.getBId())){
+                sql.append(" and bid = ? ");
+                search.add(condition.getBId());
+            }
+            if(condition.getSId() != null && !"".equals(condition.getSId())){
+                sql.append(" and sid = ? ");
+                search.add(condition.getSId());
+            }
+            sql.append(" order by ctime desc ");
+            if(condition.getCurrentPage() != 0){
+                sql.append( " limit ?,?");
+                search.add(condition.getCurrentPage());
+                search.add(condition.getPageSize());
+            }
         }
         try {
             orderList = qr.query(sql.toString(),new BeanListHandler<>(Order.class),search.toArray());
@@ -133,6 +144,14 @@ public class OrderDaoImpl implements IOrderDao {
         if(condition.getState() != null && !"".equals(condition.getState())){
             sql.append(" and state = ? ");
             search.add(condition.getState());
+        }
+        if(condition.getBId() != null && !"".equals(condition.getBId())){
+            sql.append(" and bid = ? ");
+            search.add(condition.getBId());
+        }
+        if(condition.getSId() != null && !"".equals(condition.getSId())){
+            sql.append(" and sid = ? ");
+            search.add(condition.getSId());
         }
         Long count = 0L;
         try {

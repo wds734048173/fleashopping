@@ -65,6 +65,108 @@ public class OrderServlet extends HttpServlet {
             case "payOrder":
                 payOrder(req,resp);
                 break;
+            case "getSaleOrderList":
+                getSaleOrderList(req,resp);
+                break;
+            case "getBuyerOrderList":
+                getBuyerOrderList(req,resp);
+                break;
+            case "updateBuyerOrderState":
+                updateBuyerOrderState(req,resp);
+                break;
+            case "updateSaleOrderState":
+                updateSaleOrderState(req,resp);
+                break;
+        }
+    }
+
+    private void updateSaleOrderState(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            int orderId = Integer.valueOf(req.getParameter("orderId"));
+            int state = Integer.valueOf(req.getParameter("state"));
+            orderService.updateOrderState(orderId,state);
+            getSaleOrderList(req,resp);
+        }
+    }
+
+    private void updateBuyerOrderState(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            int orderId = Integer.valueOf(req.getParameter("orderId"));
+            int state = Integer.valueOf(req.getParameter("state"));
+            orderService.updateOrderState(orderId,state);
+            getBuyerOrderList(req,resp);
+        }
+    }
+
+    private void getBuyerOrderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            //查询条件
+            String searchOrderNo = "";
+            if (req.getParameter("searchOrderNo") != null) {
+                searchOrderNo = req.getParameter("searchOrderNo");
+            }
+            String searchOrderState = "";
+            if (req.getParameter("searchOrderState") != null) {
+                searchOrderState = req.getParameter("searchOrderState");
+            }
+            Condition condition = new Condition();
+            condition.setOrderNo(searchOrderNo);
+            condition.setState(searchOrderState);
+            condition.setBId(userId.toString());
+            List<Order> orderList = orderService.getOrderList(condition);
+            req.setAttribute("condition", condition);
+            req.setAttribute("orderList", orderList);
+            try {
+                req.getRequestDispatcher("user/orderBuyerList.jsp").forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getSaleOrderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else {
+            //查询条件
+            String searchOrderNo = "";
+            if (req.getParameter("searchOrderNo") != null) {
+                searchOrderNo = req.getParameter("searchOrderNo");
+            }
+            String searchOrderState = "";
+            if (req.getParameter("searchOrderState") != null) {
+                searchOrderState = req.getParameter("searchOrderState");
+            }
+            Condition condition = new Condition();
+            condition.setOrderNo(searchOrderNo);
+            condition.setState(searchOrderState);
+            condition.setSId(userId.toString());
+            List<Order> orderList = orderService.getOrderList(condition);
+            req.setAttribute("condition", condition);
+            req.setAttribute("orderList", orderList);
+            try {
+                req.getRequestDispatcher("user/orderSaleList.jsp").forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
