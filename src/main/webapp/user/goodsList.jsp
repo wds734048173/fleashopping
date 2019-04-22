@@ -24,7 +24,7 @@
         <div class="top center">
             <div class="left fl">
                 <ul>
-                    <li><a href="../user/index.jsp">返回首页</a></li>
+                    <li><a href="../user/index.jsp" target="_self">返回首页</a></li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -36,10 +36,10 @@
                 <div class="fr">
                     <ul>
                         <%--登录页面--%>
-                        <li><a href="/user/login.jsp" target="_blank">登录</a></li>
+                        <li><a href="/user/login.jsp" target="_self">登录</a></li>
                         <li>|</li>
                         <%--注册页面--%>
-                        <li><a href="/user/register.jsp" target="_blank" >注册</a></li>
+                        <li><a href="/user/register.jsp" target="_self" >注册</a></li>
                     </ul>
                 </div>
                 <%
@@ -49,9 +49,9 @@
                     <ul>
                         <li>欢迎您：<%=realname%></li>
                         <li>|</li>
-                        <li><a href="/customer.do?method=getMyInfo&id=<%=session.getAttribute("CustomerId")%>" target="_blank">个人中心</a></li>
+                        <li><a href="/customer.do?method=getMyInfo&id=<%=session.getAttribute("CustomerId")%>"  target="_self">个人中心</a></li>
                         <li>|</li>
-                        <li><a href="/logout.do">退出登录</a></li>
+                        <li><a href="/logout.do" target="_self">退出登录</a></li>
                     </ul>
                 </div>
                 <%
@@ -77,8 +77,8 @@
                     <c:if test="${goodsList.size()/5 >= i}">
                         <c:forEach begin="${i * 5}" end="${(i+1)*5}" var="goods" items="${goodsList}" step="1">
                             <div class="mingxing fl">
-                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
-                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt="" target="_self"></a></div>
+                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self">${goods.name}</a></div>
                                 <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
                                 <div class="jiage">${goods.spricereal}元</div>
                             </div>
@@ -87,8 +87,8 @@
                     <c:if test="${goodsList.size()/5 < i}">
                         <c:forEach begin="${i * 5}" end="${goodsList.size() - i * 5}" var="goods" items="${goodsList}" step="1">
                             <div class="mingxing fl">
-                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt=""></a></div>
-                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}">${goods.name}</a></div>
+                                <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self"><img src="${goods.pic}" alt=""></a></div>
+                                <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self">${goods.name}</a></div>
                                 <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
                                 <div class="jiage">${goods.spricereal}元</div>
                             </div>
@@ -109,17 +109,17 @@
                         <span class="footer-slogan">买书看书 · 不求人</span>
                     </div>
                     <div class="fl footer-function">
-                        <a href="#" rel="nofollow">关于我们</a>
-                        <a href="#" rel="nofollow">用户协议</a>
-                        <a href="#" rel="nofollow">最新信息</a>
-                        <a href="#" rel="nofollow">意见反馈</a>
+                        <a href="#" rel="nofollow" target="_self">关于我们</a>
+                        <a href="#" rel="nofollow" target="_self">用户协议</a>
+                        <a href="#" rel="nofollow" target="_self">最新信息</a>
+                        <a href="#" rel="nofollow" target="_self">意见反馈</a>
                     </div>
                     <div class="fr footer-kefu">
-                        <a href="javascript:void(0)" rel="nofollow" class="lxkf">
+                        <a href="javascript:void(0)" rel="nofollow" class="lxkf" target="_self">
                             <i class="iconfont">&#xe601;</i>
                             立即联系
                         </a>
-                        <a rel="nofollow">
+                        <a rel="nofollow" target="_self">
                             <i class="iconfont">&#xe61a;</i>
                             021-61097639
                         </a>
@@ -130,7 +130,7 @@
                 <p class="footer-bottom-size">© 2018 在线买书 晋ICP备17020445号-1
                     <span id="exec_time"></span>|
                     <span id="load_time"></span>
-                    <a class="shgongshang" rel="nofollow" href="#">
+                    <a class="shgongshang" rel="nofollow" href="#" target="_self">
                         <img src="" alt="">山西工商</a>
                 </p>
             </div>

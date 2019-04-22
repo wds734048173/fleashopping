@@ -24,7 +24,7 @@
     <div class="top center">
         <div class="left fl">
             <ul>
-                <li><a href="../user/index.jsp">首页</a></li>
+                <li><a href="../user/index.jsp" target="_self">首页</a></li>
                 <div class="clear"></div>
             </ul>
         </div>
@@ -36,9 +36,9 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo" target="_self">个人中心</a></li>
                     <li>|</li>
-                    <li><a href="/logout.do">退出登录</a></li>
+                    <li><a href="/logout.do" target="_self">退出登录</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
@@ -54,11 +54,11 @@
     <%--左侧导航栏--%>
     <div class="selfinfo center">
         <div class="lfnav fl">
-            <div class="ddzx"><li class="ml40"><a href="user.do?method=getMyInfo">我的个人信息</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/goods.do?method=getOwnGoodsList">我发布的商品</a></li></div>
-            <div class="ddzx"><li class="ml40 action"><a href="/collection.do?method=getCollectionList">我收藏的商品</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getSaleOrderList">我卖出的订单</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getBuyerOrderList">我买到的订单</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="user.do?method=getMyInfo" target="_self">我的个人信息</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/goods.do?method=getOwnGoodsList" target="_self">我发布的商品</a></li></div>
+            <div class="ddzx"><li class="ml40 action"><a href="/collection.do?method=getCollectionList" target="_self">我收藏的商品</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getSaleOrderList" target="_self">我卖出的订单</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getBuyerOrderList" target="_self">我买到的订单</a></li></div>
         </div>
         <%--右侧代码--%>
         <div class="rtcont fr">
@@ -89,8 +89,8 @@
                             <td>${collection.GStateStr}</td>
                             <td><fmt:formatDate value="${collection.ctime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                             <td>
-                                <a class="btn btn-default" href="/goods.do?method=detail&goodsId=${collection.GId}" role="button">详情</a>
-                                <a class="btn btn-default" href="/collection.do?method=removeCollection&collectionId=${collection.id}" role="button">删除</a>
+                                <a class="btn btn-default" href="/goods.do?method=detail&goodsId=${collection.GId}" role="button" target="_self">详情</a>
+                                <a class="btn btn-default" href="/collection.do?method=removeCollection&collectionId=${collection.id}" role="button" target="_self">删除</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -113,17 +113,17 @@
                     <span class="footer-slogan">买书看书 · 不求人</span>
                 </div>
                 <div class="fl footer-function">
-                    <a href="#" rel="nofollow">关于我们</a>
-                    <a href="#" rel="nofollow">用户协议</a>
-                    <a href="#" rel="nofollow">最新信息</a>
-                    <a href="#" rel="nofollow">意见反馈</a>
+                    <a href="#" rel="nofollow" target="_self">关于我们</a>
+                    <a href="#" rel="nofollow" target="_self">用户协议</a>
+                    <a href="#" rel="nofollow" target="_self">最新信息</a>
+                    <a href="#" rel="nofollow" target="_self">意见反馈</a>
                 </div>
                 <div class="fr footer-kefu">
-                    <a href="javascript:void(0)" rel="nofollow" class="lxkf">
+                    <a href="javascript:void(0)" rel="nofollow" class="lxkf" target="_self">
                         <i class="iconfont">&#xe601;</i>
                         立即联系
                     </a>
-                    <a rel="nofollow">
+                    <a rel="nofollow" target="_self">
                         <i class="iconfont">&#xe61a;</i>
                         021-61097639
                     </a>
@@ -134,7 +134,7 @@
             <p class="footer-bottom-size">© 2018 在线买书 晋ICP备17020445号-1
                 <span id="exec_time"></span>|
                 <span id="load_time"></span>
-                <a class="shgongshang" rel="nofollow" href="#">
+                <a class="shgongshang" rel="nofollow" href="#" target="_self">
                     <img src="" alt="">山西工商</a>
             </p>
         </div>

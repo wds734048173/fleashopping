@@ -90,7 +90,7 @@
     <div class="top center">
         <div class="left fl">
             <ul>
-                <li><a href="../user/index.jsp">首页</a></li>
+                <li><a href="../user/index.jsp" target="_self">首页</a></li>
                 <div class="clear"></div>
             </ul>
         </div>
@@ -102,9 +102,9 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo"  target="_self">个人中心</a></li>
                     <li>|</li>
-                    <li><a href="/logout.do">退出登录</a></li>
+                    <li><a href="/logout.do" target="_self">退出登录</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
@@ -118,11 +118,11 @@
     <%--左侧导航栏--%>
     <div class="selfinfo center">
         <div class="lfnav fl">
-            <div class="ddzx"><li class="ml40"><a href="user.do?method=getMyInfo">我的个人信息</a></li></div>
-            <div class="ddzx"><li class="ml40 action"><a href="/goods.do?method=getOwnGoodsList">我发布的商品</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/collection.do?method=getCollectionList">我收藏的商品</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getSaleOrderList">我卖出的订单</a></li></div>
-            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getBuyerOrderList">我买到的订单</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="user.do?method=getMyInfo" target="_self">我的个人信息</a></li></div>
+            <div class="ddzx"><li class="ml40 action"><a href="/goods.do?method=getOwnGoodsList" target="_self">我发布的商品</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/collection.do?method=getCollectionList" target="_self">我收藏的商品</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getSaleOrderList" target="_self">我卖出的订单</a></li></div>
+            <div class="ddzx"><li class="ml40"><a href="/order.do?method=getBuyerOrderList" target="_self">我买到的订单</a></li></div>
         </div>
         <%--右侧代码--%>
         <div class="rtcont fr">
@@ -178,12 +178,12 @@
                             <td>${goods.ypricereal}</td>
                             <td>${goods.spricereal}</td>
                             <td>
-                                <a class="btn btn-default getGoodsInfo" href="#" role="button"  name="getGoodsInfo">详情</a>
+                                <a class="btn btn-default getGoodsInfo" href="#" role="button"  name="getGoodsInfo" target="_self">详情</a>
                                 <c:if test="${goods.state == 0}">
-                                    <a class="btn btn-default downGoods" href="#" role="button"  name="downGoods">下架</a>
+                                    <a class="btn btn-default downGoods" href="#" role="button"  name="downGoods" target="_self">下架</a>
                                 </c:if>
                                 <c:if test="${goods.state == 1}">
-                                    <a class="btn btn-default upGoods" href="#" role="button"  name="upGoods">上架</a>
+                                    <a class="btn btn-default upGoods" href="#" role="button"  name="upGoods" target="_self">上架</a>
                                 </c:if>
                             </td>
                         </tr>
@@ -208,17 +208,17 @@
                     <span class="footer-slogan">买书看书 · 不求人</span>
                 </div>
                 <div class="fl footer-function">
-                    <a href="#" rel="nofollow">关于我们</a>
-                    <a href="#" rel="nofollow">用户协议</a>
-                    <a href="#" rel="nofollow">最新信息</a>
-                    <a href="#" rel="nofollow">意见反馈</a>
+                    <a href="#" rel="nofollow" target="_self">关于我们</a>
+                    <a href="#" rel="nofollow" target="_self">用户协议</a>
+                    <a href="#" rel="nofollow" target="_self">最新信息</a>
+                    <a href="#" rel="nofollow" target="_self">意见反馈</a>
                 </div>
                 <div class="fr footer-kefu">
-                    <a href="javascript:void(0)" rel="nofollow" class="lxkf">
+                    <a href="javascript:void(0)" rel="nofollow" class="lxkf" target="_self">
                         <i class="iconfont">&#xe601;</i>
                         立即联系
                     </a>
-                    <a rel="nofollow">
+                    <a rel="nofollow" target="_self">
                         <i class="iconfont">&#xe61a;</i>
                         021-61097639
                     </a>

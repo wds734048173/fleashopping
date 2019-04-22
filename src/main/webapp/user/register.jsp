@@ -23,7 +23,7 @@
     <div class="top center" style="background: #333">
         <div class="left fl">
             <ul>
-                <li><a href="../user/index.jsp">首页</a></li>
+                <li><a href="../user/index.jsp" target="_self">首页</a></li>
                 <div class="clear"></div>
             </ul>
         </div>
@@ -31,7 +31,7 @@
             <div class="fr">
                 <ul>
                     <%--注册页面--%>
-                    <li><a href="../user/register.jsp" target="_blank" >注册</a></li>
+                    <li><a href="../user/register.jsp"  target="_self">注册</a></li>
                 </ul>
             </div>
             <div class="clear"></div>

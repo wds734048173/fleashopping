@@ -36,7 +36,7 @@
     <div class="top center">
         <div class="left fl">
             <ul>
-                <li><a href="../user/index.jsp">首页</a></li>
+                <li><a href="../user/index.jsp" target="_self">首页</a></li>
                 <div class="clear"></div>
             </ul>
         </div>
@@ -48,9 +48,9 @@
                 <ul>
                     <li>欢迎您：<%=realname%></li>
                     <li>|</li>
-                    <li><a href="/user.do?method=getMyInfo" target="_blank">个人中心</a></li>
+                    <li><a href="/user.do?method=getMyInfo"  target="_self">个人中心</a></li>
                     <li>|</li>
-                    <li><a href="/logout.do">退出登录</a></li>
+                    <li><a href="/logout.do" target="_self">退出登录</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
@@ -106,8 +106,8 @@
 
                     <tr class="shop">
                         <td colspan="5">
-                            店铺：<a class="J_ShopName J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.6" href="#" target="_blank" title="#">书籍是人类进步的阶梯</a>
-                            <span class="seller">卖家：<a href="#" target="_blank" class="J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.15">高尔基</a></span>
+                            店铺：<a class="J_ShopName J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.6" href="#" target="_self" title="#">书籍是人类进步的阶梯</a>
+                            <span class="seller">卖家：<a href="#"  target="_self" class="J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.15">高尔基</a></span>
                         </td>
                     </tr>
 
@@ -117,7 +117,7 @@
                     <tr class="item" data-lineid="19614514619:31175333266:35612993875" data-pointRate="0">
                         <td class="s-title">
                             <input type="hidden" name="goodsId" id="goodsId" value="${goods.id}">
-                            <a href="#" target="_blank"  data-point-url="http://log.mmstat.com/buy.1.5">
+                            <a href="#"  target="_self" data-point-url="http://log.mmstat.com/buy.1.5">
                                 <img src="${goods.pic}" class="itempic"><span class="title J_MakePoint" data-point-url="http://log.mmstat.com/buy.1.5">${goods.name}</span></a>
                             <div>
                                 <span style="color:gray;">卖家承诺72小时内发货</span>
@@ -203,7 +203,7 @@
                                     <div class="extra-area">
                                         <ul class="dib-wrap">
                                             <li class="dib title">发货时间：</li>
-                                            <li class="dib content">卖家承诺订单在买家付款后，72小时内<a href="#">发货</a></li>
+                                            <li class="dib content">卖家承诺订单在买家付款后，72小时内<a href="#" target="_self">发货</a></li>
                                         </ul>
                                     </div>
                                   <%--  <div class="servicearea" style="display: none"></div>--%>
@@ -239,7 +239,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a id="J_Go" title="点击此按钮，提交订单。" class="btn btn-primary btn-warning active"><input type="submit" value="提交订单"/></a>
+                                        <a id="J_Go" title="点击此按钮，提交订单。" class="btn btn-primary btn-warning active"  target="_self"><input type="submit" value="提交订单"/></a>
                                     </div>
                                 </div>
                                 <div class="msg" style="clear: both;">
@@ -268,17 +268,17 @@
                     <span class="footer-slogan">买书看书 · 不求人</span>
                 </div>
                 <div class="fl footer-function">
-                    <a href="#" rel="nofollow">关于我们</a>
-                    <a href="#" rel="nofollow">用户协议</a>
-                    <a href="#" rel="nofollow">最新信息</a>
-                    <a href="#" rel="nofollow">意见反馈</a>
+                    <a href="#" rel="nofollow" target="_self">关于我们</a>
+                    <a href="#" rel="nofollow" target="_self">用户协议</a>
+                    <a href="#" rel="nofollow" target="_self">最新信息</a>
+                    <a href="#" rel="nofollow" target="_self">意见反馈</a>
                 </div>
                 <div class="fr footer-kefu">
-                    <a href="javascript:void(0)" rel="nofollow" class="lxkf">
+                    <a href="javascript:void(0)" rel="nofollow" class="lxkf" target="_self">
                         <i class="iconfont">&#xe601;</i>
                         立即联系
                     </a>
-                    <a rel="nofollow">
+                    <a rel="nofollow" target="_self">
                         <i class="iconfont">&#xe61a;</i>
                         021-61097639
                     </a>
@@ -289,7 +289,7 @@
             <p class="footer-bottom-size">© 2018 在线买书 晋ICP备17020445号-1
                 <span id="exec_time"></span>|
                 <span id="load_time"></span>
-                <a class="shgongshang" rel="nofollow" href="#">
+                <a class="shgongshang" rel="nofollow" href="#" target="_self">
                     <img src="" alt="">山西工商</a>
             </p>
         </div>
