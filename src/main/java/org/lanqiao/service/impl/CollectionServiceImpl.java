@@ -43,39 +43,33 @@ public class CollectionServiceImpl implements ICollectionService {
     public List<Collection> getCollectionList(int uId) {
         //对收藏商品进行处理
         List<Collection> collectionList = collectionDao.selectCollectionList(uId);
-        Map<Integer,String> goodsStateIdNameMap = DataMap.getGoodsStateIdNameMap();
-        //获取商品id列表
-        /*StringBuffer goodsIds = new StringBuffer("(");
-        for(int i = 0; i < collectionList.size(); i++){
-            if(i == collectionList.size()-1){
-                goodsIds.append(collectionList.get(i).getGId() + ")");
-            }else{
-                goodsIds.append(collectionList.get(i).getGId() + ",");
+        if(collectionList.size() > 0){
+            Map<Integer,String> goodsStateIdNameMap = DataMap.getGoodsStateIdNameMap();
+            //获取商品id列表
+            List<String> goodsIds = new ArrayList<>();
+            for(Collection collection : collectionList){
+                goodsIds.add(collection.getGId() + "");
             }
-        }*/
-        List<String> goodsIds = new ArrayList<>();
-        for(Collection collection : collectionList){
-            goodsIds.add(collection.getGId() + "");
-        }
-        //通过ids获取商品详细详细列表
-        List<Goods> goodsList = goodsDao.selectGoodsListByIds(goodsIds);
-        for(Collection collection : collectionList){
-            int goodsId = collection.getGId();
-            for(Goods goods : goodsList){
-                int id = goods.getId();
-                if(goodsId == id){
-                    //完善收藏的信息
-                    collection.setGName(goods.getName());
-                    collection.setGPic(goods.getPic());
-                    collection.setSprice(goods.getSprice());
-                    collection.setYprice(goods.getYprice());
-                    collection.setGState(goods.getState());
-                    //对价格进行处理
-                    collection.setSpricereal(df.format((double)goods.getSprice()/100));
-                    collection.setYpricereal(df.format((double)goods.getYprice()/100));
-                    //对商品状态进行转换
-                    if(goodsStateIdNameMap.containsKey(goods.getState())){
-                        collection.setGStateStr(goodsStateIdNameMap.get(goods.getState()));
+            //通过ids获取商品详细详细列表
+            List<Goods> goodsList = goodsDao.selectGoodsListByIds(goodsIds);
+            for(Collection collection : collectionList){
+                int goodsId = collection.getGId();
+                for(Goods goods : goodsList){
+                    int id = goods.getId();
+                    if(goodsId == id){
+                        //完善收藏的信息
+                        collection.setGName(goods.getName());
+                        collection.setGPic(goods.getPic());
+                        collection.setSprice(goods.getSprice());
+                        collection.setYprice(goods.getYprice());
+                        collection.setGState(goods.getState());
+                        //对价格进行处理
+                        collection.setSpricereal(df.format((double)goods.getSprice()/100));
+                        collection.setYpricereal(df.format((double)goods.getYprice()/100));
+                        //对商品状态进行转换
+                        if(goodsStateIdNameMap.containsKey(goods.getState())){
+                            collection.setGStateStr(goodsStateIdNameMap.get(goods.getState()));
+                        }
                     }
                 }
             }

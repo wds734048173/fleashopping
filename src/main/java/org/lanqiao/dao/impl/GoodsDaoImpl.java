@@ -166,13 +166,17 @@ public class GoodsDaoImpl implements IGoodsDao {
     public List<Goods> selectGoodsListByIds(List<String> idList) {
         List<Goods> goodsList = null;
         StringBuffer sql = new StringBuffer("SELECT * from tb_goods where id in ");
-        for (int i = 0; i < idList.size(); i++) {
-            if(i == 0){
-                sql.append( "(" + idList.get(i) + ",");
-            }else if(i == idList.size() - 1){
-                sql.append(idList.get(i) + ")");
-            }else{
-                sql.append(idList.get(i) + ",");
+        if(idList.size() == 1){
+            sql.append( "(" + idList.get(0) + ")");
+        }else{
+            for (int i = 0; i < idList.size(); i++) {
+                if(i == 0){
+                    sql.append( "(" + idList.get(i) + ",");
+                }else if(i == idList.size() - 1){
+                    sql.append(idList.get(i) + ")");
+                }else{
+                    sql.append(idList.get(i) + ",");
+                }
             }
         }
         try {
