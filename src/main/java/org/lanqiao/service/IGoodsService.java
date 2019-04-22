@@ -23,4 +23,8 @@ public interface IGoodsService {
     public Goods getGoodsById(int id);
     //查询所有的商品
     public List<Goods> getGoodsListAll(Condition condition);
+    //新增商品
+    public void addGoods(Goods goods);
+    //修改商品
+    public void modifyGoods(Goods goods);
 }

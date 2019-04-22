@@ -30,8 +30,7 @@
         <div class="right fr">
             <div class="fr">
                 <ul>
-                    <%--注册页面--%>
-                    <li><a href="../user/register.jsp"  target="_self">注册</a></li>
+                    <li><a href="../user/login.jsp" target="_self">登录</a></li>
                 </ul>
             </div>
             <div class="clear"></div>

@@ -17,8 +17,51 @@
     <link rel="stylesheet" type="text/css" href="/user/css/index.css">
     <script type="text/javascript" src="../user/js/jquery.min.js"></script>
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="/manager/css/webuploader.css">
+    <script type="text/javascript" src="/manager/js/webuploader.js"></script>
     <script type="text/javascript">
         $(function () {
+            //新增
+            $("#addGoods").click(function () {
+                //获取分类
+                $.ajax({
+                    url:"/goodsClass.do?method=getGoodsClassListForSelect",
+                    success:function (data) {
+                        var goodsClassList = eval(data);
+                        $.each(goodsClassList,function (index,obj) {
+                            var goodsClass = eval(obj);
+                            var str = "<option value="+goodsClass.id +">"+goodsClass.name+"</option>";
+                            $("#goodsClassId").append(str);
+                        });
+                    }
+                })
+                $('#addGoodsModel').modal({
+                    keyboard: false,
+                    show:true
+                })
+            })
+            //保存
+            $("#save").click(function () {
+                var goodsId = $("#goodsId").val();
+                var goodsName = $("#goodsName").val();
+                var goodsClassId = $("#goodsClassId  option:selected").val();
+                var ypricereal = $("#ypricereal").val();
+                var spricereal = $("#spricereal").val();
+                var remark = $("#remark").val();
+                var goodsPic = $("#goodsPic").val();
+                if(goodsName.length > 20){
+                    alert("名称多于20字，请重新输入");
+                    return;
+                }
+                //查询条件
+                var searchGoodsName = $("#searchGoodsName").val();
+                var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
+                var searchGoodsState = $("#searchGoodsState option:selected").val();
+                var url = "/goods.do?method=addGoods&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState
+                    +"&goodsClassId="+goodsClassId+"&goodsName="+goodsName+"&ypricereal="+ypricereal+"&spricereal="+spricereal+"&remark="+remark+"&goodsPic="+goodsPic+"&goodsId="+goodsId;
+                window.location.href = url;
+                $(".modal-backdrop").remove();
+            })
             //修改
             $(".getGoodsInfo").click(function () {
                 var id = $(this).parent().parent().children("td:eq(0)").text();
@@ -156,6 +199,9 @@
                 </div>
             </div>
             <div class="modal-body">
+                <a class="btn btn-default" href="#" role="button"  id="addGoods" name="addGoods">添加商品分类</a>
+            </div>
+            <div class="modal-body">
                 <table class="table table-hover table-bordered">
                     <thead>
                     <th hidden>商品id</th>
@@ -190,6 +236,61 @@
                     </c:forEach>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="addGoodsModel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="gridSystemModalLabel">新增商品</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/goodsClass.do?method=addGoodsClass" id="addForm">
+                                <div class="form-group hidden">
+                                    <label for="goodsId" class="control-label">商品id:</label>
+                                    <input type="text" class="form-control" id="goodsId" name="goodsId">
+                                </div>
+                                <div>
+                                    <label >图书封面:</label>
+                                    <div id="uploader-demo" class="myinput">
+                                        <!--用来存放item-->
+                                        <div id="fileList" class="uploader-list"></div>
+                                        <div id="filePicker">选择图片</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="goodsPic" value="" name="goodsPic">
+                                <div class="form-group">
+                                    <label for="goodsName" class="control-label">商品名称:</label>
+                                    <input type="text" class="form-control" id="goodsName" name="goodsName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="goodsClassId" class="control-label">商品分类:</label>
+                                    <select class="form-control" name="goodsClassId" id="goodsClassId">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ypricereal" class="control-label">原价:</label>
+                                    <input type="number" class="form-control" id="ypricereal" name="ypricereal" required value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="spricereal" class="control-label">销售价:</label>
+                                    <input type="number" class="form-control" id="spricereal" name="spricereal" required value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="remark" class="control-label">商品介绍:</label>
+                                    <%--<input type="text" class="form-control" id="remark" name="remark" disabled value="${goods.remark}">--%>
+                                    <textarea class="layui-textarea"  name="remark" id="remark" style="margin: 0px; width: 567px; height: 134px;resize: none;"  required></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="save">保存</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="clear"></div>
@@ -270,4 +371,5 @@
         })
     })
 </script>
+<script type="text/javascript" src="/manager/js/picture.js"></script>
 </html>

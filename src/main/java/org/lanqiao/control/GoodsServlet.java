@@ -3,6 +3,7 @@ package org.lanqiao.control;
 import com.alibaba.fastjson.JSON;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
+import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.service.IGoodsService;
 import org.lanqiao.service.impl.GoodsServiceImpl;
 import org.lanqiao.utils.PageModel;
@@ -65,7 +66,42 @@ public class GoodsServlet extends HttpServlet {
             case "getOwnGoodsList":
                 getOwnGoodsList(req,resp);
                 break;
+            case "addGoods":
+                addGoods(req,resp);
+                break;
         }
+    }
+
+    private void addGoods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            Goods goods = new Goods();
+            String goodsName = req.getParameter("goodsName");
+            goods.setName(goodsName);
+            String goodsClassId = req.getParameter("goodsClassId");
+            String ypricereal = req.getParameter("ypricereal");
+            String spricereal = req.getParameter("spricereal");
+            String remark = req.getParameter("remark");
+            String goodsPic = req.getParameter("goodsPic");
+            goods.setClassId(Integer.valueOf(goodsClassId));
+            goods.setSprice((int)(Double.valueOf(spricereal) * 100));
+            goods.setYprice((int)(Double.valueOf(ypricereal) * 100));
+            goods.setRemark(remark);
+            goods.setPic(goodsPic);
+            goods.setUId(Integer.valueOf(userId.toString()));
+            String goodsId = req.getParameter("goodsId");
+            if(goodsId == null || "".equals(goodsId)){
+                goodsService.addGoods(goods);
+            }else{
+                goods.setId(Integer.valueOf(goodsId));
+                goodsService.modifyGoods(goods);
+            }
+            getOwnGoodsList(req, resp);
+        }
+
     }
 
     private void UpGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

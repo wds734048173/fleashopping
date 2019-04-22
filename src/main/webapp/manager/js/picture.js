@@ -65,13 +65,13 @@ jQuery(function() {
         $percent.css( 'width', percentage * 100 + '%' );
     });
     //上传之后的返回值
-    /*uploader.on('uploadAccept',function(object,ret){
-        if(ret.status=='1'){
+    uploader.on('uploadAccept',function(object,ret){
+        /*if(ret.status=='1'){
             $("#imgSrc").attr('value',ret.data);
-
             return true;
-        }
-    } );*/
+        }*/
+        $("#goodsPic").val(ret);
+    } );
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
     uploader.on( 'uploadSuccess', function(file) {
         $( '#'+file.id ).addClass('upload-state-done');

@@ -89,4 +89,14 @@ public class GoodsServiceImpl implements IGoodsService {
         }
         return goodsList;
     }
+
+    @Override
+    public void addGoods(Goods goods) {
+        goodsDao.insertGoods(goods);
+    }
+
+    @Override
+    public void modifyGoods(Goods goods) {
+        goodsDao.updateGoods(goods);
+    }
 }
