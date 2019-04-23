@@ -57,7 +57,7 @@ public class CollectionDaoImpl implements ICollectionDao {
     @Override
     public List<Collection> selectCollectionList(int uId) {
         List<Collection> collectionList = null;
-        String sql = "SELECT * from tb_collection where uid = ? ";
+        String sql = "SELECT * from tb_collection where uid = ? order by ctime desc";
         try {
             collectionList = qr.query(sql,new BeanListHandler<>(Collection.class),uId);
         } catch (SQLException e) {
