@@ -59,6 +59,11 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
+    public void removeGoodsById(int id) {
+        goodsDao.updateGoodsState(id,3);
+    }
+
+    @Override
     public Goods getGoodsById(int id) {
         Goods goods = goodsDao.selectGoodsById(id);
         Map<Integer,String> goodsClassIdNameMap = DataMap.getGoodsClassIdNameMap();

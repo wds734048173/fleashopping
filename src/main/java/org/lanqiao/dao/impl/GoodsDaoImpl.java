@@ -115,6 +115,9 @@ public class GoodsDaoImpl implements IGoodsDao {
             if(condition.getState() != null && !"-1".equals(condition.getState())){
                 sql.append(" and state = ? ");
                 search.add(condition.getState());
+            }else{
+                sql.append(" and state != ? ");
+                search.add(3);
             }
             if(condition.getSId() != null && !"".equals(condition.getSId())){
                 sql.append(" and uid = ? ");
@@ -151,6 +154,9 @@ public class GoodsDaoImpl implements IGoodsDao {
             if(condition.getState() != null && !"-1".equals(condition.getState())){
                 sql.append(" and state = ? ");
                 search.add(condition.getState());
+            }else{
+                sql.append(" and state != ? ");
+                search.add(3);
             }
         }
         Long count = 0L;

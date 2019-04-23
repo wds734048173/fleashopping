@@ -3,7 +3,6 @@ package org.lanqiao.control;
 import com.alibaba.fastjson.JSON;
 import org.lanqiao.domain.Condition;
 import org.lanqiao.domain.Goods;
-import org.lanqiao.domain.GoodsClass;
 import org.lanqiao.service.IGoodsService;
 import org.lanqiao.service.impl.GoodsServiceImpl;
 import org.lanqiao.utils.PageModel;
@@ -46,14 +45,17 @@ public class GoodsServlet extends HttpServlet {
             case "getGoodsListByCondition":
                 getGoodsListByCondition(req,resp,"");
                 break;
-            case "DownGoodsById":
-                DownGoodsById(req,resp);
+            case "downGoodsById":
+                downGoodsById(req,resp);
                 break;
-            case "DownGoodsSaleById":
-                DownGoodsSaleById(req,resp);
+            case "downGoodsSaleById":
+                downGoodsSaleById(req,resp);
                 break;
-            case "UpGoodsSaleById":
-                UpGoodsSaleById(req,resp);
+            case "upGoodsSaleById":
+                upGoodsSaleById(req,resp);
+                break;
+            case "removeGoodsSaleById":
+                removeGoodsSaleById(req,resp);
                 break;
             //后端获取详情
             case "getGoodsById":
@@ -69,6 +71,18 @@ public class GoodsServlet extends HttpServlet {
             case "addGoods":
                 addGoods(req,resp);
                 break;
+        }
+    }
+
+    private void removeGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Object userId = session.getAttribute("userId");
+        if(userId == null){
+            req.getRequestDispatcher("user/login.jsp").forward(req,resp);
+        }else{
+            int goodsId = Integer.valueOf(req.getParameter("goodsId"));
+            goodsService.removeGoodsById(goodsId);
+            getOwnGoodsList(req,resp);
         }
     }
 
@@ -104,7 +118,7 @@ public class GoodsServlet extends HttpServlet {
 
     }
 
-    private void UpGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void upGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Object userId = session.getAttribute("userId");
         if(userId == null){
@@ -116,7 +130,7 @@ public class GoodsServlet extends HttpServlet {
         }
     }
 
-    private void DownGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void downGoodsSaleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Object userId = session.getAttribute("userId");
         if(userId == null){
@@ -192,7 +206,7 @@ public class GoodsServlet extends HttpServlet {
         }
     }
 
-    private void DownGoodsById(HttpServletRequest req, HttpServletResponse resp) {
+    private void downGoodsById(HttpServletRequest req, HttpServletResponse resp) {
         int goodsId = Integer.valueOf(req.getParameter("goodsId"));
         goodsService.downGoodsById(goodsId);
         getGoodsListByCondition(req,resp,"update");

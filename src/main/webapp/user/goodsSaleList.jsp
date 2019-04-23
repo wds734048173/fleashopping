@@ -26,6 +26,9 @@
         $(function () {
             //新增
             $("#addGoods").click(function () {
+                $("#gridSystemModalLabel").innerHTML = "新增商品信息";
+                $("#goodsPicDiv").hide();
+                $("#uploadPic").show();
                 //获取分类
                 $.ajax({
                     url:"/goodsClass.do?method=getGoodsClassListForSelect",
@@ -64,13 +67,25 @@
                     +"&goodsClassId="+goodsClassId+"&goodsName="+goodsName+"&ypricereal="+ypricereal+"&spricereal="+spricereal+"&remark="+remark+"&goodsPic="+goodsPic+"&goodsId="+goodsId;
                 window.location.href = url;
                 $(".modal-backdrop").remove();
-                /*url = "/goods.do?method=getOwnGoodsList&searchGoodsName="+searchGoodsName+"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
-                window.location.href = url;*/
             })
             //修改
             $(".getGoodsInfo").click(function () {
                 var id = $(this).parent().parent().children("td:eq(0)").text();
-                // document.getElementById("gridSystemModalLabel").innerHTML = "修改商品分类";
+                $("#gridSystemModalLabel").innerHTML = "修改商品信息";
+                $("#goodsPicDiv").show();
+                $("#uploadPic").hide();
+                //获取分类
+                $.ajax({
+                    url:"/goodsClass.do?method=getGoodsClassListForSelect",
+                    success:function (data) {
+                        var goodsClassList = eval(data);
+                        $.each(goodsClassList,function (index,obj) {
+                            var goodsClass = eval(obj);
+                            var str = "<option value="+goodsClass.id +">"+goodsClass.name+"</option>";
+                            $("#goodsClassId").append(str);
+                        });
+                    }
+                })
                 $.ajax({
                     //通过id获取商品分类信息
                     url:"/goods.do?method=getGoodsById&goodsId="+id,
@@ -78,11 +93,13 @@
                         var goods = eval(data);
                         $("#goodsId").val(goods.id);
                         $("#goodsName").val(goods.name);
-                        $("#goodsClassId").val(goods.classStr);
+                        $("#goodsClassId").val(goods.classId);
                         $("#ypricereal").val(goods.ypricereal);
                         $("#spricereal").val(goods.spricereal);
                         $("#remark").val(goods.remark);
-                        $("#pic").attr("src",goods.pic);
+                        // $("#pic").attr("src",goods.pic);
+                        $("#goodsPic").val(goods.pic);
+                        $("#goodsPicImg").attr("src",goods.pic);
                     }
                 })
                 $('#addGoodsModel').modal({
@@ -99,9 +116,8 @@
                     var searchGoodsName = $("#searchGoodsName").val();
                     var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
                     var searchGoodsState = $("#searchGoodsState option:selected").val();
-                    var url = "/goods.do?method=DownGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
+                    var url = "/goods.do?method=downGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
                     window.location.href = url;
-                    window.location.href = "/goods.do?method=getOwnGoodsList";
                 }else{
                     return;
                 }
@@ -115,7 +131,22 @@
                     var searchGoodsName = $("#searchGoodsName").val();
                     var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
                     var searchGoodsState = $("#searchGoodsState option:selected").val();
-                    var url = "/goods.do?method=UpGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
+                    var url = "/goods.do?method=upGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
+                    window.location.href = url;
+                }else{
+                    return;
+                }
+            })
+            //删除
+            $(".removeGoods").click(function () {
+                var isRemove = confirm ("确定删除吗？");
+                if(isRemove){
+                    var id = $(this).parent().parent().children("td:eq(0)").text();
+                    //查询条件
+                    var searchGoodsName = $("#searchGoodsName").val();
+                    var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
+                    var searchGoodsState = $("#searchGoodsState option:selected").val();
+                    var url = "/goods.do?method=removeGoodsSaleById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState;
                     window.location.href = url;
                 }else{
                     return;
@@ -230,13 +261,14 @@
                             <td>${goods.ypricereal}</td>
                             <td>${goods.spricereal}</td>
                             <td>
-                                <a class="btn btn-default getGoodsInfo" href="#" role="button"  name="getGoodsInfo" target="_self">详情</a>
+                                <a class="btn btn-default getGoodsInfo" href="#" role="button"  name="getGoodsInfo" target="_self">修改</a>
                                 <c:if test="${goods.state == 0}">
                                     <a class="btn btn-default downGoods" href="#" role="button"  name="downGoods" target="_self">下架</a>
                                 </c:if>
                                 <c:if test="${goods.state == 1}">
                                     <a class="btn btn-default upGoods" href="#" role="button"  name="upGoods" target="_self">上架</a>
                                 </c:if>
+                                <a class="btn btn-default removeGoods" href="#" role="button"  name="removeGoods" target="_self">删除</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -257,15 +289,19 @@
                                     <label for="goodsId" class="control-label">商品id:</label>
                                     <input type="text" class="form-control" id="goodsId" name="goodsId">
                                 </div>
-                                <div>
-                                    <label >图书封面:</label>
+                                <div id="uploadPic">
+                                    <label >商品图片:</label>
                                     <div id="uploader-demo" class="myinput">
                                         <!--用来存放item-->
                                         <div id="fileList" class="uploader-list"></div>
                                         <div id="filePicker">选择图片</div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="goodsPic" value="" name="goodsPic">
+                                <div class="form-group" id="goodsPicDiv" style="display: none">
+                                    <label for="goodsPic" class="control-label">商品图片:</label>
+                                    <input type="hidden" id="goodsPic" value="" name="goodsPic">
+                                    <img src="" id="goodsPicImg" style="width: 100px;height: 100px;">
+                                </div>
                                 <div class="form-group">
                                     <label for="goodsName" class="control-label">商品名称:</label>
                                     <input type="text" class="form-control" id="goodsName" name="goodsName" required>

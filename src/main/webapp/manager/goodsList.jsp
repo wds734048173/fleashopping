@@ -20,7 +20,7 @@
                 var id = $(this).parent().parent().children("td:eq(0)").text();
                 $(".content").load("/goods.do?method=getGoodsById&goodsId="+id);
             })*/
-            //修改
+            //查看详情
             $(".getGoodsInfo").click(function () {
                 var id = $(this).parent().parent().children("td:eq(0)").text();
                 // document.getElementById("gridSystemModalLabel").innerHTML = "修改商品分类";
@@ -53,7 +53,7 @@
                     var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
                     var searchGoodsState = $("#searchGoodsState option:selected").val();
                     var currentPage = $("#currentPage").val();
-                    var url = "/goods.do?method=DownGoodsById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState + "&currentPage=" + currentPage;
+                    var url = "/goods.do?method=downGoodsById&goodsId=" + id + "&searchGoodsName=" + searchGoodsName +"&searchGoodsClassId="+searchGoodsClassId+"&searchGoodsState="+searchGoodsState + "&currentPage=" + currentPage;
                     $(".content").load(url);
                 }else{
                     return;
