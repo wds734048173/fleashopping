@@ -59,6 +59,10 @@
                     alert("名称多于20字，请重新输入");
                     return;
                 }
+               /* if(remark.length > 240){
+                    alert("描述多于240字，请重新输入");
+                    return;
+                }*/
                 //查询条件
                 var searchGoodsName = $("#searchGoodsName").val();
                 var searchGoodsClassId = $("#searchGoodsClassId option:selected").val();
@@ -236,7 +240,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <a class="btn btn-default" href="#" role="button"  id="addGoods" name="addGoods">添加商品分类</a>
+                <a class="btn btn-default" href="#" role="button"  id="addGoods" name="addGoods">添加商品</a>
             </div>
             <div class="modal-body">
                 <table class="table table-hover table-bordered">

@@ -92,14 +92,15 @@
             <div class="left fl"><img src="${goods.pic}" style="background-size:cover;width: 500px;height: 500px;margin: 30px 0 0 30px"></div>
             <div class="right fr">
                 <input hidden id="goodsId" name="goodsId" value="${goods.id}">
-                <div class="h3 ml20 mt20">${goods.name}</div>
                 <br><br><br>
-                <div class="jianjie mr40 ml20">所属分类：${goods.classStr}</div>
+                <div class="h3 ml20 mt20" style="font-size: xx-large">${goods.name}</div>
                 <br><br><br>
-                <div class="jiage ml20 mt10">售价：${goods.spricereal}元</div>
+                <div class="jianjie mr40 ml20" style="font-size: x-large">所属分类：${goods.classStr}</div>
                 <br><br><br>
-                <div class="jianjie mr40 ml20">原价:${goods.ypricereal}元</div>
-                <br><br><br><br><br><br><br><br><br>
+                <div class="jiage ml20 mt10" style="font-size: xx-large">售价：${goods.spricereal}元</div>
+                <br><br><br>
+                <div class="jianjie mr40 ml20"style="font-size: x-large">原价:${goods.ypricereal}元</div>
+                <br><br><br>
                 <%--自己不能购买自己的产品--%>
                 <c:if test="${userId==goods.UId}">
                     <div class="xiadan ml20 mt20">
@@ -127,15 +128,24 @@
             <div class="clear"></div>
         </div>
     </form>
-    <div style="height: 200px">
+    <div>
         <div class="xiangqing">
             <div class="neirong w">
                 <div class="xiaomi6 fl">概述</div>
             </div>
         </div>
+        <br><br><br>
         <div class="w f1">
-            <div class="ml40 ftbc" style="color: #011737;float: left" >${goods.remark}</div>
+            <div style="font-size: xx-large;color: black;" >
+                <P style="text-indent:2em;">
+                    ${goods.remark}
+                </P>
+
+            </div>
+            <div class="clear"></div>
         </div>
+        <br><br><br>
+        <div class="clear"></div>
     </div>
 
     <%--页脚--%>
