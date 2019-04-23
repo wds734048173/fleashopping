@@ -25,12 +25,6 @@ public interface IUserService {
     public int getUserCount(Condition condition);
     //通过用户名密码查询普通用户
     public User getUserByUserNameAndPassword(String username,String password);
-    //通过用户名密码查询管理员用户
-//    public User getManagerByUserNameAndPassword(String username,String password);
-    //通过用户名查询用户信息
-    public User selectUserByUserName(String username);
-    //删除用户
-    public void deleteUserById(int id);
     //修改密码
     public int modifyUserPassword(User user);
     //修改用户状态

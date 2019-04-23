@@ -15,8 +15,6 @@ public interface IGoodsDao {
     public void insertGoods(Goods goods);
     //修改商品信息
     public void updateGoods(Goods goods);
-    //删除商品
-    public void deleteGoodsById(int id);
     //通过商品id获取商品信息
     public Goods selectGoodsById(int id);
     //获取其他人商品信息（全部）

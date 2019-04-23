@@ -85,32 +85,6 @@ public class OrderDaoImpl implements IOrderDao {
     }
 
     @Override
-    public List<Order> selectOwnerOrderList(int uId) {
-        List<Order> orderList = null;
-        StringBuffer sql = new StringBuffer("SELECT * from tb_order where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
-        try {
-            orderList = qr.query(sql.toString(),new BeanListHandler<>(Order.class),search.toArray());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orderList;
-    }
-
-    @Override
-    public int selectOwnerOrderCount(int uId) {
-        StringBuffer sql = new StringBuffer("SELECT count(1) from tb_order where 1 = 1 ");
-        List<Object> search = new ArrayList<>();
-        Long count = 0L;
-        try {
-            count = qr.query(sql.toString(),new ScalarHandler<>(1),search.toArray());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Integer.valueOf(count.toString());
-    }
-
-    @Override
     public List<Order> selectOrderList(Condition condition) {
         List<Order> orderList = null;
         StringBuffer sql = new StringBuffer("SELECT * from tb_order where 1 = 1 ");

@@ -44,16 +44,6 @@ public class GoodsDaoImpl implements IGoodsDao {
     }
 
     @Override
-    public void deleteGoodsById(int id) {
-        String sql = "DELETE FROM tb_goods WHERE id = ?";
-        try {
-            qr.execute(sql,id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public Goods selectGoodsById(int id) {
         Goods goods = null;
         String sql = "SELECT * from tb_goods where id = ?";

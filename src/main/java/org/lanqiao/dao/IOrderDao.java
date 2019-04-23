@@ -17,10 +17,6 @@ public interface IOrderDao {
     public void insertOrder(Order order,List<OrderInfo> orderInfoList);
     //修改订单状态
     public void updateOrderState(int orderId,int state);
-    //获取个人订单列表
-    public List<Order> selectOwnerOrderList(int uId);
-    //获取个人订单数量
-    public int selectOwnerOrderCount(int uId);
     //获取全部订单
     public List<Order> selectOrderList(Condition condition);
     //获取全部订单数量

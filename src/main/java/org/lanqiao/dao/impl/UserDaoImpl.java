@@ -124,28 +124,6 @@ public class UserDaoImpl implements IUserDao {
         return user;
     }
 
-    /*@Override
-    public User selectManagerByUserNameAndPassword(String username, String password) {
-        String sql = "SELECT * FROM tb_user WHERE role = 0 and username = ? AND password = ?";
-        User user = null;
-        try {
-            user = qr.query(sql,new BeanHandler<>(User.class),username,password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }*/
-
-    @Override
-    public User selectUserByUserName(String username) {
-        return null;
-    }
-
-    @Override
-    public void deleteUserById(int id) {
-
-    }
-
     @Override
     public void updateUserState(int userId, int state) {
         String sql = "UPDATE tb_user SET rtime = now(),state = ? WHERE id = ?";
