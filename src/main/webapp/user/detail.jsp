@@ -81,6 +81,7 @@
         </div>
     </header>
     <%--中间代码--%>
+    <br>
     <div class="xiangqing">
         <div class="neirong w">
             <div class="xiaomi6 fl">${goods.name}</div>
@@ -89,6 +90,7 @@
     </div>
     <form action="/collection.do?method=addCollection" method="post">
         <div class="jieshao mt20 w">
+            <br>
             <div class="left fl"><img src="${goods.pic}" style="background-size:cover;width: 500px;height: 500px;margin: 30px 0 0 30px"></div>
             <div class="right fr">
                 <input hidden id="goodsId" name="goodsId" value="${goods.id}">
@@ -129,12 +131,15 @@
         </div>
     </form>
     <div>
+        <div hidden style="height: 50px;">
+
+        </div>
         <div class="xiangqing">
             <div class="neirong w">
                 <div class="xiaomi6 fl">概述</div>
             </div>
         </div>
-        <br><br><br>
+        <br>
         <div class="w f1">
             <div style="font-size: xx-large;color: black;" >
                 <P style="text-indent:2em;">
@@ -144,7 +149,7 @@
             </div>
             <div class="clear"></div>
         </div>
-        <br><br><br>
+        <br>
         <div class="clear"></div>
     </div>
 
