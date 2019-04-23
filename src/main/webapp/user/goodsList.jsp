@@ -79,7 +79,7 @@
                             <div class="mingxing fl">
                                 <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}"><img src="${goods.pic}" alt="" target="_self"></a></div>
                                 <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self">${goods.name}</a></div>
-                                <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                                <%--<div class="youhui">${goods.remark}&lt;%&ndash;<%=goods.getRemark().substring(0,9)%>&ndash;%&gt;</div>--%>
                                 <div class="jiage">${goods.spricereal}元</div>
                             </div>
                         </c:forEach>
@@ -89,7 +89,7 @@
                             <div class="mingxing fl">
                                 <div class="sub_mingxing"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self"><img src="${goods.pic}" alt=""></a></div>
                                 <div class="pinpai"><a href="/goods.do?method=detail&goodsId=${goods.id}" target="_self">${goods.name}</a></div>
-                                <div class="youhui">${goods.remark}<%--<%=goods.getRemark().substring(0,9)%>--%></div>
+                               <%-- <div class="youhui">${goods.remark}&lt;%&ndash;<%=goods.getRemark().substring(0,9)%>&ndash;%&gt;</div>--%>
                                 <div class="jiage">${goods.spricereal}元</div>
                             </div>
                         </c:forEach>

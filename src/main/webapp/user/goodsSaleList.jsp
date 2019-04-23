@@ -261,6 +261,7 @@
                             <td>${goods.ypricereal}</td>
                             <td>${goods.spricereal}</td>
                             <td>
+                                <a class="btn btn-default" href="/goods.do?method=detail&goodsId=${goods.id}" role="button"  name="getGoodsInfo" target="_self">详情</a>
                                 <a class="btn btn-default getGoodsInfo" href="#" role="button"  name="getGoodsInfo" target="_self">修改</a>
                                 <c:if test="${goods.state == 0}">
                                     <a class="btn btn-default downGoods" href="#" role="button"  name="downGoods" target="_self">下架</a>

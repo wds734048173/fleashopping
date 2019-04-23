@@ -12,7 +12,6 @@ import org.lanqiao.utils.jdbcUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +35,14 @@ public class OrderDaoImpl implements IOrderDao {
         String sql1 = "insert into tb_order(no,state,type,price,sid,freight,bid,realname,telphone,address,ctime,money) values(?,?,?,?,?,?,?,?,?,?,now(),?)";
         String sql2 = "select max(id) from tb_order";
         String sql3 = "insert into tb_order_info (oid,gid,gname,yprice,sprice,num,gpic) values (?,?,?,?,?,?,?)";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String sql4 = "update tb_goods set state = 2 ,rtime = NOW() WHERE id in (SELECT gid FROM tb_order_info WHERE oid = ?)";
         try {
             qr.execute(sql1,order.getNo(),order.getState(),order.getType(),order.getMoney(),order.getSid(),order.getFreight(),order.getBid(),order.getRealname(),order.getTelphone(),order.getAddress(),order.getMoney());
             int oId = qr.query(sql2,new ScalarHandler<>(1));
             for (int i = 0; i < orderInfoList.size(); i++) {
                 qr.execute(sql3,oId,orderInfoList.get(i).getGId(),orderInfoList.get(i).getGname(),orderInfoList.get(i).getYprice(),orderInfoList.get(i).getSprice(),orderInfoList.get(i).getNum(),orderInfoList.get(i).getGpic());
             }
+            qr.execute(sql4,oId);
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,20 +54,34 @@ public class OrderDaoImpl implements IOrderDao {
         String sql = "";
         if(state == 6){
             sql = "UPDATE tb_order SET canceltime = now(),state = ? WHERE id = ?";
-        }else if(state == 2){
-            sql = "UPDATE tb_order SET paytime = now(),state = ? WHERE id = ?";
-        }else if(state == 3){
-            sql = "UPDATE tb_order SET sendtime = now(),state = ? WHERE id = ?";
-        }else if(state == 4){
-            sql = "UPDATE tb_order SET receivetime = now(),state = ? WHERE id = ?";
-        }else if(state == 5){
-            sql = "UPDATE tb_order SET commenttime = now(),state = ? WHERE id = ?";
+            String sql1 = "update tb_goods set state = 0 ,rtime = NOW() WHERE id in (SELECT gid FROM tb_order_info WHERE oid = ?)";
+            Connection conn = null;
+            try {
+                conn = jdbcUtils.getConnection();
+                conn.setAutoCommit(false);
+                qr.execute(sql,state,orderId);
+                qr.execute(sql1,orderId);
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            if(state == 2){
+                sql = "UPDATE tb_order SET paytime = now(),state = ? WHERE id = ?";
+            }else if(state == 3){
+                sql = "UPDATE tb_order SET sendtime = now(),state = ? WHERE id = ?";
+            }else if(state == 4){
+                sql = "UPDATE tb_order SET receivetime = now(),state = ? WHERE id = ?";
+            }else if(state == 5){
+                sql = "UPDATE tb_order SET commenttime = now(),state = ? WHERE id = ?";
+            }
+            try {
+                qr.execute(sql,state,orderId);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            qr.execute(sql,state,orderId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

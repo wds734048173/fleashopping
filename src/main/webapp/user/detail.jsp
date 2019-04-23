@@ -1,4 +1,6 @@
-<%@ page import="org.lanqiao.domain.Goods" %><%--
+<%@ page import="org.lanqiao.domain.Goods" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/12/6/006
@@ -98,15 +100,33 @@
                 <br><br><br>
                 <div class="jianjie mr40 ml20">原价:${goods.ypricereal}元</div>
                 <br><br><br><br><br><br><br><br><br>
-                <div class="xiadan ml20 mt20">
-                    <input class="jrgwc" type="button" name="jrgwc" value="加入收藏" id="addCollection"/>
-                    <input class="jrgwc" type="button" name="jrgwc" value="立即购买" id="addOrder"/>
-                </div>
+                <%--自己不能购买自己的产品--%>
+                <c:if test="${userId==goods.UId}">
+                    <div class="xiadan ml20 mt20">
+                        <input class="jrgwc" type="button" name="jrgwc" value="加入收藏" id="addCollection" disabled style="background-color:grey;"/>
+                        <input class="jrgwc" type="button" name="jrgwc" value="立即购买" id="addOrder" disabled style="background-color:grey;"/>
+                    </div>
+                </c:if>
+
+                <%--不是自己商品，并且是上架状态，都可以收藏，下单--%>
+                <c:if test="${userId!=goods.UId && goods.state==0}">
+                    <div class="xiadan ml20 mt20">
+                        <input class="jrgwc" type="button" name="jrgwc" value="加入收藏" id="addCollection"/>
+                        <input class="jrgwc" type="button" name="jrgwc" value="立即购买" id="addOrder"/>
+                    </div>
+                </c:if>
+
+                <%--已出售/下架的商品不能再次购买，但是应该可以收藏--%>
+                <c:if test="${userId!=goods.UId && 0!=goods.state}">
+                    <div class="xiadan ml20 mt20">
+                        <input class="jrgwc" type="button" name="jrgwc" value="加入收藏" id="addCollection"/>
+                        <input class="jrgwc" type="button" name="jrgwc" value="立即购买" id="addOrder" disabled style="background-color:grey;"/>
+                    </div>
+                </c:if>
             </div>
             <div class="clear"></div>
         </div>
     </form>
-    <div class="xiadan ml20 mt20"></div>
     <div style="height: 200px">
         <div class="xiangqing">
             <div class="neirong w">
